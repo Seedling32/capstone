@@ -42,8 +42,7 @@ export const config = {
           if (isMatch) {
             return {
               id: user.userId,
-              firstName: user.firstName,
-              lastName: user.lastName,
+              name: `${user.firstName} ${user.lastName}`,
               email: user.email,
               role: user.role,
             };
