@@ -32,3 +32,21 @@ export const signUpFormSchema = z
     message: 'Passwords do not match.',
     path: ['confirmPassword'],
   });
+
+// Adding rides schemas for user rides
+export const rideItemSchema = z.object({
+  ride_id: z.string().min(1, 'Ride is required.'),
+  shortDescription: z.string().min(1, 'Ride name is required.'),
+  slug: z.string().min(1, 'Ride slug is required.'),
+  date: z.coerce.date(),
+  staticMapUrl: z.string().min(1, 'Image is required.'),
+  distance: z.number(),
+});
+
+export const insertRideSchema = z.object({
+  userId: z.string(),
+  rideId: z.string(),
+  status: z.string(),
+  dateSignedUp: z.coerce.date(),
+  dateCompleted: z.coerce.date().nullable(),
+});

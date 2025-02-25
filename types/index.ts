@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import { createRideSchema } from '@/lib/validators';
+import {
+  createRideSchema,
+  insertRideSchema,
+  rideItemSchema,
+} from '@/lib/validators';
 
 export type Ride = z.infer<typeof createRideSchema> & {
   ride_id: string;
@@ -10,3 +14,6 @@ export type Ride = z.infer<typeof createRideSchema> & {
   updatedAt: Date;
   distance: number;
 };
+
+export type userRide = z.infer<typeof insertRideSchema>;
+export type rideItem = z.infer<typeof rideItemSchema>;

@@ -15,32 +15,34 @@ datasource db {
 }
 
 model ride {
-  ride_id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ride_id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   slug             String
-  date             DateTime
+  date             DateTime    @db.Timestamp(6)
   path             String // JSON string to store coordinates
   distance         Float
   shortDescription String
   longDescription  String
   staticMapUrl     String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt        DateTime    @default(now()) @db.Timestamp(6)
+  updatedAt        DateTime    @updatedAt @db.Timestamp(6)
+  user_ride        user_ride[]
 }
 
 model user {
-  userId        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  firstName     String    @default("NO_FIRST_NAME")
-  lastName      String    @default("NO_LAST_NAME")
-  email         String    @unique(map: "user_email_idx")
-  emailVerified DateTime? @db.Timestamp(6)
+  userId        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstName     String      @default("NO_FIRST_NAME")
+  lastName      String      @default("NO_LAST_NAME")
+  email         String      @unique(map: "user_email_idx")
+  emailVerified DateTime?   @db.Timestamp(6)
   image         String?
   password      String?
-  location_id   Int?
-  role          String    @default("USER")
-  createdAt     DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt     DateTime  @updatedAt
+  locationId    Int?
+  role          String      @default("USER")
+  createdAt     DateTime    @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime    @updatedAt
   account       Account[]
   session       Session[]
+  user_ride     user_ride[]
 }
 
 model Account {
@@ -80,4 +82,15 @@ model VerificationToken {
   expires    DateTime @db.Timestamp(6)
 
   @@id([identifier, token])
+}
+
+model user_ride {
+  user_ride_id   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id        String    @db.Uuid
+  ride_id        String    @db.Uuid
+  status         String
+  date_signed_up DateTime  @default(now()) @db.Timestamp(6)
+  date_completed DateTime?
+  user           user      @relation(fields: [user_id], references: [userId], onDelete: Cascade)
+  ride           ride      @relation(fields: [ride_id], references: [ride_id], onDelete: Cascade)
 }
