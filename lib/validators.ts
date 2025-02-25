@@ -46,7 +46,7 @@ export const rideItemSchema = z.object({
 export const insertRideSchema = z.object({
   userId: z.string(),
   rideId: z.string(),
-  status: z.string(),
-  dateSignedUp: z.coerce.date(),
-  dateCompleted: z.coerce.date().nullable(),
+  status: z.string().optional(),
+  dateSignedUp: z.coerce.date().optional(),
+  dateCompleted: z.coerce.date().optional().nullable(),
 });

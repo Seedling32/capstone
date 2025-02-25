@@ -88,7 +88,7 @@ model user_ride {
   user_ride_id   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   user_id        String    @db.Uuid
   ride_id        String    @db.Uuid
-  status         String
+  status         String    @default("SIGNED_UP")
   date_signed_up DateTime  @default(now()) @db.Timestamp(6)
   date_completed DateTime?
   user           user      @relation(fields: [user_id], references: [userId], onDelete: Cascade)
