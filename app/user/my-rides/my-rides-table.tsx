@@ -15,7 +15,7 @@ const RidesTable = ({ rides }: { rides: getMyRide }) => {
   return (
     <>
       <h1 className="py-4 h2-bold">My Rides</h1>
-      {!rides ? (
+      {!rides || rides.rides.length < 1 ? (
         <div>
           <p>No rides to display.</p>
           <Button type="button" className="mt-4">

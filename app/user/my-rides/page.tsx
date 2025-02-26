@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getMyRides } from '@/lib/actions/signup.actions';
+import { getMyRides } from '@/lib/actions/ride.actions';
 import RidesTable from './my-rides-table';
 
 export const metadata: Metadata = {

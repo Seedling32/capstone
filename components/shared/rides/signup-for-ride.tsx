@@ -5,7 +5,7 @@ import { Plus, Loader } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { rideItem } from '@/types';
-import { addRideToUserRide } from '@/lib/actions/signup.actions';
+import { addRideToUserRide } from '@/lib/actions/ride.actions';
 import { useTransition } from 'react';
 
 const SignUpForRide = ({ ride }: { ride: rideItem }) => {
