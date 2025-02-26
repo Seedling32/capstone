@@ -91,6 +91,8 @@ export async function getMyRides() {
       success: true,
       rides: userRides.map((userRide) => ({
         ride_id: userRide.ride.ride_id,
+        slug: userRide.ride.slug,
+        staticMapUrl: userRide.ride.staticMapUrl,
         shortDescription: userRide.ride.shortDescription,
         date: userRide.ride.date,
         distance: userRide.ride.distance,

@@ -17,3 +17,6 @@ export type Ride = z.infer<typeof createRideSchema> & {
 
 export type userRide = z.infer<typeof insertRideSchema>;
 export type rideItem = z.infer<typeof rideItemSchema>;
+export type getMyRide = {
+  rides: rideItem[];
+};
