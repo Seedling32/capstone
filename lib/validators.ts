@@ -50,3 +50,10 @@ export const insertRideSchema = z.object({
   dateSignedUp: z.coerce.date().optional(),
   dateCompleted: z.coerce.date().optional().nullable(),
 });
+
+// Schema to update user profile
+export const updateProfileSchema = z.object({
+  firstName: z.string().min(3, 'First name must be at least 3 characters.'),
+  lastName: z.string().min(3, 'Last name must be at least 3 characters.'),
+  email: z.string().min(3, 'Email must be at least 3 characters.'),
+});
