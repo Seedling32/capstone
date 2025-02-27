@@ -2,108 +2,172 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { signUpDefaultValues } from '@/lib/constants';
 import Link from 'next/link';
-import { useActionState } from 'react';
-import { useFormStatus } from 'react-dom';
 import { signUpUser } from '@/lib/actions/user.actions';
 import { useSearchParams } from 'next/navigation';
+import { signUpFormSchema } from '@/lib/validators';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { useSession } from 'next-auth/react';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 
 const SignUpForm = () => {
-  const [data, action] = useActionState(signUpUser, {
-    success: false,
-    message: '',
-  });
+  const { data: session, update } = useSession();
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams?.get('callbackUrl') || '/';
 
-  const SignUpButton = () => {
-    const { pending } = useFormStatus();
+  const form = useForm<z.infer<typeof signUpFormSchema>>({
+    resolver: zodResolver(signUpFormSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-    return (
-      <Button disabled={pending} className="w-full" variant="default">
-        {pending ? 'Submitting...' : 'Register'}
-      </Button>
-    );
+  const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
+    const response = await signUpUser(null, values);
+
+    if (!response.success) {
+      return toast(<div className="text-destructive">{response.message}</div>);
+    }
+
+    const newSession = {
+      ...session,
+      user: {
+        ...session?.user,
+        name: `${values.firstName} ${values.lastName}`,
+      },
+    };
+
+    await update(newSession);
+
+    toast('User registered successfully.');
   };
 
   return (
-    <form action={action}>
-      <input type="hidden" name="callbackUrl" value={callbackUrl} />
-      <div className="space-y-6">
-        <div>
-          <Label htmlFor="firstName">First Name</Label>
-          <Input
-            id="firstName"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <input type="hidden" name="callbackUrl" value={callbackUrl} />
+        <div className="flex flex-col gap-5">
+          <FormField
+            control={form.control}
             name="firstName"
-            type="text"
-            required
-            autoComplete="firstName"
-            defaultValue={signUpDefaultValues.firstName}
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={signUpDefaultValues.firstName}
+                    className="input-field"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
-        <div>
-          <Label htmlFor="lastName">Last Name</Label>
-          <Input
-            id="lastName"
+          <FormField
+            control={form.control}
             name="lastName"
-            type="text"
-            required
-            autoComplete="lastName"
-            defaultValue={signUpDefaultValues.lastName}
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={signUpDefaultValues.lastName}
+                    className="input-field"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
+          <FormField
+            control={form.control}
             name="email"
-            type="email"
-            required
-            autoComplete="email"
-            defaultValue={signUpDefaultValues.email}
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={signUpDefaultValues.email}
+                    className="input-field"
+                    type="email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
-        <div>
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
+          <FormField
+            control={form.control}
             name="password"
-            type="password"
-            required
-            autoComplete="password"
-            defaultValue={signUpDefaultValues.password}
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={signUpDefaultValues.password}
+                    className="input-field"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
-        <div>
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <Input
-            id="confirmPassword"
+          <FormField
+            control={form.control}
             name="confirmPassword"
-            type="password"
-            required
-            autoComplete="confirmPassword"
-            defaultValue={signUpDefaultValues.confirmPassword}
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={signUpDefaultValues.confirmPassword}
+                    className="input-field"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
-        <div>
-          <SignUpButton />
-        </div>
-
-        {data && !data.success && (
-          <div className="text-center text-destructive">{data.message}</div>
-        )}
-
-        <div className="text-sm text-center text-muted-foreground">
+        <Button
+          type="submit"
+          size="lg"
+          className="button col-span-2 w-full mt-4"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? 'Submitting...' : 'Register'}
+        </Button>
+        <div className="text-sm text-center text-muted-foreground mt-4">
           Already have an account?{' '}
           <Link href="/sign-in" target="_self" className="link">
             Sign In
           </Link>
         </div>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 };
 
