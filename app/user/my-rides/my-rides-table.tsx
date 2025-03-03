@@ -10,6 +10,7 @@ import {
 import { getMyRide } from '@/types';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { formatDateTime } from '@/lib/utils';
 
 const RidesTable = ({ rides }: { rides: getMyRide }) => {
   return (
@@ -50,7 +51,7 @@ const RidesTable = ({ rides }: { rides: getMyRide }) => {
                         <span className="px-2">{ride.shortDescription}</span>
                       </Link>
                     </TableCell>
-                    <TableCell>Ride Date</TableCell>
+                    <TableCell>{formatDateTime(ride.date).dateTime}</TableCell>
                     <TableCell>{ride.distance} Miles</TableCell>
                   </TableRow>
                 ))}
