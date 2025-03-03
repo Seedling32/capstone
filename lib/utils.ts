@@ -73,3 +73,8 @@ export const formatDateTime = (dateString: Date) => {
     timeOnly: formattedTime,
   };
 };
+
+// Show only the first 20 words
+export const limitedDescription = (description: string) => {
+  return description.split(' ').slice(0, 20).join(' ') + ' ...';
+};
