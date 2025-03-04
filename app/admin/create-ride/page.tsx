@@ -1,6 +1,11 @@
+import { Metadata } from 'next';
 import CreateRide from '@/components/shared/map/CreateRide';
 
-const AdminPage = () => {
+export const metadata: Metadata = {
+  title: 'Create Ride',
+};
+
+const AdminCreateRide = () => {
   return (
     <div style={{ padding: '20px', textAlign: 'center' }}>
       <h1 className="h2-bold">Create Ride</h1>
@@ -10,4 +15,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default AdminCreateRide;

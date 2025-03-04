@@ -18,7 +18,7 @@ const Menu = () => {
           Rides
         </Link>
         <Link href="/about-us" className="hover:border-b">
-          About Us
+          About
         </Link>
         <Link href="/contact" className="hover:border-b">
           Contact
@@ -37,7 +37,7 @@ const Menu = () => {
               Rides
             </Link>
             <Link href="/about-us" className="hover:underline">
-              About Us
+              About
             </Link>
             <Link href="/contact" className="hover:underline">
               Contact
