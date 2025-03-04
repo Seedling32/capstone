@@ -13,7 +13,6 @@ import { UserIcon, UserRoundPlus } from 'lucide-react';
 
 const UserButton = async () => {
   const session = await auth();
-  console.log(session);
 
   if (!session) {
     return (
