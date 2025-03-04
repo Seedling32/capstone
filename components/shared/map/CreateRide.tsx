@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { GoogleMap, Polyline } from '@react-google-maps/api';
+import { Input } from '@/components/ui/input';
 
 const mapContainerStyle = {
   width: '100%',
@@ -111,29 +112,29 @@ const CreateRide = () => {
 
   return (
     <div style={{ position: 'relative', textAlign: 'center', padding: '20px' }}>
-      <h1>Bike Route Planner</h1>
-      <input
+      <h2>Bike Route Planner</h2>
+      <Input
         type="text"
-        placeholder="Short description"
+        placeholder="Ride Title..."
         value={shortDescription}
         onChange={(e) => setShortDescription(e.target.value)}
-        style={{ marginBottom: '10px', width: '100%', padding: '10px' }}
+        className="mb-3"
+        required
       />
-      <textarea
-        placeholder="Long description"
+      <Input
+        type="text"
+        placeholder="Description..."
         value={longDescription}
         onChange={(e) => setLongDescription(e.target.value)}
-        style={{
-          marginBottom: '20px',
-          width: '100%',
-          padding: '10px',
-          height: '100px',
-        }}
+        className="mb-3"
+        required
       />
-      <input
+      <Input
         type="datetime-local"
         value={date}
         onChange={(e) => setDate(e.target.value)}
+        className="border-none"
+        required
       />
       <div style={{ position: 'relative', width: '100%', height: '600px' }}>
         <GoogleMap
