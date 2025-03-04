@@ -22,6 +22,7 @@ export default function AdminLayout({
                 height={48}
                 width={48}
                 alt={`${APP_NAME} logo.`}
+                className="rounded-md"
               />
             </Link>
             <MainNav className="mx-6" />

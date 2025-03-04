@@ -13,6 +13,7 @@ import { UserIcon, UserRoundPlus } from 'lucide-react';
 
 const UserButton = async () => {
   const session = await auth();
+  console.log(session);
 
   if (!session) {
     return (
@@ -69,6 +70,14 @@ const UserButton = async () => {
               My Rides
             </Link>
           </DropdownMenuItem>
+
+          {session?.user?.role === 'ADMIN' && (
+            <DropdownMenuItem>
+              <Link href="/admin/overview" className="w-full">
+                Admin
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem className="p-0 mb-1">
             <form action={signOutUser} className="w-full">
               <Button
