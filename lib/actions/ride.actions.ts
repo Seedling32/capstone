@@ -125,3 +125,43 @@ export async function getMyRides() {
     };
   }
 }
+
+type RiderDataType = {
+  month: string;
+  activeUsers: number;
+}[];
+
+// Get ride data for admin overview
+export async function getRideSummary() {
+  // Get counts for resources
+  const userRidesCount = await prisma.user_ride.count();
+  const totalRidesCount = await prisma.ride.count();
+  const usersCount = await prisma.user.count();
+
+  // Get monthly rider engagement
+  const riderDataRaw = await prisma.$queryRaw<
+    Array<{ month: string; activeUsers: number }>
+  >`SELECT to_char("date_signed_up", 'MM/YY') as "month", COUNT(*) as "activeUsers FROM "user_ride" WHERE "status" = "SIGNED_UP"`;
+
+  const riderData: RiderDataType = riderDataRaw.map((entry) => ({
+    month: entry.month,
+    activeUsers: entry.activeUsers,
+  }));
+
+  // Get latest rides
+  const latestRides = await prisma.user_ride.findMany({
+    orderBy: { date_signed_up: 'desc' },
+    include: {
+      user: { select: { firstName: true, lastName: true } },
+    },
+    take: 6,
+  });
+
+  return {
+    userRidesCount,
+    totalRidesCount,
+    usersCount,
+    riderData,
+    latestRides,
+  };
+}
