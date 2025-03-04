@@ -145,7 +145,7 @@ export async function getRideSummary() {
 
   const riderData: RiderDataType = riderDataRaw.map((entry) => ({
     month: entry.month,
-    activeUsers: entry.activeUsers,
+    activeUsers: Number(entry.activeUsers),
   }));
 
   // Get latest rides

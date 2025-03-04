@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import Charts from './charts';
 import { getRideSummary } from '@/lib/actions/ride.actions';
 import { formatDateTime } from '@/lib/utils';
 import {
@@ -83,7 +84,13 @@ const AdminOverviewPage = async () => {
           <CardHeader>
             <CardTitle>Overview</CardTitle>
           </CardHeader>
-          <CardContent>{/* CHART */}</CardContent>
+          <CardContent>
+            <Charts
+              data={{
+                riderData: summary.riderData,
+              }}
+            />
+          </CardContent>
         </Card>
         <Card className="col-span-3">
           <CardHeader>
