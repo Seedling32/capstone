@@ -23,8 +23,8 @@ const RideDetailsPage = async (props: {
     typeof ride.path === 'string' ? JSON.parse(ride.path) : ride.path;
 
   return (
-    <div className="container flex flex-col justify-self-center justify-between  gap-10 mt-8 mx-4 md:flex-row">
-      <div className="max-w-[300px]">
+    <div className="container flex flex-col justify-self-center justify-between  gap-10 mt-8 px-8 md:flex-row">
+      <div className="max-w-full md:max-w-[33%]">
         <h1 className="text-3xl font-bold mb-4">{ride.shortDescription}</h1>
         <p className="text-lg mb-4">{ride.longDescription}</p>
         <ul className="mb-6">
@@ -44,7 +44,7 @@ const RideDetailsPage = async (props: {
           />
         )}
       </div>
-      <div className="container mx-auto p-6">
+      <div className="container">
         <DynamicMap path={parsedPath} zoom={15} />
       </div>
     </div>
