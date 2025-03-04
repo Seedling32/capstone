@@ -141,7 +141,7 @@ export async function getRideSummary() {
   // Get monthly rider engagement
   const riderDataRaw = await prisma.$queryRaw<
     Array<{ month: string; activeUsers: number }>
-  >`SELECT to_char("date_signed_up", 'MM/YY') as "month", COUNT(*) as "activeUsers FROM "user_ride" WHERE "status" = "SIGNED_UP"`;
+  >`SELECT to_char("date_signed_up", 'MM/YY') as "month", COUNT(*) as "activeUsers" FROM "user_ride" WHERE "status" = 'SIGNED_UP' GROUP BY "month" ORDER BY "month" DESC`;
 
   const riderData: RiderDataType = riderDataRaw.map((entry) => ({
     month: entry.month,
@@ -153,6 +153,14 @@ export async function getRideSummary() {
     orderBy: { date_signed_up: 'desc' },
     include: {
       user: { select: { firstName: true, lastName: true } },
+      ride: {
+        select: {
+          staticMapUrl: true,
+          shortDescription: true,
+          date: true,
+          slug: true,
+        },
+      },
     },
     take: 6,
   });
