@@ -20,12 +20,14 @@ import {
 } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { requireAdmin } from '@/lib/auth-guard';
 
 export const metadata: Metadata = {
   title: 'Overview',
 };
 
 const AdminOverviewPage = async () => {
+  await requireAdmin();
   const session = await auth();
 
   if (session?.user?.role !== 'ADMIN') throw new Error('User not authorized.');
