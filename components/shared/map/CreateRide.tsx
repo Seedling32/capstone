@@ -5,6 +5,7 @@ import { GoogleMap, Polyline } from '@react-google-maps/api';
 import { Input } from '@/components/ui/input';
 import { slugify } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const mapContainerStyle = {
   width: '100%',
@@ -96,7 +97,7 @@ const CreateRide = () => {
       });
 
       if (response.ok) {
-        alert('Route saved successfully!');
+        toast.success('Route saved successfully!');
         setPath([]);
         setShortDescription('');
         setLongDescription('');
@@ -104,11 +105,17 @@ const CreateRide = () => {
         setDate('');
         setDistance(0);
       } else {
-        alert('Failed to save the route.');
+        toast.error(
+          <div className="text-destructive">Failed to save the route.</div>
+        );
       }
     } catch (error) {
       console.error('Error saving route:', error);
-      alert('An error occurred while saving the route.');
+      toast.warning(
+        <div className="text-destructive">
+          An error occurred while saving the route.
+        </div>
+      );
     } finally {
       setLoading(false);
     }
