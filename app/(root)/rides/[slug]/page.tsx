@@ -3,6 +3,8 @@ import DynamicMap from '@/components/shared/map/DynamicMap';
 import SignUpForRide from '@/components/shared/rides/signup-for-ride';
 import { auth } from '@/auth';
 import { formatDateTime } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const RideDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -18,9 +20,20 @@ const RideDetailsPage = async (props: {
   // See if there's a session for dynamic content
   const session = await auth();
 
-  // Parse path from string to array of objects if needed
+  // Parse path from string to array of objects for dynamic map
   const parsedPath =
     typeof ride.path === 'string' ? JSON.parse(ride.path) : ride.path;
+  console.log(parsedPath);
+
+  // Calculate dynamic zoom level based on path length
+  const calculateZoom = (path: { lat: number; lng: number }[]) => {
+    // Close zoom for a single point
+    if (path.length < 15) return 15;
+    // Zoomed in for a small ride
+    else return 13;
+  };
+
+  const zoomLevel = calculateZoom(parsedPath);
 
   return (
     <div className="container flex flex-col justify-self-center justify-between  gap-10 mt-8 px-8 md:flex-row">
@@ -29,9 +42,10 @@ const RideDetailsPage = async (props: {
         <p className="text-lg mb-4">{ride.longDescription}</p>
         <ul className="mb-6">
           <li>Distance: {ride.distance} Miles</li>
-          <li>Date: {formatDateTime(ride.date).dateTime}</li>
+          <li>Date: {formatDateTime(ride.date).dateOnly}</li>
+          <li>Time: {formatDateTime(ride.date).timeOnly}</li>
         </ul>
-        {session && (
+        {session ? (
           <SignUpForRide
             ride={{
               ride_id: ride.ride_id,
@@ -42,10 +56,17 @@ const RideDetailsPage = async (props: {
               staticMapUrl: ride.staticMapUrl,
             }}
           />
+        ) : (
+          <>
+            <p>Sign in to sign up for this ride.</p>
+            <Button>
+              <Link href="/sign-in">Sign-in</Link>
+            </Button>
+          </>
         )}
       </div>
       <div className="container">
-        <DynamicMap path={parsedPath} zoom={15} />
+        <DynamicMap path={parsedPath} zoom={zoomLevel} />
       </div>
     </div>
   );
