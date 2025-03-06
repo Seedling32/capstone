@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { GoogleMap, Polyline } from '@react-google-maps/api';
 import { Input } from '@/components/ui/input';
 import { slugify } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 const mapContainerStyle = {
   width: '100%',
@@ -67,7 +68,9 @@ const CreateRide = () => {
     }
   };
 
-  const saveRoute = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent page reload
+
     if (path.length === 0) {
       alert('Please add some points to the map before saving.');
       return;
@@ -114,66 +117,67 @@ const CreateRide = () => {
   return (
     <div style={{ position: 'relative', textAlign: 'center', padding: '20px' }}>
       <h2>Bike Route Planner</h2>
-      <Input
-        type="text"
-        placeholder="Ride Title..."
-        value={shortDescription}
-        onChange={(e) => setShortDescription(e.target.value)}
-        className="mb-3"
-        required
-      />
-      <Input
-        type="text"
-        placeholder="Description..."
-        value={longDescription}
-        onChange={(e) => setLongDescription(e.target.value)}
-        className="mb-3"
-        required
-      />
-      <Input
-        type="datetime-local"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        className="border-none"
-        required
-      />
-      <div style={{ position: 'relative', width: '100%', height: '600px' }}>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={defaultCenter}
-          zoom={12}
-          onClick={handleMapClick}
-        >
-          <Polyline
-            path={path}
-            options={{ strokeColor: '#FF0000', strokeWeight: 4 }}
-          />
-          {savedRoutes.map((route) => (
+
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-4"
+      >
+        <Input
+          type="text"
+          placeholder="Ride Title..."
+          value={shortDescription}
+          onChange={(e) => setShortDescription(e.target.value)}
+          className="mb-3"
+          required
+        />
+        <Input
+          type="text"
+          placeholder="Description..."
+          value={longDescription}
+          onChange={(e) => setLongDescription(e.target.value)}
+          className="mb-3"
+          required
+        />
+        <Input
+          type="datetime-local"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="border-none"
+          required
+        />
+
+        {/* Hidden input to include path in form validation */}
+        <input type="hidden" value={JSON.stringify(path)} required />
+
+        <div style={{ position: 'relative', width: '100%', height: '600px' }}>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={defaultCenter}
+            zoom={12}
+            onClick={handleMapClick}
+          >
             <Polyline
-              key={route.id}
-              path={route.path}
-              options={{ strokeColor: '#00FF00', strokeWeight: 4 }}
+              path={path}
+              options={{ strokeColor: '#FF0000', strokeWeight: 4 }}
             />
-          ))}
-        </GoogleMap>
-        <button
-          onClick={saveRoute}
+            {savedRoutes.map((route) => (
+              <Polyline
+                key={route.id}
+                path={route.path}
+                options={{ strokeColor: '#00FF00', strokeWeight: 4 }}
+              />
+            ))}
+          </GoogleMap>
+        </div>
+
+        <Button
+          type="submit"
           disabled={loading}
-          style={{
-            position: 'absolute',
-            bottom: '20px',
-            right: '80px',
-            padding: '10px 20px',
-            background: loading ? 'gray' : 'blue',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: loading ? 'not-allowed' : 'pointer',
-          }}
+          className="p-3 bg-blue-500 text-white rounded disabled:bg-gray-500"
         >
           {loading ? 'Saving...' : 'Save Route'}
-        </button>
-      </div>
+        </Button>
+      </form>
     </div>
   );
 };
