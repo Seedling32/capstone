@@ -23,7 +23,6 @@ const RideDetailsPage = async (props: {
   // Parse path from string to array of objects for dynamic map
   const parsedPath =
     typeof ride.path === 'string' ? JSON.parse(ride.path) : ride.path;
-  console.log(parsedPath);
 
   // Calculate dynamic zoom level based on path length
   const calculateZoom = (path: { lat: number; lng: number }[]) => {
