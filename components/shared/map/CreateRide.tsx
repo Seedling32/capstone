@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { GoogleMap, Polyline } from '@react-google-maps/api';
 import { Input } from '@/components/ui/input';
+import { slugify } from '@/lib/utils';
 
 const mapContainerStyle = {
   width: '100%',
@@ -81,7 +82,7 @@ const CreateRide = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          slug: shortDescription || `Route ${Date.now()}`,
+          slug: slugify(shortDescription),
           path,
           shortDescription,
           longDescription,

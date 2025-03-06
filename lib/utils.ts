@@ -76,5 +76,15 @@ export const formatDateTime = (dateString: Date) => {
 
 // Show only the first 20 words
 export const limitedDescription = (description: string) => {
-  return description.split(' ').slice(0, 20).join(' ') + ' ...';
+  if (description.split(' ').length < 20) return description;
+  return description.split(' ').slice(0, 19).join(' ') + ' ...';
+};
+
+// Slugify any string
+export const slugify = (text: string) => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-');
 };

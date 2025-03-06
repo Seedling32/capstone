@@ -58,7 +58,7 @@ const RideDetailsPage = async (props: {
           />
         ) : (
           <>
-            <p>Sign in to sign up for this ride.</p>
+            <p>Please sign in to register for rides.</p>
             <Button>
               <Link href="/sign-in">Sign-in</Link>
             </Button>

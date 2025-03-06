@@ -6,7 +6,7 @@ import { limitedDescription } from '@/lib/utils';
 
 const RideCard = ({ ride }: { ride: Ride }) => {
   return (
-    <Card className="flex flex-col w-full max-w-sm shadow-xl">
+    <Card className="flex flex-col w-full max-w-[300px] shadow-xl">
       <CardHeader className="p-0 items-center">
         <Link href={`/rides/${ride.slug}`}>
           <Image
@@ -25,7 +25,7 @@ const RideCard = ({ ride }: { ride: Ride }) => {
           <p className="text-m">{limitedDescription(ride.longDescription)}</p>
         </Link>
         <div>
-          <p className="font-bold">{ride.distance} Miles</p>
+          <p className="font-bold">Length: {ride.distance} Miles</p>
         </div>
       </CardContent>
     </Card>
