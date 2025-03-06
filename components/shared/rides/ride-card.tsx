@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Ride } from '@/types';
 import { limitedDescription } from '@/lib/utils';
+import { formatDateTime } from '@/lib/utils';
 
 const RideCard = ({ ride }: { ride: Ride }) => {
   return (
@@ -24,8 +25,12 @@ const RideCard = ({ ride }: { ride: Ride }) => {
           <h3 className="h3-bold">{ride.shortDescription}</h3>
           <p className="text-m">{limitedDescription(ride.longDescription)}</p>
         </Link>
-        <div>
+        <div className="mt-2">
+          <hr />
           <p className="font-bold">Length: {ride.distance} Miles</p>
+          <p className="font-bold">
+            Date: {formatDateTime(ride.date).dateTime}
+          </p>
         </div>
       </CardContent>
     </Card>
