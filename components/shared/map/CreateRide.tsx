@@ -77,8 +77,6 @@ const CreateRide = () => {
       return;
     }
 
-    // const formattedDate = date ? new Date(date + 'UTC').toISOString() : null;
-
     const localDate = new Date(date);
     const formattedDate = new Date(
       localDate.getTime() - localDate.getTimezoneOffset() * 60000
