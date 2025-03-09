@@ -77,7 +77,7 @@ const CreateRide = () => {
       return;
     }
 
-    const formattedDate = date ? new Date(date).toISOString() : null;
+    const formattedDate = date ? new Date(date + 'UTC').toISOString() : null;
 
     setLoading(true);
 

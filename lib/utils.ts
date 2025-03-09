@@ -63,7 +63,7 @@ export const formatDateTime = (dateString: Date) => {
     'en-US',
     dateOptions
   );
-  const formattedTime: string = new Date(dateString).toLocaleDateString(
+  const formattedTime: string = new Date(dateString).toLocaleTimeString(
     'en-US',
     timeOptions
   );
