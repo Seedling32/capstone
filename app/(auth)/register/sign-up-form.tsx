@@ -162,7 +162,7 @@ const SignUpForm = () => {
         </Button>
         <div className="text-sm text-center text-muted-foreground mt-4">
           Already have an account?{' '}
-          <Link href="/sign-in" target="_self" className="link">
+          <Link href="/sign-in" target="_self" className="link hover:underline">
             Sign In
           </Link>
         </div>
