@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'hero-large': "url('/images/hero.png')",
-        'hero-small': "url('/images/hero-small.png')",
+        'hero-large': "url('/images/hero-large.webp')",
+        'hero-small': "url('/images/hero-small.webp')",
       },
       colors: {
         background: 'hsl(var(--background))',
