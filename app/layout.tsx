@@ -24,6 +24,22 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
+        <noscript className="flex justify-center items-center">
+          <div className="flex flex-col items-center pt-8">
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a href="/" rel="noopener noreferrer">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/logo.svg"
+                height="100"
+                width="100"
+                alt="Pedal-Pact logo."
+              ></img>
+            </a>
+            <p>JavaScript is required for the best experience on this site.</p>
+            <p>Thanks for dropping in!</p>
+          </div>
+        </noscript>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

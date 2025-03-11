@@ -9,11 +9,7 @@ export const metadata: Metadata = {
 const RidesPage = async () => {
   const latestRides = await getLatestRides();
 
-  return (
-    <>
-      <RideList data={latestRides} title="Explore our rides" />
-    </>
-  );
+  return <RideList data={latestRides} title="Explore our rides" />;
 };
 
 export default RidesPage;
