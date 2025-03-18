@@ -83,48 +83,38 @@ export async function addRideToUserRide(data: rideItem) {
   }
 }
 
-export async function getMyRides() {
-  try {
-    // Check for user authentication
-    const session = await auth();
-    if (!session) throw new Error('User not found.');
-    const userId = session?.user?.id as string;
+// Get all rides associated with specific user
+export async function getMyRides({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  // Check for user authentication
+  const session = await auth();
+  if (!session) throw new Error('User not found.');
+  const userId = session?.user?.id as string;
 
-    // Get user rides from database
-    const userRides = await prisma.user_ride.findMany({
-      where: { user_id: userId },
-      include: {
-        ride: true, // Include ride details
-      },
-    });
+  // Get user rides from database
+  const userRides = await prisma.user_ride.findMany({
+    where: { user_id: userId },
+    orderBy: { date_signed_up: 'desc' },
+    take: limit,
+    skip: (page - 1) * limit,
+    include: {
+      ride: true, // Include ride details
+    },
+  });
 
-    if (!userRides.length) {
-      return {
-        success: false,
-        message: 'No rides found for this user.',
-        rides: [],
-      };
-    }
+  const dataCount = await prisma.user_ride.count({
+    where: { user_id: userId },
+  });
 
-    // Convert rides to a plain object array
-    return {
-      success: true,
-      rides: userRides.map((userRide) => ({
-        ride_id: userRide.ride.ride_id,
-        slug: userRide.ride.slug,
-        staticMapUrl: userRide.ride.staticMapUrl,
-        shortDescription: userRide.ride.shortDescription,
-        date: userRide.ride.date,
-        distance: userRide.ride.distance,
-      })),
-    };
-  } catch (error) {
-    return {
-      success: false,
-      message: formatError(error),
-      rides: [],
-    };
-  }
+  return {
+    userRides,
+    totalPages: Math.ceil(dataCount / limit),
+  };
 }
 
 type RiderDataType = {

@@ -10,7 +10,7 @@ export const GOOGLE_MAPS_API_KEY =
 export const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
 
-export const PAGE_SIZE = process.env.PAGE_SIZE || 10;
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 8;
 
 export const signInDefaultValues = {
   email: '',
