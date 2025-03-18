@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import Pagination from '@/components/shared/pagination';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
@@ -80,12 +81,12 @@ const MyRidesPage = async (props: {
                 ))}
               </TableBody>
             </Table>
-            {/* {rides.totalPages > 1 && (
+            {rides.totalPages > 1 && (
               <Pagination
                 page={Number(page) || 1}
                 totalPages={rides?.totalPages}
               />
-            )} */}
+            )}
           </div>
         </div>
       )}
