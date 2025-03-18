@@ -5,6 +5,7 @@ import { convertToPlainObject, formatError } from '../utils';
 import { auth } from '@/auth';
 import { insertRideSchema, rideItemSchema } from '../validators';
 import { rideItem } from '@/types';
+import { PAGE_SIZE } from '../constants';
 
 // Get rides to display on the ride page.
 export async function getLatestRides() {

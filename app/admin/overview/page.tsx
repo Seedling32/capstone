@@ -49,17 +49,6 @@ const AdminOverviewPage = async () => {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Total Ride Interactions
-            </CardTitle>
-            <ClipboardPlus />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{summary.userRidesCount}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Users</CardTitle>
             <UsersRound />
           </CardHeader>
@@ -70,7 +59,18 @@ const AdminOverviewPage = async () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Signed Up Users
+              All Time Sign Ups
+            </CardTitle>
+            <ClipboardPlus />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{summary.userRidesCount}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              This Months Sign Ups
             </CardTitle>
             <CheckCircleIcon />
           </CardHeader>
