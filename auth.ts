@@ -47,6 +47,7 @@ export const config = {
               name: `${user.firstName} ${user.lastName}`,
               email: user.email,
               role: user.role,
+              image: user.image,
             };
           }
         }
@@ -62,6 +63,7 @@ export const config = {
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
+      session.user.image = token.image;
 
       // If there is an update, set user name
       if (trigger === 'update') {
@@ -75,6 +77,7 @@ export const config = {
       // Assign user fields to token
       if (user) {
         token.role = user.role;
+        token.image = user.image;
 
         // If user has no name then use email
         if (user.firstName === 'NO_FIRST_NAME') {
