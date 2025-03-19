@@ -73,7 +73,7 @@ const MyRidesPage = async (props: {
                     </TableCell>
                     <TableCell>{ride.ride.distance} Miles</TableCell>
                     <TableCell>
-                      <Link href={`/rides/${ride.ride.slug}`}>
+                      <Link href={`/my-rides/${ride.user_ride_id}`}>
                         <span className="px-2">Details</span>
                       </Link>
                     </TableCell>

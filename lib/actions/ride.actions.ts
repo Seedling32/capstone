@@ -164,3 +164,36 @@ export async function getRideSummary() {
     latestRides,
   };
 }
+
+// Get all user rides
+export async function getAllUserRides({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const data = await prisma.user_ride.findMany({
+    orderBy: { date_signed_up: 'desc' },
+    take: limit,
+    skip: (page - 1) * limit,
+    include: {
+      user: { select: { firstName: true, lastName: true } },
+      ride: {
+        select: {
+          staticMapUrl: true,
+          shortDescription: true,
+          date: true,
+          slug: true,
+        },
+      },
+    },
+  });
+
+  const dataCount = await prisma.user_ride.count();
+
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
+  };
+}
