@@ -15,6 +15,7 @@ import { formatDateTime } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Pagination from '@/components/shared/pagination';
+import { Badge } from '@/components/ui/badge';
 
 export const metadata: Metadata = {
   title: 'User Rides',
@@ -64,17 +65,27 @@ const AdminUserRides = async (props: {
                 </TableCell>
                 <TableCell>{formatDateTime(ride.ride.date).dateTime}</TableCell>
                 <TableCell>
-                  {ride.status === 'SIGNED_UP'
-                    ? 'Signed Up'
-                    : ride.status === 'CANCELED'
-                    ? 'Canceled'
-                    : ride.status === 'COMPLETED'
-                    ? 'Completed'
-                    : 'No Show'}
+                  <Badge
+                    variant={
+                      ride.status === 'SIGNED_UP' || ride.status === 'COMPLETED'
+                        ? 'secondary'
+                        : 'destructive'
+                    }
+                  >
+                    {ride.status === 'SIGNED_UP'
+                      ? 'Signed Up'
+                      : ride.status === 'CANCELED'
+                      ? 'Canceled'
+                      : ride.status === 'COMPLETED'
+                      ? 'Completed'
+                      : 'No Show'}
+                  </Badge>
                 </TableCell>
                 <TableCell>
                   <Button asChild variant="outline" size="sm">
-                    <Link href={`/rides/${ride.user_ride_id}`}>Details</Link>
+                    <Link href={`/user/my-rides/${ride.user_ride_id}`}>
+                      Details
+                    </Link>
                   </Button>
                 </TableCell>
               </TableRow>

@@ -27,26 +27,28 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
   };
 
   return (
-    <div className="flex gap-2 items-center">
-      <Button
-        size="lg"
-        variant="outline"
-        className="w-28"
-        disabled={Number(page) <= 1}
-        onClick={() => handleClick('prev')}
-      >
-        Previous
-      </Button>
+    <div className="flex flex-col items-center gap-4 mt-6">
+      <div className="flex gap-2 items-center">
+        <Button
+          size="lg"
+          variant="outline"
+          className="w-28"
+          disabled={Number(page) <= 1}
+          onClick={() => handleClick('prev')}
+        >
+          Previous
+        </Button>
+        <Button
+          size="lg"
+          variant="outline"
+          className="w-28"
+          disabled={Number(page) >= totalPages}
+          onClick={() => handleClick('next')}
+        >
+          Next
+        </Button>
+      </div>
       <span>{`${page} of ${totalPages}`}</span>
-      <Button
-        size="lg"
-        variant="outline"
-        className="w-28"
-        disabled={Number(page) >= totalPages}
-        onClick={() => handleClick('next')}
-      >
-        Next
-      </Button>
     </div>
   );
 };

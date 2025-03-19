@@ -28,13 +28,12 @@ import { changeUserRideStatus } from '@/lib/actions/user.actions';
 import { updateStatusFormDefaultValues } from '@/lib/constants';
 import { updateUserRideStatusSchema } from '@/lib/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
-// import { revalidatePath } from 'next/cache';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-const statusOptions = ['SIGNED_UP', 'CANCELED', 'COMPLETED'];
+const userStatusOptions = ['SIGNED_UP', 'CANCELED', 'COMPLETED'];
 
 const StatusForm = ({ userRideId }: { userRideId: string }) => {
   const [open, setOpen] = useState(false);
@@ -62,10 +61,9 @@ const StatusForm = ({ userRideId }: { userRideId: string }) => {
 
     setOpen(false);
 
-    // revalidatePath(`/user/my-rides/${userRideId}`);
-
     toast.success(`${response.message}`);
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Button onClick={handleOpenForm} variant="default">
@@ -97,7 +95,7 @@ const StatusForm = ({ userRideId }: { userRideId: string }) => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {statusOptions.map((option) => (
+                        {userStatusOptions.map((option) => (
                           <SelectItem key={option} value={option}>
                             {option === 'SIGNED_UP'
                               ? 'Signed Up'
