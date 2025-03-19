@@ -57,3 +57,13 @@ export const updateProfileSchema = z.object({
   lastName: z.string().min(3, 'Last name must be at least 3 characters.'),
   email: z.string().min(3, 'Email must be at least 3 characters.'),
 });
+
+// Schema for getting all user rides and their associated ride
+export const allUserRidesSchema = z.object({
+  user_ride_id: z.string().min(1, 'Ride is required'),
+  user_id: z.string().min(1, 'User is required.'),
+  ride_id: z.string().min(1, 'Ride is required.'),
+  status: z.string().min(1, 'Status is required.'),
+  date_signed_up: z.coerce.date(),
+  dateCompleted: z.coerce.date().optional().nullable(),
+});

@@ -117,6 +117,18 @@ export async function getMyRides({
   };
 }
 
+// Get user ride by ID
+export async function getUserRideById(userRideId: string) {
+  const data = await prisma.user_ride.findFirst({
+    where: { user_ride_id: userRideId },
+    include: {
+      ride: true,
+    },
+  });
+
+  return convertToPlainObject(data);
+}
+
 type RiderDataType = {
   month: string;
   activeUsers: number;
