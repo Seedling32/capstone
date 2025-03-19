@@ -13,15 +13,18 @@ import {
 import { formatDateTime } from '@/lib/utils';
 import { getUserRide } from '@/types';
 import Image from 'next/image';
+import StatusForm from './status-form';
+
+const currentDate = new Date();
 
 const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
-  const { status } = userRide;
+  const { status, user_ride_id } = userRide;
   const { staticMapUrl, shortDescription, date, distance } = userRide.ride;
 
   return (
     <>
       <h1 className="py-4 text-2xl">{shortDescription}</h1>
-      <div className="grid md:grid-cols-2 md:gap-5">
+      <div className="grid gap-4 md:grid-cols-2">
         <div className="flex flex-col gap-4">
           <Card>
             <CardContent className="p-4 flex flex-col items-center">
@@ -79,7 +82,13 @@ const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
                 <TableBody>
                   <TableRow>
                     <TableCell>
-                      <Badge>
+                      <Badge
+                        variant={
+                          status === 'SIGNED_UP' || status === 'COMPLETED'
+                            ? 'secondary'
+                            : 'destructive'
+                        }
+                      >
                         {status === 'SIGNED_UP'
                           ? 'Signed Up'
                           : status === 'CANCELED'
@@ -89,7 +98,20 @@ const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
                           : 'No Show'}
                       </Badge>
                     </TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>
+                      {currentDate < new Date(date) ? (
+                        <StatusForm userRideId={user_ride_id} />
+                      ) : (
+                        <>
+                          <p>Unable to change status after the ride date.</p>
+                          <p>
+                            If you forgot to mark the ride as completed please
+                            just send us an email and we can check it off for
+                            you.
+                          </p>
+                        </>
+                      )}
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

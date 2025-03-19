@@ -13,6 +13,7 @@ import {
 import Pagination from '@/components/shared/pagination';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
 
 export const metadata: Metadata = {
   title: 'My Rides',
@@ -46,6 +47,7 @@ const MyRidesPage = async (props: {
                   <TableHead>Ride</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Distance</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -72,6 +74,24 @@ const MyRidesPage = async (props: {
                       {formatDateTime(ride.ride.date).dateTime}
                     </TableCell>
                     <TableCell>{ride.ride.distance} Miles</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={
+                          ride.status === 'SIGNED_UP' ||
+                          ride.status === 'COMPLETED'
+                            ? 'secondary'
+                            : 'destructive'
+                        }
+                      >
+                        {ride.status === 'SIGNED_UP'
+                          ? 'Signed Up'
+                          : ride.status === 'CANCELED'
+                          ? 'Canceled'
+                          : ride.status === 'COMPLETED'
+                          ? 'Completed'
+                          : 'No Show'}
+                      </Badge>
+                    </TableCell>
                     <TableCell>
                       <Link href={`/user/my-rides/${ride.user_ride_id}`}>
                         <span className="px-2">Details</span>

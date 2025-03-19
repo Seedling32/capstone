@@ -1,11 +1,17 @@
 'use server';
 
-import { signInFormSchema, signUpFormSchema } from '../validators';
+import {
+  signInFormSchema,
+  signUpFormSchema,
+  updateUserRideStatusSchema,
+} from '../validators';
 import { auth, signIn, signOut } from '@/auth';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { hashSync } from 'bcrypt-ts-edge';
 import { prisma } from '@/db/prisma';
 import { formatError } from '../utils';
+import { z } from 'zod';
+import { revalidatePath } from 'next/cache';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -112,6 +118,46 @@ export async function updateProfile(user: {
     return {
       success: true,
       message: 'User updated successfully.',
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: formatError(error),
+    };
+  }
+}
+
+// Change the status of a user ride
+export async function changeUserRideStatus(
+  data: z.infer<typeof updateUserRideStatusSchema>
+) {
+  try {
+    const session = await auth();
+    if (!session) throw new Error('User is not authenticated.');
+
+    // Validate and store the new status
+    const status = updateUserRideStatusSchema.parse({
+      ...data,
+    });
+
+    // Get the ride that is being updated
+    const ride = await prisma.user_ride.findFirst({
+      where: { user_ride_id: status.userRideId },
+    });
+    if (!ride) throw new Error('Ride not found.');
+
+    await prisma.user_ride.update({
+      where: { user_ride_id: status.userRideId },
+      data: {
+        status: status.status,
+      },
+    });
+
+    revalidatePath(`/user/my-rides/${status.userRideId}`);
+
+    return {
+      success: true,
+      message: 'Status updated successfully.',
     };
   } catch (error) {
     return {

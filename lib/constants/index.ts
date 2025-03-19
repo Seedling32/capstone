@@ -24,3 +24,7 @@ export const signUpDefaultValues = {
   password: '',
   confirmPassword: '',
 };
+
+export const updateStatusFormDefaultValues = {
+  status: '',
+};

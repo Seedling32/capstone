@@ -58,6 +58,12 @@ export const updateProfileSchema = z.object({
   email: z.string().min(3, 'Email must be at least 3 characters.'),
 });
 
+// Schema for updating user ride status
+export const updateUserRideStatusSchema = z.object({
+  userRideId: z.string().min(1, 'Ride ID is required'),
+  status: z.string().min(1, 'Ride status is required.'),
+});
+
 // Schema for getting all user rides and their associated ride
 export const allUserRidesSchema = z.object({
   user_ride_id: z.string().min(1, 'Ride is required'),
