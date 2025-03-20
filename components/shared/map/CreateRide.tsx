@@ -183,7 +183,7 @@ const CreateRide = () => {
         <Button
           type="submit"
           disabled={loading}
-          className="p-3 bg-blue-500 text-white rounded disabled:bg-gray-500"
+          className="p-3 bg-orange-600 text-white rounded disabled:bg-gray-500"
         >
           {loading ? 'Saving...' : 'Save Route'}
         </Button>
