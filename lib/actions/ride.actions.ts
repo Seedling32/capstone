@@ -6,6 +6,7 @@ import { auth } from '@/auth';
 import { insertRideSchema, rideItemSchema } from '../validators';
 import { rideItem } from '@/types';
 import { PAGE_SIZE } from '../constants';
+import { revalidatePath } from 'next/cache';
 
 // Get rides to display on the ride page.
 export async function getLatestRides() {
@@ -235,4 +236,29 @@ export async function getAllUserRides({
     data,
     totalPages: Math.ceil(dataCount / limit),
   };
+}
+
+// Delete a ride
+export async function deleteRide(rideId: string) {
+  try {
+    const rideExists = await prisma.ride.findFirst({
+      where: { ride_id: rideId },
+    });
+
+    if (!rideExists) throw new Error('Ride not found.');
+
+    await prisma.ride.delete({ where: { ride_id: rideId } });
+
+    revalidatePath('/admin/all-rides');
+
+    return {
+      success: true,
+      message: 'Ride deleted successfully.',
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: formatError(error),
+    };
+  }
 }

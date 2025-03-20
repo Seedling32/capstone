@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { requireAdmin } from '@/lib/auth-guard';
-import { getAllRides } from '@/lib/actions/ride.actions';
+import { getAllRides, deleteRide } from '@/lib/actions/ride.actions';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table';
 import { formatDateTime } from '@/lib/utils';
 import Pagination from '@/components/shared/pagination';
+import DeleteDialog from '@/components/shared/delete-dialog';
 
 export const metadata: Metadata = {
   title: 'All Rides',
@@ -78,10 +79,11 @@ const AdminAllRides = async (props: {
               <TableCell>{formatDateTime(ride.date).dateTime}</TableCell>
               <TableCell>{ride.distance} Miles</TableCell>
               <TableCell>{ride.user_ride.length}</TableCell>
-              <TableCell>
+              <TableCell className="flex gap-2">
                 <Button variant="outline" size="sm">
                   <Link href={`/admin/all-rides/${ride.slug}`}>Edit</Link>
                 </Button>
+                <DeleteDialog id={ride.ride_id} action={deleteRide} />
               </TableCell>
             </TableRow>
           ))}

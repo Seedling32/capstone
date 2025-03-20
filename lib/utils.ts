@@ -13,7 +13,7 @@ export function convertToPlainObject<T>(value: T): T {
 
 // Format errors
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function formatError(error: any) {
+export function formatError(error: any) {
   if (error.name === 'ZodError') {
     // Handle zod error
     const fieldErrors = Object.keys(error.errors).map(
