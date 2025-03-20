@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
 import { formUrlQuery } from '@/lib/utils';
+import { Badge } from '../ui/badge';
 
 type PaginationProps = {
   page: number | string;
@@ -48,7 +49,7 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
           Next
         </Button>
       </div>
-      <span>{`${page} of ${totalPages}`}</span>
+      <Badge variant="secondary">{`${page} of ${totalPages}`}</Badge>
     </div>
   );
 };

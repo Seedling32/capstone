@@ -214,7 +214,7 @@ export async function getAllUserRides({
   page: number;
 }) {
   const data = await prisma.user_ride.findMany({
-    orderBy: { date_signed_up: 'desc' },
+    orderBy: { ride: { date: 'desc' } },
     take: limit,
     skip: (page - 1) * limit,
     include: {

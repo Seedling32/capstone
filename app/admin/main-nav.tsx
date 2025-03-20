@@ -11,10 +11,6 @@ const links = [
     href: '/admin/overview',
   },
   {
-    title: 'Create Ride',
-    href: '/admin/create-ride',
-  },
-  {
     title: 'All Rides',
     href: '/admin/all-rides',
   },
