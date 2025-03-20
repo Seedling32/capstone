@@ -94,7 +94,9 @@ const MyRidesPage = async (props: {
                     </TableCell>
                     <TableCell>
                       <Link href={`/user/my-rides/${ride.user_ride_id}`}>
-                        <span className="px-2">Details</span>
+                        <Button variant="outline" size="sm">
+                          Details
+                        </Button>
                       </Link>
                     </TableCell>
                   </TableRow>
