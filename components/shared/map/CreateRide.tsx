@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { slugify } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { Textarea } from '@/components/ui/textarea';
 
 const mapContainerStyle = {
   width: '100%',
@@ -73,7 +74,7 @@ const CreateRide = () => {
     e.preventDefault(); // Prevent page reload
 
     if (path.length === 0) {
-      alert('Please add some points to the map before saving.');
+      toast.warning('Please add some points to the map before saving.');
       return;
     }
 
@@ -140,8 +141,7 @@ const CreateRide = () => {
           className="mb-3"
           required
         />
-        <Input
-          type="text"
+        <Textarea
           placeholder="Description..."
           value={longDescription}
           onChange={(e) => setLongDescription(e.target.value)}

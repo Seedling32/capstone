@@ -33,11 +33,11 @@ const ModeToggle = () => {
           className="focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           {theme === 'system' ? (
-            <SunMoonIcon />
+            <SunMoonIcon color="#ea580b" />
           ) : theme === 'dark' ? (
-            <MoonIcon />
+            <MoonIcon color="#ea580b" />
           ) : (
-            <SunIcon />
+            <SunIcon color="#ea580b" />
           )}
         </Button>
       </DropdownMenuTrigger>

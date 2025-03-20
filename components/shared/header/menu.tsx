@@ -14,13 +14,13 @@ const Menu = () => {
   return (
     <div className="flex justify-end gap-3">
       <nav className="hidden md:flex items-center w-full max-w-s gap-2 text-white">
-        <Link href="/rides" className="hover:border-b">
+        <Link href="/rides" className="hover:text-orange-600">
           Rides
         </Link>
-        <Link href="/about-us" className="hover:border-b">
+        <Link href="/about-us" className="hover:text-orange-600">
           About
         </Link>
-        <Link href="/contact" className="hover:border-b">
+        <Link href="/contact" className="hover:text-orange-600">
           Contact
         </Link>
         <UserButton />
@@ -29,7 +29,7 @@ const Menu = () => {
       <nav className="md:hidden">
         <Sheet>
           <SheetTrigger className="align-middle">
-            <EllipsisVertical className="text-yellow-500" />
+            <EllipsisVertical className="text-orange-600" />
           </SheetTrigger>
           <SheetContent className="flex flex-col items-start">
             <SheetTitle>Menu</SheetTitle>
