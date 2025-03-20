@@ -24,7 +24,6 @@ const RideDetailsPage = async (props: {
   const userRide = await prisma.user_ride.findFirst({
     where: { ride_id: ride.ride_id },
   });
-  console.log(userRide);
 
   // Parse path from string to array of objects for dynamic map
   const parsedPath =

@@ -22,6 +22,8 @@ const SignUpForRide = ({ ride }: { ride: rideItem }) => {
         return;
       }
 
+      router.refresh();
+
       // Handle success add to rides
       toast(`Signed Up For ${ride.shortDescription}`, {
         action: {
