@@ -93,11 +93,11 @@ const MyRidesPage = async (props: {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Link href={`/user/my-rides/${ride.user_ride_id}`}>
-                        <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm">
+                        <Link href={`/user/my-rides/${ride.user_ride_id}`}>
                           Details
-                        </Button>
-                      </Link>
+                        </Link>
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

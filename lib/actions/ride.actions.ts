@@ -19,6 +19,33 @@ export async function getLatestRides() {
   return convertToPlainObject(data);
 }
 
+// Get all rides
+export async function getAllRides({
+  query,
+  limit = PAGE_SIZE,
+  page,
+  difficulty,
+}: {
+  query: string;
+  limit?: number;
+  page: number;
+  difficulty?: string;
+}) {
+  const data = await prisma.ride.findMany({
+    orderBy: { date: 'desc' },
+    skip: (page - 1) * limit,
+    take: limit,
+    include: { user_ride: { where: { status: 'SIGNED_UP' } } },
+  });
+
+  const dataCount = await prisma.ride.count();
+
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
+  };
+}
+
 // Get individual ride details based on the slug.
 export async function getRideBySlug(slug: string) {
   return await prisma.ride.findFirst({
