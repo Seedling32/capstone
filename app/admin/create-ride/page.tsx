@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import CreateRide from './CreateRide';
+import RideForm from '@/components/admin/ride-form';
 import { requireAdmin } from '@/lib/auth-guard';
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ const AdminCreateRide = async () => {
         Fill out the Ride Title, Description, and Date. Don&apos;t forget to
         generate the slug!
       </p>
-      <CreateRide />
+      <RideForm type="Create" />
     </>
   );
 };

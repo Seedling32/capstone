@@ -7,6 +7,7 @@ import {
   createRideSchema,
   insertRideSchema,
   rideItemSchema,
+  updateRideSchema,
 } from '../validators';
 import { rideItem } from '@/types';
 import { PAGE_SIZE } from '../constants';
@@ -295,6 +296,37 @@ export async function createNewRide({
     return {
       success: true,
       message: 'Ride created successfully.',
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: formatError(error),
+    };
+  }
+}
+
+// Update a ride
+export async function updateRide({
+  data,
+}: {
+  data: z.infer<typeof updateRideSchema>;
+}) {
+  try {
+    const newRide = updateRideSchema.parse(data);
+    const rideExists = await prisma.ride.findFirst({
+      where: { ride_id: newRide.ride_id },
+    });
+
+    if (!rideExists) throw new Error('Ride not found');
+
+    await prisma.ride.update({
+      where: { ride_id: newRide.ride_id },
+      data: newRide,
+    });
+
+    return {
+      success: true,
+      message: 'Ride updated successfully.',
     };
   } catch (error) {
     return {

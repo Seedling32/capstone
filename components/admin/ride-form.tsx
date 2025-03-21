@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Textarea } from '@/components/ui/textarea';
 import { ControllerRenderProps, SubmitHandler, useForm } from 'react-hook-form';
-import { createRideSchema } from '@/lib/validators';
+import { createRideSchema, updateRideSchema } from '@/lib/validators';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -26,6 +26,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import polyline from '@mapbox/polyline';
+import { Ride } from '@/types';
 
 const mapContainerStyle = {
   width: '100%',
@@ -34,10 +35,24 @@ const mapContainerStyle = {
 
 const defaultCenter = { lat: 35.5951, lng: -82.5515 }; // Asheville, NC
 
-const CreateRide = () => {
-  const form = useForm<z.infer<typeof createRideSchema>>({
-    resolver: zodResolver(createRideSchema),
-    defaultValues: createRideFormDefaultValues,
+const RideForm = ({
+  type,
+  ride,
+  rideId,
+}: {
+  type: 'Create' | 'Update';
+  ride?: Ride;
+  rideId?: string;
+}) => {
+  type CreateRideSchema = z.infer<typeof createRideSchema>;
+  type UpdateRideSchema = z.infer<typeof updateRideSchema>;
+
+  const form = useForm<CreateRideSchema | UpdateRideSchema>({
+    resolver: zodResolver(
+      type === 'Update' ? updateRideSchema : createRideSchema
+    ),
+    defaultValues:
+      ride && type === 'Update' ? ride : createRideFormDefaultValues,
   });
 
   const [path, setPath] = useState<{ lat: number; lng: number }[]>([]);
@@ -294,10 +309,11 @@ const CreateRide = () => {
           </div>
           <Button
             type="submit"
+            disabled={form.formState.isSubmitting}
             onClick={handlePreSubmit}
-            className="bg-orange-600 min-w-[350px] self-center"
+            className="bg-green-500 min-w-[350px] self-center"
           >
-            {form.formState.isSubmitting ? 'Saving Route...' : 'Save Route'}
+            {form.formState.isSubmitting ? 'Saving Route...' : `${type} Ride`}
           </Button>
         </div>
       </form>
@@ -305,4 +321,4 @@ const CreateRide = () => {
   );
 };
 
-export default CreateRide;
+export default RideForm;
