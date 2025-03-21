@@ -9,6 +9,9 @@ export const createRideSchema = z.object({
     .string()
     .min(3, 'Long description must be at least 3 characters.'),
   date: z.coerce.date(),
+  staticMapUrl: z.string().optional(),
+  slug: z.string().min(3, 'Slug must be at least 3 characters.'),
+  distance: z.number(),
 });
 
 // Schema for signing users in

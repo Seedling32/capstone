@@ -61,7 +61,7 @@ const AdminAllRides = async (props: {
         </TableHeader>
         <TableBody>
           {rides.data.map((ride) => (
-            <TableRow key={ride.slug}>
+            <TableRow key={ride.ride_id}>
               <TableCell>
                 <Link
                   href={`/rides/${ride.slug}`}

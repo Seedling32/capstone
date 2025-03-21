@@ -28,3 +28,12 @@ export const signUpDefaultValues = {
 export const updateStatusFormDefaultValues = {
   status: '',
 };
+
+export const createRideFormDefaultValues = {
+  shortDescription: '',
+  longDescription: '',
+  date: new Date(),
+  staticMapUrl: '',
+  distance: 0.0,
+  slug: '',
+};

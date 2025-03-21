@@ -81,14 +81,14 @@ export const limitedDescription = (description: string) => {
   return description.split(' ').slice(0, 19).join(' ') + ' ...';
 };
 
-// Slugify any string
-export const slugify = (text: string) => {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-');
-};
+// // Slugify any string
+// export const slugify = (text: string) => {
+//   return text
+//     .toLowerCase()
+//     .trim()
+//     .replace(/[^a-z0-9\s-]/g, '')
+//     .replace(/\s+/g, '-');
+// };
 
 // Form the pagination links
 export function formUrlQuery({

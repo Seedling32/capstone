@@ -3,10 +3,15 @@
 import { prisma } from '@/db/prisma';
 import { convertToPlainObject, formatError } from '../utils';
 import { auth } from '@/auth';
-import { insertRideSchema, rideItemSchema } from '../validators';
+import {
+  createRideSchema,
+  insertRideSchema,
+  rideItemSchema,
+} from '../validators';
 import { rideItem } from '@/types';
 import { PAGE_SIZE } from '../constants';
 import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
 
 // Get rides to display on the ride page.
 export async function getLatestRides() {
@@ -254,6 +259,40 @@ export async function deleteRide(rideId: string) {
     return {
       success: true,
       message: 'Ride deleted successfully.',
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: formatError(error),
+    };
+  }
+}
+
+export async function createNewRide({
+  data,
+  path,
+}: {
+  data: z.infer<typeof createRideSchema>;
+  path: { lat: number; lng: number }[];
+}) {
+  try {
+    const newRide = createRideSchema.parse(data);
+
+    await prisma.ride.create({
+      data: {
+        slug: newRide.slug,
+        shortDescription: newRide.shortDescription,
+        longDescription: newRide.longDescription,
+        date: newRide.date,
+        staticMapUrl: newRide.staticMapUrl,
+        distance: newRide.distance,
+        path: JSON.stringify(path),
+      },
+    });
+
+    return {
+      success: true,
+      message: 'Ride created successfully.',
     };
   } catch (error) {
     return {
