@@ -14,7 +14,7 @@ export default function AdminLayout({
     >
       <>
         {children}
-        <Toaster position="top-center" />
+        <Toaster position="top-center" richColors />
       </>
     </LoadScriptNext>
   );

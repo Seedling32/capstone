@@ -42,7 +42,7 @@ export default function AdminLayout({
         <div className="flex-1 space-y-4 p-8 pt-6 container mx-auto">
           {children}
         </div>
-        <Toaster position="top-center" />
+        <Toaster position="top-center" richColors />
       </div>
     </>
   );
