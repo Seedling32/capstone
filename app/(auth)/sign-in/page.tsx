@@ -41,6 +41,7 @@ const SignInPage = async (props: {
               height={100}
               alt={`${APP_NAME} logo`}
               priority={true}
+              className="rounded-md"
             />
           </Link>
           <CardTitle className="text-center">Sign In</CardTitle>
