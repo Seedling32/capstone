@@ -30,7 +30,7 @@ const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
             <CardContent className="p-4 flex flex-col items-center">
               <h2 className="text-xl pb-4">Route Image</h2>
               <Image
-                src={staticMapUrl}
+                src={staticMapUrl!}
                 alt={`Map of ${shortDescription}.`}
                 width={600}
                 height={500}

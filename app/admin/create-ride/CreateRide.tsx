@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { GoogleMap, Polyline } from '@react-google-maps/api';
 import { Input } from '@/components/ui/input';
-import { format } from 'date-fns';
 import DatePicker from 'react-datepicker';
 import slugify from 'slugify';
 import { Button } from '@/components/ui/button';
