@@ -28,7 +28,8 @@ const Menu = () => {
       </nav>
       <nav className="md:hidden">
         <Sheet>
-          <SheetTrigger className="align-middle">
+          <SheetTrigger className="align-middle text-orange-600 flex">
+            Menu
             <EllipsisVertical className="text-orange-600" />
           </SheetTrigger>
           <SheetContent className="flex flex-col items-start">
