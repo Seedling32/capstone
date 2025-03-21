@@ -190,6 +190,15 @@ export async function getAllUsers({
   };
 }
 
+// Get user by userId
+export async function getUserById(userId: string) {
+  const user = await prisma.user.findFirst({
+    where: { userId: userId },
+  });
+  if (!user) throw new Error('User not found');
+  return user;
+}
+
 // Delete a user
 export async function deleteUser(id: string) {
   try {

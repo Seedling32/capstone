@@ -59,11 +59,17 @@ export const insertRideSchema = z.object({
   dateCompleted: z.coerce.date().optional().nullable(),
 });
 
-// Schema to update user profile
+// Schema for user to update profile
 export const updateProfileSchema = z.object({
   firstName: z.string().min(3, 'First name must be at least 3 characters.'),
   lastName: z.string().min(3, 'Last name must be at least 3 characters.'),
   email: z.string().min(3, 'Email must be at least 3 characters.'),
+});
+
+// Schema to update the user as admin
+export const updateUserSchema = updateProfileSchema.extend({
+  userId: z.string().min(1, 'Id is required.'),
+  role: z.string().min(1, 'Role is required.'),
 });
 
 // Schema for updating user ride status

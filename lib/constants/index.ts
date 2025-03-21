@@ -37,3 +37,7 @@ export const createRideFormDefaultValues = {
   distance: 0.0,
   slug: '',
 };
+
+export const USER_ROLES = process.env.USER_ROLES
+  ? process.env.USER_ROLES.split(', ')
+  : ['ADMIN', 'SUPER_ADMIN', 'USER'];
