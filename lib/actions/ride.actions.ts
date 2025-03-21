@@ -155,6 +155,7 @@ export async function getUserRideById(userRideId: string) {
   const data = await prisma.user_ride.findFirst({
     where: { user_ride_id: userRideId },
     include: {
+      user: { select: { firstName: true, lastName: true } },
       ride: true,
     },
   });

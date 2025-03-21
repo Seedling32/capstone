@@ -62,7 +62,10 @@ const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
         <div>
           <Card>
             <CardContent className="p-4">
-              <h2 className="text-xl pb-4">Ride Actions</h2>
+              <h2 className="text-xl pb-4">
+                Ride Actions for{' '}
+                {`${userRide.user.firstName} ${userRide.user.lastName}`}
+              </h2>
               <p className="pb-4">
                 If you can&apos;t make it to a ride, please use the select menu
                 below to change your status to &apos;Canceled&apos; at least

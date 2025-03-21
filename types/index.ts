@@ -11,7 +11,10 @@ export type Ride = z.infer<typeof createRideSchema> & {
   createdAt: Date;
   updatedAt: Date;
 };
-
+export type UserName = {
+  firstName: string;
+  lastName: string;
+};
 export type userRide = z.infer<typeof insertRideSchema>;
 export type rideItem = z.infer<typeof rideItemSchema>;
 export type getMyRide = {
@@ -19,4 +22,5 @@ export type getMyRide = {
 };
 export type getUserRide = z.infer<typeof allUserRidesSchema> & {
   ride: Ride;
+  user: UserName;
 };
