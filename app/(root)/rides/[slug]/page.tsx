@@ -22,7 +22,10 @@ const RideDetailsPage = async (props: {
   // See if there's a session for dynamic content
   const session = await auth();
   const userRide = await prisma.user_ride.findFirst({
-    where: { ride_id: ride.ride_id },
+    where: {
+      ride_id: ride.ride_id,
+      user_id: session?.user?.id,
+    },
   });
 
   // Parse path from string to array of objects for dynamic map

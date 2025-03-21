@@ -47,7 +47,7 @@ export const rideItemSchema = z.object({
   shortDescription: z.string().min(1, 'Ride name is required.'),
   slug: z.string().min(1, 'Ride slug is required.'),
   date: z.coerce.date(),
-  staticMapUrl: z.string().min(1, 'Image is required.'),
+  staticMapUrl: z.string().optional().nullable(),
   distance: z.number(),
 });
 
