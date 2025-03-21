@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { requireAdmin } from '@/lib/auth-guard';
-import { getAllUsers } from '@/lib/actions/user.actions';
+import { deleteUser, getAllUsers } from '@/lib/actions/user.actions';
 import {
   Table,
   TableBody,
@@ -66,11 +66,11 @@ const AdminAllUsers = async (props: {
                       : 'User'}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                <TableCell className="flex gap-2">
                   <Button asChild variant="outline" size="sm">
-                    <Link href={`admin/users/${user.userId}`}>Edit</Link>
+                    <Link href={`/admin/users/${user.userId}`}>Edit</Link>
                   </Button>
-                  {/* <DeleteDialog id={user.userId} action={deleteUser} /> */}
+                  <DeleteDialog id={user.userId} action={deleteUser} />
                 </TableCell>
               </TableRow>
             ))}
