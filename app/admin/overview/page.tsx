@@ -28,9 +28,6 @@ export const metadata: Metadata = {
 
 const AdminOverviewPage = async () => {
   await requireAdmin();
-  const session = await auth();
-
-  if (session?.user?.role !== 'ADMIN') throw new Error('User not authorized.');
 
   const summary = await getRideSummary();
 

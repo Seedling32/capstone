@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/select';
 import { USER_ROLES } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
+import { updateUser } from '@/lib/actions/user.actions';
 
 const UpdateUserForm = ({
   user,
@@ -39,8 +40,24 @@ const UpdateUserForm = ({
     defaultValues: user,
   });
 
-  const onSubmit = () => {
-    return;
+  const onSubmit = async (values: z.infer<typeof updateUserSchema>) => {
+    try {
+      const response = await updateUser({
+        ...values,
+        userId: user.userId,
+      });
+
+      if (!response.success) {
+        return toast.error(`${response.message}`);
+      }
+
+      toast.success(`${response.message}`);
+
+      form.reset();
+      router.push('/admin/users');
+    } catch (error) {
+      toast.error(`${(error as Error).message}`);
+    }
   };
 
   return (

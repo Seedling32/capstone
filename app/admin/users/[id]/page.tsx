@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getUserById } from '@/lib/actions/user.actions';
 import UpdateUserForm from './update-user-form';
 import { auth } from '@/auth';
+import { requireAdmin } from '@/lib/auth-guard';
 
 export const metadata: Metadata = {
   title: 'Update User',
@@ -13,9 +14,10 @@ const AdminUserUpdatePage = async (props: {
     id: string;
   }>;
 }) => {
+  await requireAdmin();
   const { id } = await props.params;
   const session = await auth();
-  const isSuperAdmin = session?.user.role === 'ADMIN';
+  const isSuperAdmin = session?.user.role === 'SUPER_ADMIN';
 
   const user = await getUserById(id);
 
