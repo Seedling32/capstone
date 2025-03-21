@@ -10,6 +10,7 @@ export type Ride = z.infer<typeof createRideSchema> & {
   ride_id: string;
   createdAt: Date;
   updatedAt: Date;
+  path: string;
 };
 export type UserName = {
   firstName: string;
@@ -23,4 +24,11 @@ export type getMyRide = {
 export type getUserRide = z.infer<typeof allUserRidesSchema> & {
   ride: Ride;
   user: UserName;
+};
+
+export type DynamicMapProps = {
+  path: { lat: number; lng: number }[];
+  savedRoutes?: { id: number; path: { lat: number; lng: number }[] }[];
+  onMapClick?: (event: google.maps.MapMouseEvent) => void;
+  zoom?: number;
 };

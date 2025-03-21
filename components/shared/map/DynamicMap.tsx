@@ -1,6 +1,7 @@
 'use client';
 
 import { GoogleMap, Polyline } from '@react-google-maps/api';
+import { DynamicMapProps } from '@/types';
 
 const mapContainerStyle = {
   width: '100%',
@@ -9,13 +10,6 @@ const mapContainerStyle = {
 
 const defaultCenter = { lat: 35.5951, lng: -82.5515 }; // Asheville, NC
 const defaultZoom = 12;
-
-type DynamicMapProps = {
-  path: { lat: number; lng: number }[];
-  savedRoutes?: { id: number; path: { lat: number; lng: number }[] }[];
-  onMapClick?: (event: google.maps.MapMouseEvent) => void;
-  zoom?: number;
-};
 
 const DynamicMap = ({
   path,

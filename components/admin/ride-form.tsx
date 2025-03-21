@@ -50,12 +50,19 @@ const RideForm = ({
   type CreateRideSchema = z.infer<typeof createRideSchema>;
   type UpdateRideSchema = z.infer<typeof updateRideSchema>;
 
+  const processRide =
+    ride && type === 'Update'
+      ? {
+          ...ride,
+          date: ride.date ? new Date(ride.date) : new Date(),
+        }
+      : createRideFormDefaultValues;
+
   const form = useForm<CreateRideSchema | UpdateRideSchema>({
     resolver: zodResolver(
       type === 'Update' ? updateRideSchema : createRideSchema
     ),
-    defaultValues:
-      ride && type === 'Update' ? ride : createRideFormDefaultValues,
+    defaultValues: processRide,
   });
 
   const [path, setPath] = useState<{ lat: number; lng: number }[]>([]);
@@ -102,6 +109,37 @@ const RideForm = ({
   useEffect(() => {
     form.setValue('distance', parseFloat(distance.toFixed(2)));
   }, [distance, form]);
+
+  // Parses out the existing path if one exists to draw on the map
+  useEffect(() => {
+    if (type === 'Update' && ride && ride.path) {
+      try {
+        // Parse path from string to array of objects for dynamic map
+        const parsedPath =
+          typeof ride.path === 'string' ? JSON.parse(ride.path) : ride.path;
+
+        setPath(parsedPath);
+
+        // Calculate distance from decoded path
+        if (parsedPath.length > 1 && googleRef.current) {
+          let totalDistance = 0;
+          for (let i = 1; i < parsedPath.length; i++) {
+            const prev = parsedPath[i - 1];
+            const curr = parsedPath[i];
+            const segment =
+              googleRef.current.maps.geometry.spherical.computeDistanceBetween(
+                new google.maps.LatLng(prev.lat, prev.lng),
+                new google.maps.LatLng(curr.lat, curr.lng)
+              );
+            totalDistance += segment * 0.000621371; // to miles
+          }
+          setDistance(totalDistance);
+        }
+      } catch (error) {
+        console.error('Error decoding path:', error);
+      }
+    }
+  }, [type, ride]);
 
   // Encodes the path array and sets the value for staticMapUrl
   const handlePreSubmit = () => {
