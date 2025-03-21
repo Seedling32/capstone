@@ -36,6 +36,11 @@ export function formatError(error: any) {
   }
 }
 
+// Shorten UUID
+export function formatId(id: string) {
+  return `..${id.substring(id.length - 6)}`;
+}
+
 // Format date and times
 export const formatDateTime = (dateString: Date) => {
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
@@ -80,15 +85,6 @@ export const limitedDescription = (description: string) => {
   if (description.split(' ').length < 20) return description;
   return description.split(' ').slice(0, 19).join(' ') + ' ...';
 };
-
-// // Slugify any string
-// export const slugify = (text: string) => {
-//   return text
-//     .toLowerCase()
-//     .trim()
-//     .replace(/[^a-z0-9\s-]/g, '')
-//     .replace(/\s+/g, '-');
-// };
 
 // Form the pagination links
 export function formUrlQuery({

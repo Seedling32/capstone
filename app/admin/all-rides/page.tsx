@@ -68,7 +68,7 @@ const AdminAllRides = async (props: {
                   className="flex items-center"
                 >
                   <Image
-                    src={ride.staticMapUrl}
+                    src={ride.staticMapUrl!}
                     alt={ride.shortDescription}
                     width={50}
                     height={50}

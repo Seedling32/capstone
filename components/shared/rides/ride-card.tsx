@@ -11,7 +11,7 @@ const RideCard = ({ ride }: { ride: Ride }) => {
       <CardHeader className="p-0 items-center">
         <Link href={`/rides/${ride.slug}`}>
           <Image
-            src={ride.staticMapUrl}
+            src={ride.staticMapUrl!}
             alt={ride.shortDescription}
             height={300}
             width={300}

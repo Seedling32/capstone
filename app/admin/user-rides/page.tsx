@@ -53,7 +53,7 @@ const AdminUserRides = async (props: {
               <TableRow key={ride.user_ride_id}>
                 <TableCell className="flex">
                   <Image
-                    src={ride.ride.staticMapUrl}
+                    src={ride.ride.staticMapUrl!}
                     alt={ride.ride.shortDescription}
                     width={50}
                     height={50}
