@@ -53,11 +53,20 @@ export async function getAllRides({
   };
 }
 
-// Get individual ride details based on the slug.
+// Get single ride by the slug.
 export async function getRideBySlug(slug: string) {
   return await prisma.ride.findFirst({
     where: { slug: slug },
   });
+}
+
+// Get single ride by ID
+export async function getRideById(rideId: string) {
+  const data = await prisma.ride.findFirst({
+    where: { ride_id: rideId },
+  });
+
+  return convertToPlainObject(data);
 }
 
 export async function addRideToUserRide(data: rideItem) {

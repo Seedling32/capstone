@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { GoogleMap, Polyline } from '@react-google-maps/api';
 import { Input } from '@/components/ui/input';
 import DatePicker from 'react-datepicker';
@@ -16,7 +17,7 @@ import {
   createRideFormDefaultValues,
   GOOGLE_MAPS_API_KEY,
 } from '@/lib/constants';
-import { createNewRide } from '@/lib/actions/ride.actions';
+import { createNewRide, updateRide } from '@/lib/actions/ride.actions';
 import {
   Form,
   FormControl,
@@ -44,6 +45,8 @@ const RideForm = ({
   ride?: Ride;
   rideId?: string;
 }) => {
+  const router = useRouter();
+
   type CreateRideSchema = z.infer<typeof createRideSchema>;
   type UpdateRideSchema = z.infer<typeof updateRideSchema>;
 
@@ -129,21 +132,50 @@ const RideForm = ({
       ...values,
     };
 
-    const response = await createNewRide({
-      data: updatedValues,
-      path,
-    });
-    console.log(response.success);
+    // On Create
+    if (type === 'Create') {
+      const response = await createNewRide({
+        data: updatedValues,
+        path,
+      });
+      console.log(response.success);
 
-    if (!response.success) {
-      toast.error(`${response.message}`);
-      setSubmitted(false);
-    } else {
-      toast.success(`${response.message}`);
-      form.reset();
-      setPath([]);
-      setDistance(0);
-      setSubmitted(false);
+      if (!response.success) {
+        toast.error(`${response.message}`);
+        setSubmitted(false);
+      } else {
+        toast.success(`${response.message}`);
+        form.reset();
+        setPath([]);
+        setDistance(0);
+        setSubmitted(false);
+      }
+    }
+
+    // On Update
+    if (type === 'Update') {
+      if (!rideId) {
+        router.push('/admin/all-rides');
+        return;
+      }
+      const response = await updateRide({
+        data: {
+          ...updatedValues,
+          ride_id: rideId,
+        },
+      });
+      console.log(response.success);
+
+      if (!response.success) {
+        toast.error(`${response.message}`);
+        setSubmitted(false);
+      } else {
+        toast.success(`${response.message}`);
+        form.reset();
+        setPath([]);
+        setDistance(0);
+        setSubmitted(false);
+      }
     }
   };
 

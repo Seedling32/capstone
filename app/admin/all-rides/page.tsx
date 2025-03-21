@@ -46,7 +46,7 @@ const AdminAllRides = async (props: {
       <div className="flex-between">
         <h1 className="h2-bold">All Rides</h1>
         <Button asChild variant="default">
-          <Link href="/admin/create-ride">Create New Ride</Link>
+          <Link href="/admin/all-rides/create-ride">Create New Ride</Link>
         </Button>
       </div>
       <Table>
@@ -81,7 +81,7 @@ const AdminAllRides = async (props: {
               <TableCell>{ride.user_ride.length}</TableCell>
               <TableCell className="flex gap-2">
                 <Button variant="outline" size="sm">
-                  <Link href={`/admin/all-rides/${ride.slug}`}>Edit</Link>
+                  <Link href={`/admin/all-rides/${ride.ride_id}`}>Edit</Link>
                 </Button>
                 <DeleteDialog id={ride.ride_id} action={deleteRide} />
               </TableCell>
