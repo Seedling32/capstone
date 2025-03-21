@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { GoogleMap, Polyline } from '@react-google-maps/api';
 import { Input } from '@/components/ui/input';
 import { format } from 'date-fns';
+import DatePicker from 'react-datepicker';
 import slugify from 'slugify';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -42,15 +43,11 @@ const CreateRide = () => {
 
   const [path, setPath] = useState<{ lat: number; lng: number }[]>([]);
   const [submitted, setSubmitted] = useState(false);
-  // const [savedRoutes] = useState<Route[]>([]);
-  // const [loading, setLoading] = useState<boolean>(false);
   const [distance, setDistance] = useState<number>(0);
-  // const [shortDescription, setShortDescription] = useState('');
-  // const [longDescription, setLongDescription] = useState('');
-  // const [staticMapUrl, setStaticMapUrl] = useState('');
-  // const [date, setDate] = useState<string>('');
   const googleRef = useRef<typeof google | null>(null); // Store Google API
 
+  // Populate the path array and calculate distance.
+  // If the event happens on a lat/lng point it adds it to the array
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     if (event.latLng) {
       const newPath = [
@@ -78,6 +75,7 @@ const CreateRide = () => {
     }
   };
 
+  // These two use effects check window status for google maps and update distance continually
   useEffect(() => {
     if (typeof window !== 'undefined' && window.google) {
       googleRef.current = window.google;
@@ -88,6 +86,7 @@ const CreateRide = () => {
     form.setValue('distance', parseFloat(distance.toFixed(2)));
   }, [distance, form]);
 
+  // Encodes the path array and sets the value for staticMapUrl
   const handlePreSubmit = () => {
     if (path.length === 0) {
       toast.error('Please draw a route first.');
@@ -105,24 +104,15 @@ const CreateRide = () => {
     })();
   };
 
+  //
   const onSubmit: SubmitHandler<z.infer<typeof createRideSchema>> = async (
     values
   ) => {
     if (submitted) return;
     setSubmitted(true);
 
-    if (path.length === 0) console.log('wtf');
-    const encodePolyline = (path: { lat: number; lng: number }[]) => {
-      return polyline.encode(path.map((point) => [point.lat, point.lng]));
-    };
-    const encodedPath = encodePolyline(path);
-
-    const staticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?size=600x300&path=enc:${encodedPath}&key=${GOOGLE_MAPS_API_KEY}`;
-
     const updatedValues = {
       ...values,
-      distance: parseFloat(distance.toFixed(2)),
-      staticMapUrl,
     };
 
     const response = await createNewRide({
@@ -144,16 +134,15 @@ const CreateRide = () => {
   };
 
   return (
-    <div style={{ position: 'relative', textAlign: 'center', padding: '20px' }}>
-      <h2>Bike Route Planner</h2>
-      <Form {...form}>
-        <form
-          method="POST"
-          onSubmit={form.handleSubmit(onSubmit, (errors) => {
-            console.log(errors);
-          })}
-          className="flex flex-col items-center gap-4"
-        >
+    <Form {...form}>
+      <form
+        method="POST"
+        onSubmit={form.handleSubmit(onSubmit, (errors) => {
+          console.log(errors);
+        })}
+        className="space-y-8"
+      >
+        <div className="flex flex-col gap-5 md:flex-row">
           <FormField
             control={form.control}
             name="shortDescription"
@@ -165,7 +154,7 @@ const CreateRide = () => {
                 'shortDescription'
               >;
             }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel>Ride Title</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter ride name..." {...field} />
@@ -189,7 +178,11 @@ const CreateRide = () => {
                 <FormLabel>Slug</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input placeholder="Enter slug" {...field} />
+                    <Input
+                      disabled
+                      placeholder="Click the button to generate the slug..."
+                      {...field}
+                    />
                     <Button
                       type="button"
                       className="bg-gray-800 hover:bg-gray-600 text-white px-4 py-1 mt-2"
@@ -210,79 +203,84 @@ const CreateRide = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="longDescription"
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<
-                z.infer<typeof createRideSchema>,
-                'longDescription'
-              >;
-            }) => (
-              <FormItem className="w-full">
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Enter product description"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="date"
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<
-                z.infer<typeof createRideSchema>,
-                'date'
-              >;
-            }) => (
-              <FormItem>
-                <FormLabel>Date</FormLabel>
-                <FormControl>
-                  <Input
-                    type="datetime-local"
-                    value={
-                      field.value instanceof Date
-                        ? format(field.value, "yyyy-MM-dd'T'HH:mm")
-                        : ''
-                    }
-                    onChange={(e) => field.onChange(new Date(e.target.value))}
-                    onBlur={field.onBlur}
-                    name={field.name}
-                    ref={field.ref}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="distance"
-            render={() => (
-              <FormItem>
-                <FormLabel>Distance</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={`${parseFloat(distance.toFixed(2))}`}
-                    value={`${parseFloat(distance.toFixed(2))} Miles`}
-                    disabled
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        </div>
+        <FormField
+          control={form.control}
+          name="longDescription"
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<
+              z.infer<typeof createRideSchema>,
+              'longDescription'
+            >;
+          }) => (
+            <FormItem className="w-full">
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Enter the ride description..."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="date"
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<
+              z.infer<typeof createRideSchema>,
+              'date'
+            >;
+          }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date</FormLabel>
+              <FormControl>
+                <DatePicker
+                  selected={field.value instanceof Date ? field.value : null}
+                  onChange={(date) => field.onChange(date)}
+                  onBlur={field.onBlur}
+                  name={field.name}
+                  ref={field.ref}
+                  showIcon
+                  toggleCalendarOnIconClick
+                  showTimeSelect
+                  popperPlacement="bottom-start"
+                  timeFormat="HH:mm aa"
+                  timeIntervals={15}
+                  dateFormat="yyyy-MM-dd h:mm aa"
+                  className="border rounded-md"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="distance"
+          render={() => (
+            <FormItem>
+              <FormLabel>Distance</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={`${parseFloat(distance.toFixed(2))}`}
+                  value={`${parseFloat(distance.toFixed(2))} Miles`}
+                  disabled
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <div style={{ position: 'relative', width: '100%', height: '600px' }}>
+        <div className="flex flex-col space-y-4">
+          <div>
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
               center={defaultCenter}
@@ -298,13 +296,13 @@ const CreateRide = () => {
           <Button
             type="submit"
             onClick={handlePreSubmit}
-            className="p-3 bg-orange-600 text-white rounded disabled:bg-gray-500"
+            className="bg-orange-600 min-w-[350px] self-center"
           >
             {form.formState.isSubmitting ? 'Saving Route...' : 'Save Route'}
           </Button>
-        </form>
-      </Form>
-    </div>
+        </div>
+      </form>
+    </Form>
   );
 };
 

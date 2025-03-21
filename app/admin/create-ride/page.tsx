@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import CreateRide from '@/components/shared/map/CreateRide';
+import CreateRide from './CreateRide';
 import { requireAdmin } from '@/lib/auth-guard';
 
 export const metadata: Metadata = {
@@ -10,14 +10,14 @@ const AdminCreateRide = async () => {
   await requireAdmin();
 
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h1 className="h2-bold">Create Ride</h1>
+    <>
+      <h2 className="h2-bold">Create Ride</h2>
       <p>
-        Fill out the Ride Title, Description, and Date. Then click around the
-        map to create your ride.
+        Fill out the Ride Title, Description, and Date. Don&apos;t forget to
+        generate the slug!
       </p>
       <CreateRide />
-    </div>
+    </>
   );
 };
 

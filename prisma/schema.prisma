@@ -22,7 +22,7 @@ model ride {
   distance         Float
   shortDescription String
   longDescription  String
-  staticMapUrl     String
+  staticMapUrl     String?
   createdAt        DateTime    @default(now()) @db.Timestamp(6)
   updatedAt        DateTime    @updatedAt @db.Timestamp(6)
   user_ride        user_ride[]

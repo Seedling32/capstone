@@ -14,6 +14,11 @@ export const createRideSchema = z.object({
   distance: z.number(),
 });
 
+// Schema for updating a ride
+export const updateRideSchema = createRideSchema.extend({
+  ride_id: z.string().min(1, 'Ride ID required.'),
+});
+
 // Schema for signing users in
 export const signInFormSchema = z.object({
   email: z.string().email('Invalid email address'),

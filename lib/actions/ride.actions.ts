@@ -268,6 +268,7 @@ export async function deleteRide(rideId: string) {
   }
 }
 
+// Create a ride. Path is passed in separately to stringify before saving.
 export async function createNewRide({
   data,
   path,
