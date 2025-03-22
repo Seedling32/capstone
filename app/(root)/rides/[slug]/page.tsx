@@ -48,6 +48,10 @@ const RideDetailsPage = async (props: {
         <h1 className="text-3xl font-bold mb-4">{ride.shortDescription}</h1>
         <p className="text-lg mb-4">{ride.longDescription}</p>
         <ul className="mb-6">
+          <li>
+            Difficulty:{' '}
+            {ride.difficulty.charAt(0).toUpperCase() + ride.difficulty.slice(1)}
+          </li>
           <li>Distance: {ride.distance} Miles</li>
           <li>Date: {formatDateTime(ride.date).dateOnly}</li>
           <li>Time: {formatDateTime(ride.date).timeOnly}</li>

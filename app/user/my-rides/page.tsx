@@ -47,6 +47,7 @@ const MyRidesPage = async (props: {
                   <TableHead>Ride</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Distance</TableHead>
+                  <TableHead>Difficulty</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
@@ -60,7 +61,7 @@ const MyRidesPage = async (props: {
                         className="flex items-center"
                       >
                         <Image
-                          src={ride.ride.staticMapUrl}
+                          src={ride.ride.staticMapUrl!}
                           alt={ride.ride.shortDescription}
                           width={50}
                           height={50}
@@ -74,6 +75,10 @@ const MyRidesPage = async (props: {
                       {formatDateTime(ride.ride.date).dateTime}
                     </TableCell>
                     <TableCell>{ride.ride.distance} Miles</TableCell>
+                    <TableCell>
+                      {ride.ride.difficulty.charAt(0).toUpperCase() +
+                        ride.ride.difficulty.slice(1)}
+                    </TableCell>
                     <TableCell>
                       <Badge
                         variant={

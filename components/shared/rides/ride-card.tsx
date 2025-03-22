@@ -27,6 +27,10 @@ const RideCard = ({ ride }: { ride: Ride }) => {
         </Link>
         <div className="mt-2">
           <hr />
+          <p className="font-bold">
+            Difficulty:{' '}
+            {ride.difficulty.charAt(0).toUpperCase() + ride.difficulty.slice(1)}
+          </p>
           <p className="font-bold">Length: {ride.distance} Miles</p>
           <p className="font-bold">
             Date: {formatDateTime(ride.date).dateTime}

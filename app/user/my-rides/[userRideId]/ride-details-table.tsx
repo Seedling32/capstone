@@ -19,7 +19,14 @@ const currentDate = new Date();
 
 const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
   const { status, user_ride_id } = userRide;
-  const { staticMapUrl, shortDescription, date, distance } = userRide.ride;
+  const {
+    staticMapUrl,
+    shortDescription,
+    longDescription,
+    date,
+    distance,
+    difficulty,
+  } = userRide.ride;
 
   return (
     <>
@@ -46,6 +53,7 @@ const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
                     <TableHead>Date</TableHead>
                     <TableHead>Time</TableHead>
                     <TableHead>Distance</TableHead>
+                    <TableHead>Difficulty</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -53,13 +61,22 @@ const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
                     <TableCell>{formatDateTime(date).dateOnly}</TableCell>
                     <TableCell>{formatDateTime(date).timeOnly}</TableCell>
                     <TableCell>{`${distance} Miles`}</TableCell>
+                    <TableCell>
+                      {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
             </CardContent>
           </Card>
         </div>
-        <div>
+        <div className="flex flex-col gap-4">
+          <Card>
+            <CardContent className="p-4 flex flex-col items-center">
+              <h2 className="text-xl pb-4">Route Description</h2>
+              <p>{longDescription}</p>
+            </CardContent>
+          </Card>
           <Card>
             <CardContent className="p-4">
               <h2 className="text-xl pb-4">
