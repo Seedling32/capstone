@@ -36,8 +36,13 @@ export const createRideFormDefaultValues = {
   staticMapUrl: '',
   distance: 0.0,
   slug: '',
+  difficulty: '',
 };
 
 export const USER_ROLES = process.env.USER_ROLES
   ? process.env.USER_ROLES.split(', ')
   : ['ADMIN', 'SUPER_ADMIN', 'USER'];
+
+export const RIDE_DIFFICULTIES = process.env.RIDE_DIFFICULTIES
+  ? process.env.RIDE_DIFFICULTIES.split(', ')
+  : ['easy', 'challenging', 'difficult', 'hard', 'expert'];

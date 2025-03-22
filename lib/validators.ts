@@ -12,6 +12,7 @@ export const createRideSchema = z.object({
   staticMapUrl: z.string().optional().nullable(),
   slug: z.string().min(3, 'Slug must be at least 3 characters.'),
   distance: z.number(),
+  difficulty: z.string().min(1, 'Difficulty is required.'),
 });
 
 // Schema for updating a ride

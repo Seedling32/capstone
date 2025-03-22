@@ -23,6 +23,7 @@ model ride {
   shortDescription String
   longDescription  String
   staticMapUrl     String?
+  difficulty       String      @default("easy")
   createdAt        DateTime    @default(now()) @db.Timestamp(6)
   updatedAt        DateTime    @updatedAt @db.Timestamp(6)
   user_ride        user_ride[]

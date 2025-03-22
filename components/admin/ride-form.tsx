@@ -16,6 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   createRideFormDefaultValues,
   GOOGLE_MAPS_API_KEY,
+  RIDE_DIFFICULTIES,
 } from '@/lib/constants';
 import { createNewRide, updateRide } from '@/lib/actions/ride.actions';
 import {
@@ -28,6 +29,13 @@ import {
 } from '@/components/ui/form';
 import polyline from '@mapbox/polyline';
 import { Ride } from '@/types';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 
 const mapContainerStyle = {
   width: '100%',
@@ -50,6 +58,7 @@ const RideForm = ({
   type CreateRideSchema = z.infer<typeof createRideSchema>;
   type UpdateRideSchema = z.infer<typeof updateRideSchema>;
 
+  // If updating, use existing ride values as the default values for the form, else, use default values
   const processRide =
     ride && type === 'Update'
       ? {
@@ -311,57 +320,93 @@ const RideForm = ({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="date"
-          render={({
-            field,
-          }: {
-            field: ControllerRenderProps<
-              z.infer<typeof createRideSchema>,
-              'date'
-            >;
-          }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Date</FormLabel>
-              <FormControl>
-                <DatePicker
-                  selected={field.value instanceof Date ? field.value : null}
-                  onChange={(date) => field.onChange(date)}
-                  onBlur={field.onBlur}
-                  name={field.name}
-                  ref={field.ref}
-                  showIcon
-                  toggleCalendarOnIconClick
-                  showTimeSelect
-                  popperPlacement="bottom-start"
-                  timeFormat="HH:mm aa"
-                  timeIntervals={15}
-                  dateFormat="yyyy-MM-dd h:mm aa"
-                  className="border rounded-md"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="distance"
-          render={() => (
-            <FormItem>
-              <FormLabel>Distance</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={`${parseFloat(distance.toFixed(2))}`}
-                  value={`${parseFloat(distance.toFixed(2))} Miles`}
-                  disabled
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex flex-col md:flex-row md:justify-between">
+          <FormField
+            control={form.control}
+            name="date"
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<
+                z.infer<typeof createRideSchema>,
+                'date'
+              >;
+            }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Date</FormLabel>
+                <FormControl>
+                  <DatePicker
+                    selected={field.value instanceof Date ? field.value : null}
+                    onChange={(date) => field.onChange(date)}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    ref={field.ref}
+                    showIcon
+                    toggleCalendarOnIconClick
+                    showTimeSelect
+                    popperPlacement="bottom-start"
+                    timeFormat="HH:mm aa"
+                    timeIntervals={15}
+                    dateFormat="yyyy-MM-dd h:mm aa"
+                    className="border rounded-md"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="difficulty"
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<
+                z.infer<typeof createRideSchema>,
+                'difficulty'
+              >;
+            }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Difficulty</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value.toString()}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select difficulty" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {RIDE_DIFFICULTIES.map((option) => (
+                      <SelectItem key={option} value={option}>
+                        {option.charAt(0).toUpperCase() + option.slice(1)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="distance"
+            render={() => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Distance</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={`${parseFloat(distance.toFixed(2))}`}
+                    value={`${parseFloat(distance.toFixed(2))} Miles`}
+                    disabled
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className="flex flex-col space-y-4">
           <div>
