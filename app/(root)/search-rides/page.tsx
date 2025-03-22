@@ -1,6 +1,5 @@
 import Pagination from '@/components/shared/pagination';
 import RideCard from '@/components/shared/rides/ride-card';
-import RideList from '@/components/shared/rides/ride-list';
 import { getAllRides } from '@/lib/actions/ride.actions';
 import { Metadata } from 'next';
 
@@ -29,7 +28,7 @@ const SearchRidesPage = async (props: {
     page: Number(page),
     query: q,
     difficulty,
-    distance: Number(distance),
+    distance,
     sort,
   });
 
@@ -45,7 +44,6 @@ const SearchRidesPage = async (props: {
         </div>
         <Pagination page={Number(page) || 1} totalPages={rides.totalPages} />
       </div>
-      {/* <RideList data={rides.data} title="Explore our rides" /> */}
     </div>
   );
 };

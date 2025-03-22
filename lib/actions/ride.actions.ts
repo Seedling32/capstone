@@ -40,9 +40,10 @@ export async function getAllRides({
   limit?: number;
   page: number;
   difficulty?: string;
-  distance?: number;
+  distance?: string;
   sort?: string;
 }) {
+  // Query filter
   const queryFilter: Prisma.rideWhereInput =
     query && query !== 'all'
       ? {
@@ -53,9 +54,26 @@ export async function getAllRides({
         }
       : {};
 
+  // Difficulty filter
+  const difficultyFilter =
+    difficulty && difficulty !== 'all' ? { difficulty } : {};
+
+  // Distance filter
+  const distanceFilter: Prisma.rideWhereInput =
+    distance && distance !== 'all'
+      ? {
+          distance: {
+            gte: Number(distance.split('-')[0]),
+            lte: Number(distance.split('-')[1]),
+          },
+        }
+      : {};
+
   const data = await prisma.ride.findMany({
     where: {
       ...queryFilter,
+      ...difficultyFilter,
+      ...distanceFilter,
     },
     orderBy: { date: 'desc' },
     skip: (page - 1) * limit,
