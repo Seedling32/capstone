@@ -26,7 +26,33 @@ export async function getLatestRides() {
   return convertToPlainObject(data);
 }
 
-// Get all rides
+// Get all rides for ride page
+export async function getAllRidesPage({
+  query,
+  limit = PAGE_SIZE,
+  page,
+  difficulty,
+}: {
+  query: string;
+  limit?: number;
+  page: number;
+  difficulty?: string;
+}) {
+  const data = await prisma.ride.findMany({
+    orderBy: { date: 'desc' },
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+
+  const dataCount = await prisma.ride.count();
+
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
+  };
+}
+
+// Get all rides for admin page
 export async function getAllRides({
   query,
   limit = PAGE_SIZE,
