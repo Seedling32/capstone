@@ -43,8 +43,20 @@ const AdminAllRides = async (props: {
 
   return (
     <div className="space-y-2">
-      <div className="flex-between">
-        <h1 className="h2-bold">All Rides</h1>
+      <div className="flex flex-col justify-between gap-5 sm:flex-row">
+        <div className="flex items-center gap-3">
+          <h1 className="h2-bold">All Rides</h1>
+          {searchText && (
+            <div>
+              Filtered by <i>&quot;{searchText}&quot;</i>{' '}
+              <Link href="/admin/all-rides">
+                <Button variant="outline" size="sm">
+                  Remove Filter
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
         <Button asChild variant="default">
           <Link href="/admin/all-rides/create-ride">Create New Ride</Link>
         </Button>

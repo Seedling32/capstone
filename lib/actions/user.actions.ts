@@ -14,6 +14,7 @@ import { formatError } from '../utils';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { PAGE_SIZE } from '../constants';
+import { Prisma } from '@prisma/client';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -173,11 +174,36 @@ export async function changeUserRideStatus(
 export async function getAllUsers({
   limit = PAGE_SIZE,
   page,
+  query,
 }: {
   limit?: number;
   page: number;
+  query: string;
 }) {
+  const queryFilter: Prisma.userWhereInput =
+    query && query !== 'all'
+      ? {
+          OR: [
+            {
+              firstName: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+            {
+              lastName: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+          ],
+        }
+      : {};
+
   const data = await prisma.user.findMany({
+    where: {
+      ...queryFilter,
+    },
     orderBy: { createdAt: 'desc' },
     take: limit,
     skip: (page - 1) * limit,

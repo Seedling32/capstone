@@ -13,6 +13,7 @@ import { rideItem } from '@/types';
 import { PAGE_SIZE } from '../constants';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { Prisma } from '@prisma/client';
 
 // Get rides to display on the ride page.
 export async function getLatestRides() {
@@ -64,7 +65,20 @@ export async function getAllRides({
   page: number;
   difficulty?: string;
 }) {
+  const queryFilter: Prisma.rideWhereInput =
+    query && query !== 'all'
+      ? {
+          shortDescription: {
+            contains: query,
+            mode: 'insensitive',
+          } as Prisma.StringFilter,
+        }
+      : {};
+
   const data = await prisma.ride.findMany({
+    where: {
+      ...queryFilter,
+    },
     orderBy: { date: 'desc' },
     skip: (page - 1) * limit,
     take: limit,
@@ -251,11 +265,38 @@ export async function getRideSummary() {
 export async function getAllUserRides({
   limit = PAGE_SIZE,
   page,
+  query,
 }: {
   limit?: number;
   page: number;
+  query: string;
 }) {
+  const queryFilter: Prisma.user_rideWhereInput =
+    query && query !== 'all'
+      ? {
+          user: {
+            OR: [
+              {
+                firstName: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
+              },
+              {
+                lastName: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
+              },
+            ],
+          },
+        }
+      : {};
+
   const data = await prisma.user_ride.findMany({
+    where: {
+      ...queryFilter,
+    },
     orderBy: { ride: { date: 'desc' } },
     take: limit,
     skip: (page - 1) * limit,
