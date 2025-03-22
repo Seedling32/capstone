@@ -411,3 +411,13 @@ export async function updateRide({
     };
   }
 }
+
+// Get all difficulties
+export async function getAllDifficulties() {
+  const data = await prisma.ride.groupBy({
+    by: ['difficulty'],
+    _count: true,
+  });
+
+  return data;
+}
