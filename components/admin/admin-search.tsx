@@ -7,11 +7,11 @@ import { Button } from '../ui/button';
 
 const AdminSearch = () => {
   const pathName = usePathname();
-  const formActionUrl = pathName.includes('/admin/all-rides')
-    ? '/admin/all-rides'
+  const formActionUrl = pathName.includes('/admin/user-rides')
+    ? '/admin/user-rides'
     : pathName.includes('/admin/users')
     ? '/admin/users'
-    : '/admin/user-rides';
+    : '/admin/all-rides';
 
   const searchParams = useSearchParams();
   const [queryValue, setQueryValue] = useState(searchParams.get('query') || '');
