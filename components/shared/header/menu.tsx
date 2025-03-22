@@ -14,7 +14,7 @@ const Menu = () => {
   return (
     <div className="flex justify-end gap-3">
       <nav className="hidden md:flex items-center w-full max-w-s gap-2 text-white">
-        <Link href="/rides" className="hover:text-green-500">
+        <Link href="/search-rides" className="hover:text-green-500">
           Rides
         </Link>
         <Link href="/about-us" className="hover:text-green-500">
@@ -34,7 +34,7 @@ const Menu = () => {
           </SheetTrigger>
           <SheetContent className="flex flex-col items-start">
             <SheetTitle>Menu</SheetTitle>
-            <Link href="/rides" className="hover:underline">
+            <Link href="/search-rides" className="hover:underline">
               Rides
             </Link>
             <Link href="/about-us" className="hover:underline">

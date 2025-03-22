@@ -14,7 +14,7 @@ const Search = async () => {
   const difficulties = await getAllDifficulties();
 
   return (
-    <form action="/rides" method="GET">
+    <form action="/search-rides" method="GET">
       <div className="flex w-full max-w-sm items-center space-x-2">
         <Select name="difficulty">
           <SelectTrigger className="w-[180px]">
