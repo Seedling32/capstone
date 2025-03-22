@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import RideForm from '@/components/admin/ride-form';
+import RideForm from './ride-form';
 import { requireAdmin } from '@/lib/auth-guard';
 
 export const metadata: Metadata = {

@@ -35,7 +35,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select';
+} from '@/components/ui/select';
 
 const mapContainerStyle = {
   width: '100%',
@@ -74,10 +74,58 @@ const RideForm = ({
     defaultValues: processRide,
   });
 
+  const googleRef = useRef<typeof google | null>(null); // Store Google API
+  const mapRef = useRef<google.maps.Map | null>(null);
+  const [pathInitialized, setPathInitialized] = useState(false);
   const [path, setPath] = useState<{ lat: number; lng: number }[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [distance, setDistance] = useState<number>(0);
-  const googleRef = useRef<typeof google | null>(null); // Store Google API
+
+  const handleMapLoad = (map: google.maps.Map) => {
+    mapRef.current = map;
+
+    if (typeof window !== 'undefined' && window.google) {
+      googleRef.current = window.google;
+
+      console.log('map load', true);
+    }
+
+    if (
+      !pathInitialized &&
+      type === 'Update' &&
+      ride &&
+      ride.path &&
+      googleRef.current?.maps?.geometry
+    ) {
+      console.log('decoding path...');
+      try {
+        // Parse path from string to array of objects for dynamic map
+        const parsedPath =
+          typeof ride.path === 'string' ? JSON.parse(ride.path) : ride.path;
+
+        setPath(parsedPath);
+        setPathInitialized(true);
+
+        // Calculate distance from decoded path
+        if (parsedPath.length > 1) {
+          let totalDistance = 0;
+          for (let i = 1; i < parsedPath.length; i++) {
+            const prev = parsedPath[i - 1];
+            const curr = parsedPath[i];
+            const segment =
+              googleRef.current.maps.geometry.spherical.computeDistanceBetween(
+                new google.maps.LatLng(prev.lat, prev.lng),
+                new google.maps.LatLng(curr.lat, curr.lng)
+              );
+            totalDistance += segment * 0.000621371; // to miles
+          }
+          setDistance(totalDistance);
+        }
+      } catch (error) {
+        console.error('Error decoding path:', error);
+      }
+    }
+  };
 
   // Populate the path array and calculate distance.
   // If the event happens on a lat/lng point it adds it to the array
@@ -110,45 +158,10 @@ const RideForm = ({
 
   // These two use effects check window status for google maps and update distance continually
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.google) {
-      googleRef.current = window.google;
-    }
-  }, []);
-
-  useEffect(() => {
     form.setValue('distance', parseFloat(distance.toFixed(2)));
   }, [distance, form]);
 
   // Parses out the existing path if one exists to draw on the map
-  useEffect(() => {
-    if (type === 'Update' && ride && ride.path) {
-      try {
-        // Parse path from string to array of objects for dynamic map
-        const parsedPath =
-          typeof ride.path === 'string' ? JSON.parse(ride.path) : ride.path;
-
-        setPath(parsedPath);
-
-        // Calculate distance from decoded path
-        if (parsedPath.length > 1 && googleRef.current) {
-          let totalDistance = 0;
-          for (let i = 1; i < parsedPath.length; i++) {
-            const prev = parsedPath[i - 1];
-            const curr = parsedPath[i];
-            const segment =
-              googleRef.current.maps.geometry.spherical.computeDistanceBetween(
-                new google.maps.LatLng(prev.lat, prev.lng),
-                new google.maps.LatLng(curr.lat, curr.lng)
-              );
-            totalDistance += segment * 0.000621371; // to miles
-          }
-          setDistance(totalDistance);
-        }
-      } catch (error) {
-        console.error('Error decoding path:', error);
-      }
-    }
-  }, [type, ride]);
 
   // Encodes the path array and sets the value for staticMapUrl
   const handlePreSubmit = () => {
@@ -415,6 +428,7 @@ const RideForm = ({
               center={defaultCenter}
               zoom={12}
               onClick={handleMapClick}
+              onLoad={handleMapLoad}
             >
               <Polyline
                 path={path}
