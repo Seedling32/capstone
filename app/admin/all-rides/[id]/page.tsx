@@ -1,4 +1,4 @@
-import RideForm from '../create-ride/ride-form';
+import RideForm from '../ride-form';
 import { getRideById } from '@/lib/actions/ride.actions';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';

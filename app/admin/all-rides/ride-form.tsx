@@ -86,8 +86,6 @@ const RideForm = ({
 
     if (typeof window !== 'undefined' && window.google) {
       googleRef.current = window.google;
-
-      console.log('map load', true);
     }
 
     if (
@@ -97,7 +95,6 @@ const RideForm = ({
       ride.path &&
       googleRef.current?.maps?.geometry
     ) {
-      console.log('decoding path...');
       try {
         // Parse path from string to array of objects for dynamic map
         const parsedPath =
