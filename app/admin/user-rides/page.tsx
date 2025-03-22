@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { requireAdmin } from '@/lib/auth-guard';
 import { getAllUserRides } from '@/lib/actions/ride.actions';
-import { auth } from '@/auth';
 import Image from 'next/image';
 import {
   Table,
@@ -26,9 +25,6 @@ const AdminUserRides = async (props: {
 }) => {
   await requireAdmin();
   const { page = 1 } = await props.searchParams;
-
-  const session = await auth();
-  if (session?.user?.role !== 'ADMIN') throw new Error('User not authorized');
 
   const userRides = await getAllUserRides({
     page: Number(page),
