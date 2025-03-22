@@ -2,12 +2,7 @@ import Pagination from '@/components/shared/pagination';
 import RideCard from '@/components/shared/rides/ride-card';
 import { Button } from '@/components/ui/button';
 import { getAllRides, getAllDifficulties } from '@/lib/actions/ride.actions';
-import { Metadata } from 'next';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-  title: 'Rides',
-};
 
 const distances = [
   {
@@ -33,6 +28,43 @@ const distances = [
 ];
 
 const sortOrders = ['newest', 'shortest', 'longest'];
+
+export async function generateMetadata(props: {
+  searchParams: Promise<{
+    q: string;
+    difficulty: string;
+    distance: string;
+    sort: string;
+  }>;
+}) {
+  const {
+    q = 'all',
+    difficulty = 'all',
+    distance = 'all',
+    sort = 'all',
+  } = await props.searchParams;
+
+  const isQuerySet = q && q !== 'all' && q.trim()! == '';
+  const isDifficultySet =
+    difficulty && difficulty !== 'all' && difficulty.trim()! == '';
+  const isDistanceSet =
+    distance && distance !== 'all' && distance.trim()! == '';
+  const isSortSet = sort && sort !== 'all' && sort.trim()! == '';
+
+  if (isQuerySet || isDifficultySet || isDistanceSet || isSortSet) {
+    return {
+      title: `
+    Search ${isQuerySet ? q : ''}
+    ${isDifficultySet ? `: Difficulty ${difficulty}` : ''}
+    ${isDistanceSet ? `: Distance ${distance}` : ''}
+    ${isSortSet ? `: Sort by ${sort}` : ''}`,
+    };
+  } else {
+    return {
+      title: 'Rides',
+    };
+  }
+}
 
 const SearchRidesPage = async (props: {
   searchParams: Promise<{

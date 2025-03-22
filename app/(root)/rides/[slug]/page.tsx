@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { prisma } from '@/db/prisma';
 import { Card, CardContent } from '@/components/ui/card';
+import GoogleMapsWrapper from '@/components/shared/map/google-maps-wrapper';
 
 const RideDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -96,7 +97,9 @@ const RideDetailsPage = async (props: {
         </div>
       </div>
       <div className="col-span-2">
-        <DynamicMap path={parsedPath} zoom={zoomLevel} />
+        <GoogleMapsWrapper>
+          <DynamicMap path={parsedPath} zoom={zoomLevel} />
+        </GoogleMapsWrapper>
       </div>
     </div>
   );

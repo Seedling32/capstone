@@ -33,7 +33,7 @@ const CategoryDrawer = async () => {
                 asChild
               >
                 <DrawerClose asChild>
-                  <Link href={`/rides?difficulty=${x.difficulty}`}>
+                  <Link href={`/search-rides?difficulty=${x.difficulty}`}>
                     {x.difficulty} ({x._count})
                   </Link>
                 </DrawerClose>
