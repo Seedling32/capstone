@@ -24,6 +24,29 @@ const SearchRidesPage = async (props: {
     sort = 'newest',
   } = await props.searchParams;
 
+  // Construct the filter Url
+  const getFilterUrl = ({
+    pg,
+    dif,
+    dis,
+    s,
+  }: {
+    pg?: string;
+    dif?: string;
+    dis?: string;
+    s?: string;
+  }) => {
+    const params = { q, difficulty, distance, sort, page };
+
+    if (pg) params.page = pg;
+    if (dif) params.difficulty = dif;
+    if (dis) params.distance = dis;
+    if (s) params.sort = s;
+    if (pg) params.page = pg;
+
+    return `/search-rides?${new URLSearchParams(params).toString()}`;
+  };
+
   const rides = await getAllRides({
     page: Number(page),
     query: q,
