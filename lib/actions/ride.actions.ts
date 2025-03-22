@@ -75,7 +75,12 @@ export async function getAllRides({
       ...difficultyFilter,
       ...distanceFilter,
     },
-    orderBy: { date: 'desc' },
+    orderBy:
+      sort === 'shortest'
+        ? { distance: 'asc' }
+        : sort === 'longest'
+        ? { distance: 'desc' }
+        : { createdAt: 'desc' },
     skip: (page - 1) * limit,
     take: limit,
     include: { user_ride: { where: { status: 'SIGNED_UP' } } },
