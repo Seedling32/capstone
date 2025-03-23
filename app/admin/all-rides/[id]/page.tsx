@@ -1,7 +1,9 @@
+import InstructionsDrawer from '@/components/admin/instructions-drawer';
 import RideForm from '../ride-form';
 import { getRideById } from '@/lib/actions/ride.actions';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import GoogleMapsWrapper from '@/components/shared/map/google-maps-wrapper';
 
 export const metadata: Metadata = {
   title: 'Update Ride',
@@ -21,7 +23,14 @@ const AdminUpdateRidePage = async (props: {
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       <h1 className="h2-bold">Update Ride</h1>
-      <RideForm type="Update" ride={ride} rideId={ride.ride_id} />
+      <p>
+        Edit the form to update a ride. Click the button for more specific
+        instructions.
+      </p>
+      <InstructionsDrawer />
+      <GoogleMapsWrapper>
+        <RideForm type="Update" ride={ride} rideId={ride.ride_id} />
+      </GoogleMapsWrapper>
     </div>
   );
 };
