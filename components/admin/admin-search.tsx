@@ -24,11 +24,16 @@ const AdminSearch = () => {
     <form action={formActionUrl} method="GET">
       <Input
         type="search"
-        placeholder="Search..."
+        placeholder={
+          pathName.includes('/admin/user-rides') ||
+          pathName.includes('/admin/users')
+            ? 'Search users...'
+            : 'Search rides...'
+        }
         name="query"
         value={queryValue}
         onChange={(e) => setQueryValue(e.target.value)}
-        className="hidden md:w-[100px] lg:w-[300px]"
+        className="hidden md:block w-[100px] lg:w-[300px]"
       />
       <Button className="sr-only" type="submit">
         Search
