@@ -7,7 +7,7 @@ import { formatDateTime } from '@/lib/utils';
 
 const RideCard = ({ ride }: { ride: Ride }) => {
   return (
-    <Card className="flex flex-col w-full max-w-[300px] shadow-xl">
+    <Card className="flex flex-col w-full max-w-[300px] shadow-xl overflow-hidden">
       <CardHeader className="p-0 items-center">
         <Link href={`/rides/${ride.slug}`}>
           <Image

@@ -13,14 +13,14 @@ import UserButton from './user-button';
 const Menu = () => {
   return (
     <div className="flex justify-end gap-3">
-      <nav className="hidden md:flex items-center w-full max-w-s gap-2 text-white">
-        <Link href="/search-rides" className="hover:text-green-500">
+      <nav className="hidden md:flex items-center w-full max-w-s gap-2">
+        <Link href="/search-rides" className="hover:text-primary">
           Rides
         </Link>
-        <Link href="/about-us" className="hover:text-green-500">
+        <Link href="/about-us" className="hover:text-primary">
           About
         </Link>
-        <Link href="/contact" className="hover:text-green-500">
+        <Link href="/contact" className="hover:text-primary">
           Contact
         </Link>
         <UserButton />
@@ -28,9 +28,9 @@ const Menu = () => {
       </nav>
       <nav className="md:hidden">
         <Sheet>
-          <SheetTrigger className="align-middle text-green-500 flex">
+          <SheetTrigger className="align-middle text-primary flex">
             Menu
-            <EllipsisVertical className="text-green-500" />
+            <EllipsisVertical className="text-primary" />
           </SheetTrigger>
           <SheetContent className="flex flex-col items-start">
             <SheetTitle>Menu</SheetTitle>

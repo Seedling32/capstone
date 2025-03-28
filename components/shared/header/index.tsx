@@ -6,7 +6,7 @@ import Search from './search';
 
 const Header = () => {
   return (
-    <header className="bg-slate-800 w-full">
+    <header className="bg-muted w-full">
       <div className="wrapper flex-between py-5">
         <div className="flex-start">
           <Link href="/" className="flex-start ml-4">
@@ -18,7 +18,7 @@ const Header = () => {
               priority={true}
               className="rounded-lg"
             />
-            <span className="hidden lg:block font-bold text-2xl ml-3 text-white">
+            <span className="hidden lg:block font-bold text-2xl ml-3">
               {APP_NAME}
             </span>
           </Link>

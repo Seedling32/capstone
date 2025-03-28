@@ -13,13 +13,17 @@ const RideList = ({
   const limitedData = limit ? data.slice(0, limit) : data;
 
   return (
-    <div className="flex flex-col items-center m-10">
-      <h2 className="h2-bold mb-4">{title}</h2>
+    <div className="relative flex flex-col items-center w-full">
+      <h2 className="h2-bold uppercase mb-4">{title}</h2>
       {data.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {limitedData.map((ride: Ride) => (
-            <RideCard key={ride.ride_id} ride={ride} />
-          ))}
+        <div className="overflow-hidden w-full">
+          <div className="flex gap-10 animate-scroll-left whitespace-nowrap">
+            {limitedData.map((ride: Ride) => (
+              <div key={ride.ride_id}>
+                <RideCard ride={ride} />
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <div>

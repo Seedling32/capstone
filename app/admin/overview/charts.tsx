@@ -12,7 +12,7 @@ const Charts = ({
       <LineChart data={riderData}>
         <XAxis dataKey="month" fontSize={12} />
         <YAxis fontSize={12} />
-        <Line dataKey={'activeUsers'} stroke="#22c55f" />
+        <Line dataKey={'activeUsers'} stroke="#facc14" />
       </LineChart>
     </ResponsiveContainer>
   );

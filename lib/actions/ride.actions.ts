@@ -20,7 +20,7 @@ export async function getLatestRides() {
   const data = await prisma.ride.findMany({
     take: 8,
     orderBy: {
-      createdAt: 'desc',
+      date: 'desc',
     },
   });
 
