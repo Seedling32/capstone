@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   Drawer,
@@ -7,17 +9,32 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 const InstructionsDrawer = () => {
+  const pathName = usePathname();
+  const redirectLink = pathName.includes('/admin/all-rides/create-ride')
+    ? '/admin/all-rides/create-ride'
+    : pathName;
+
   return (
-    <Drawer direction="left">
+    <Drawer direction="left" aria-describedby="form-instructions">
       <DrawerTrigger asChild>
-        <Button variant="link" className="border">
+        <Button
+          variant="link"
+          className="border"
+          onClick={(e) => {
+            e.currentTarget.blur();
+          }}
+        >
           Instructions
         </Button>
       </DrawerTrigger>
       <DrawerContent className="h-full max-w-sm">
+        <p id="form-instructions" className="sr-only">
+          Follow the instructions listed below to complete the form correctly.
+        </p>
         <DrawerHeader>
           <DrawerTitle>Fill out the form</DrawerTitle>
           <div className="space-y-1 mt-4">
@@ -49,7 +66,7 @@ const InstructionsDrawer = () => {
               </li>
             </ul>
             <DrawerClose asChild>
-              <Link href="/admin/all-rides/create-ride">
+              <Link href={redirectLink}>
                 <Button className="mt-4">Close</Button>
               </Link>
             </DrawerClose>

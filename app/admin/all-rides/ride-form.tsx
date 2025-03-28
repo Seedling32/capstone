@@ -278,10 +278,11 @@ const RideForm = ({
               >;
             }) => (
               <FormItem className="w-full">
-                <FormLabel>Slug</FormLabel>
+                <FormLabel htmlFor="slug">Slug</FormLabel>
                 <FormControl>
-                  <div className="relative">
+                  <div>
                     <Input
+                      id="slug"
                       disabled
                       placeholder="Click the button to generate the slug..."
                       {...field}
@@ -379,6 +380,7 @@ const RideForm = ({
               <FormItem className="flex flex-col">
                 <FormLabel>Difficulty</FormLabel>
                 <Select
+                  name="select"
                   onValueChange={field.onChange}
                   value={field.value.toString()}
                 >

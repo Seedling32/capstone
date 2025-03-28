@@ -15,6 +15,7 @@ import {
 import { formatDateTime } from '@/lib/utils';
 import Pagination from '@/components/shared/pagination';
 import DeleteDialog from '@/components/shared/delete-dialog';
+import { PlusIcon } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'All Rides',
@@ -58,7 +59,10 @@ const AdminAllRides = async (props: {
           )}
         </div>
         <Button asChild variant="default">
-          <Link href="/admin/all-rides/create-ride">Create New Ride</Link>
+          <Link href="/admin/all-rides/create-ride">
+            <PlusIcon />
+            Create New Ride
+          </Link>
         </Button>
       </div>
       <Table>

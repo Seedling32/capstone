@@ -80,7 +80,7 @@ export async function getAllRides({
         ? { distance: 'asc' }
         : sort === 'longest'
         ? { distance: 'desc' }
-        : { createdAt: 'desc' },
+        : { date: 'desc' },
     skip: (page - 1) * limit,
     take: limit,
     include: { user_ride: { where: { status: 'SIGNED_UP' } } },
