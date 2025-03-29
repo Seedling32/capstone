@@ -8,8 +8,8 @@ const HomePage = async () => {
   return (
     <div>
       <div className="flex flex-col justify-center items-center mb-4 bg-hero-small min-h-96 text-white text-center md:bg-hero-large relative">
-        <div className="absolute top-10 flex justify-center items-center mx-auto md:top-[180px] md:left-6">
-          <h1 className="text-left text-4xl font-bold text-shadow uppercase max-w-[300px]">
+        <div className="absolute top-10 flex justify-center items-center mx-auto md:top-[180px] md:left-20">
+          <h1 className="text-left text-5xl font-bold text-shadow uppercase max-w-[400px] bg-gradient-to-l from-slate-400 to-transparent rounded-lg">
             Connect and ride, together
           </h1>
         </div>

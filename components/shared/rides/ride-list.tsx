@@ -16,13 +16,22 @@ const RideList = ({
     <div className="relative flex flex-col items-center w-full">
       <h2 className="h2-bold uppercase mb-4">{title}</h2>
       {data.length > 0 ? (
-        <div className="overflow-hidden w-full">
-          <div className="flex gap-10 animate-scroll-left whitespace-nowrap">
-            {limitedData.map((ride: Ride) => (
-              <div key={ride.ride_id}>
-                <RideCard ride={ride} />
-              </div>
-            ))}
+        <div className="overflow-hidden w-full group">
+          <div className="flex w-fit animate-scroll-left whitespace-nowrap group-hover:[animation-play-state:paused]">
+            <div className="flex">
+              {limitedData.map((ride: Ride, index) => (
+                <div key={`${ride.ride_id}-${index}`} className="mx-4">
+                  <RideCard ride={ride} />
+                </div>
+              ))}
+            </div>
+            <div className="flex">
+              {limitedData.map((ride: Ride, index) => (
+                <div key={`${ride.ride_id}-${index}`} className="mx-4">
+                  <RideCard ride={ride} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ) : (
