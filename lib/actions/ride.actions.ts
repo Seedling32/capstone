@@ -351,9 +351,11 @@ export async function deleteRide(rideId: string) {
 export async function createNewRide({
   data,
   path,
+  elevation,
 }: {
   data: z.infer<typeof createRideSchema>;
   path: { lat: number; lng: number }[];
+  elevation?: { distance: number; elevation: number }[];
 }) {
   try {
     const newRide = createRideSchema.parse(data);
@@ -367,6 +369,7 @@ export async function createNewRide({
         staticMapUrl: newRide.staticMapUrl,
         distance: newRide.distance,
         path: JSON.stringify(path),
+        elevation: JSON.stringify(elevation),
       },
     });
 

@@ -78,6 +78,10 @@ const RideForm = ({
   const mapRef = useRef<google.maps.Map | null>(null);
   const [pathInitialized, setPathInitialized] = useState(false);
   const [path, setPath] = useState<{ lat: number; lng: number }[]>([]);
+  const [elevation, setElevation] = useState<
+    { distance: number; elevation: number }[]
+  >([]);
+  const distanceRef = useRef(0);
   const [submitted, setSubmitted] = useState(false);
   const [distance, setDistance] = useState<number>(0);
 
@@ -147,9 +151,35 @@ const RideForm = ({
         setDistance(
           (prevDistance) => prevDistance + segmentDistance * 0.000621371
         ); // Convert to miles
+        distanceRef.current += segmentDistance * 0.000621371;
       }
 
       setPath(newPath);
+
+      // Fetch elevation for this point
+      const elevator = new googleRef.current!.maps.ElevationService();
+
+      const lat = event.latLng.lat();
+      const lng = event.latLng.lng();
+
+      elevator.getElevationForLocations(
+        { locations: [new google.maps.LatLng(lat, lng)] },
+        (results, status) => {
+          if (status === 'OK' && results && results?.length > 0) {
+            const elevationInFeet = results[0].elevation * 3.28084;
+
+            setElevation((prev) => [
+              ...prev,
+              {
+                distance: Number(distanceRef.current.toFixed(2)),
+                elevation: elevationInFeet,
+              },
+            ]);
+          } else {
+            console.error('Elevation lookup failed: ', status);
+          }
+        }
+      );
     }
   };
 
@@ -194,6 +224,7 @@ const RideForm = ({
       const response = await createNewRide({
         data: updatedValues,
         path,
+        elevation,
       });
       console.log(response.success);
 
@@ -203,7 +234,9 @@ const RideForm = ({
       } else {
         toast.success(`${response.message}`);
         form.reset();
+        distanceRef.current = 0;
         setPath([]);
+        setElevation([]);
         setDistance(0);
         setSubmitted(false);
       }

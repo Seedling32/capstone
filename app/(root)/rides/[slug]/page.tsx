@@ -1,5 +1,6 @@
 import { getRideBySlug } from '@/lib/actions/ride.actions';
 import DynamicMap from '@/components/shared/map/DynamicMap';
+import ElevationChart from './elevation-chart';
 import SignUpForRide from '@/components/shared/rides/signup-for-ride';
 import { auth } from '@/auth';
 import { formatDateTime } from '@/lib/utils';
@@ -43,11 +44,16 @@ const RideDetailsPage = async (props: {
     where: { ride_id: ride.ride_id },
     include: { user: { select: { firstName: true, lastName: true } } },
   });
-  console.log(otherRiders);
 
   // Parse path from string to array of objects for dynamic map
   const parsedPath =
     typeof ride.path === 'string' ? JSON.parse(ride.path) : ride.path;
+
+  // Parse elevation for chart
+  const parsedElevation =
+    typeof ride.elevation === 'string'
+      ? JSON.parse(ride.elevation)
+      : ride.elevation;
 
   // Calculate dynamic zoom level based on path length
   const calculateZoom = (path: { lat: number; lng: number }[]) => {
@@ -121,23 +127,31 @@ const RideDetailsPage = async (props: {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {otherRiders.map((user) => (
-                <TableRow key={user.user_id}>
-                  <TableCell>{`${user.user.firstName} ${user.user.lastName}`}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={
-                        user.status === 'SIGNED_UP' ||
-                        user.status === 'COMPLETED'
-                          ? 'secondary'
-                          : 'destructive'
-                      }
-                    >
-                      {user.status === 'SIGNED_UP' ? 'Signed Up' : 'Canceled'}
-                    </Badge>
+              {otherRiders.length > 0 ? (
+                otherRiders.map((user) => (
+                  <TableRow key={user.user_id}>
+                    <TableCell>{`${user.user.firstName} ${user.user.lastName}`}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={
+                          user.status === 'SIGNED_UP' ||
+                          user.status === 'COMPLETED'
+                            ? 'secondary'
+                            : 'destructive'
+                        }
+                      >
+                        {user.status === 'SIGNED_UP' ? 'Signed Up' : 'Canceled'}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={2}>
+                    No other riders are signed up for this ride.
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </div>
@@ -146,6 +160,7 @@ const RideDetailsPage = async (props: {
         <GoogleMapsWrapper>
           <DynamicMap path={parsedPath} zoom={zoomLevel} />
         </GoogleMapsWrapper>
+        <ElevationChart data={{ rideData: parsedElevation }} />
       </div>
     </div>
   );
