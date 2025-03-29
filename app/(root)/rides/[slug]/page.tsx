@@ -8,6 +8,15 @@ import Link from 'next/link';
 import { prisma } from '@/db/prisma';
 import { Card, CardContent } from '@/components/ui/card';
 import GoogleMapsWrapper from '@/components/shared/map/google-maps-wrapper';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 
 const RideDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -29,6 +38,13 @@ const RideDetailsPage = async (props: {
     },
   });
 
+  // Get other users who are going on this ride
+  const otherRiders = await prisma.user_ride.findMany({
+    where: { ride_id: ride.ride_id },
+    include: { user: { select: { firstName: true, lastName: true } } },
+  });
+  console.log(otherRiders);
+
   // Parse path from string to array of objects for dynamic map
   const parsedPath =
     typeof ride.path === 'string' ? JSON.parse(ride.path) : ride.path;
@@ -45,7 +61,7 @@ const RideDetailsPage = async (props: {
 
   return (
     <div className="px-4 sm:px-0 justify-self-center container mt-8 grid md:grid-cols-3 gap-8">
-      <div className="">
+      <div>
         <h1 className="text-3xl font-bold mb-4">{ride.shortDescription}</h1>
         <p className="text-lg mb-4">{ride.longDescription}</p>
         <ul className="mb-6">
@@ -94,6 +110,36 @@ const RideDetailsPage = async (props: {
               </CardContent>
             </Card>
           )}
+        </div>
+        <div className="mt-6">
+          <h2 className="h2-bold capitalize">Who else is going</h2>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {otherRiders.map((user) => (
+                <TableRow key={user.user_id}>
+                  <TableCell>{`${user.user.firstName} ${user.user.lastName}`}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        user.status === 'SIGNED_UP' ||
+                        user.status === 'COMPLETED'
+                          ? 'secondary'
+                          : 'destructive'
+                      }
+                    >
+                      {user.status === 'SIGNED_UP' ? 'Signed Up' : 'Canceled'}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </div>
       <div className="col-span-2">
