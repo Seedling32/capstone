@@ -7,7 +7,7 @@ import { formatDateTime } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { prisma } from '@/db/prisma';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import GoogleMapsWrapper from '@/components/shared/map/google-maps-wrapper';
 import {
   Table,
@@ -156,11 +156,24 @@ const RideDetailsPage = async (props: {
           </Table>
         </div>
       </div>
-      <div className="col-span-2">
-        <GoogleMapsWrapper>
-          <DynamicMap path={parsedPath} zoom={zoomLevel} />
-        </GoogleMapsWrapper>
-        <ElevationChart data={{ rideData: parsedElevation }} />
+      <div className="col-span-2 flex flex-col gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-center capitalize">
+              Map & elevation profile
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-6">
+            <GoogleMapsWrapper>
+              <DynamicMap path={parsedPath} zoom={zoomLevel} />
+            </GoogleMapsWrapper>
+            {parsedElevation ? (
+              <ElevationChart data={{ rideData: parsedElevation }} />
+            ) : (
+              <div>This ride has no elevation data</div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
