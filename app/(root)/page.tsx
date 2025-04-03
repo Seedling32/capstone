@@ -1,4 +1,5 @@
 import RideList from '@/components/shared/rides/ride-list';
+import WeatherWidget from '@/components/weather-widget';
 import { getLatestRides } from '@/lib/actions/ride.actions';
 import Image from 'next/image';
 
@@ -15,7 +16,8 @@ const HomePage = async () => {
         </div>
       </div>
       <RideList title="Upcoming Rides" data={rideData} />
-      <div className=" wrapper mt-14">
+      <div className=" wrapper">
+        <WeatherWidget />
         <Image
           src="/images/portrait-home.png"
           width={387}

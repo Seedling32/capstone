@@ -15,6 +15,7 @@ export default {
       backgroundImage: {
         'hero-large': "url('/images/hero-large.webp')",
         'hero-small': "url('/images/hero-small.webp')",
+        mountains: "url('/images/mountains.jpg')",
       },
       colors: {
         background: 'hsl(var(--background))',
