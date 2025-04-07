@@ -7,16 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { getAllDifficulties } from '@/lib/actions/ride.actions';
+import { getAllStates } from '@/lib/actions/location.actions';
 import { SearchIcon } from 'lucide-react';
 
 const Search = async () => {
-  const difficulties = await getAllDifficulties();
+  const states = await getAllStates();
 
   return (
     <form action="/search-rides" method="GET">
       <div className="flex w-full max-w-sm items-center space-x-2">
-        <Select name="difficulty">
+        <Select name="state">
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="All" />
           </SelectTrigger>
@@ -24,14 +24,9 @@ const Search = async () => {
             <SelectItem key="All" value="all">
               All
             </SelectItem>
-            {difficulties.map((x) => (
-              <SelectItem
-                key={
-                  x.difficulty.charAt(0).toUpperCase() + x.difficulty.slice(1)
-                }
-                value={x.difficulty}
-              >
-                {x.difficulty.charAt(0).toUpperCase() + x.difficulty.slice(1)}
+            {states.map((x) => (
+              <SelectItem key={x.abbreviation} value={x.abbreviation}>
+                {x.abbreviation}
               </SelectItem>
             ))}
           </SelectContent>

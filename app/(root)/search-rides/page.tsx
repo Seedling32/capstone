@@ -73,6 +73,7 @@ const SearchRidesPage = async (props: {
     difficulty?: string;
     distance?: string;
     sort?: string;
+    state?: string;
   }>;
 }) => {
   const {
@@ -81,6 +82,7 @@ const SearchRidesPage = async (props: {
     difficulty = 'all',
     distance = 'all',
     sort = 'newest',
+    state = 'all',
   } = await props.searchParams;
 
   // Construct the filter Url
@@ -88,20 +90,23 @@ const SearchRidesPage = async (props: {
     pg,
     dif,
     dis,
-    s,
+    sor,
+    sta,
   }: {
     pg?: string;
     dif?: string;
     dis?: string;
-    s?: string;
+    sor?: string;
+    sta?: string;
   }) => {
-    const params = { q, difficulty, distance, sort, page };
+    const params = { q, difficulty, distance, sort, page, state };
 
     if (pg) params.page = pg;
     if (dif) params.difficulty = dif;
     if (dis) params.distance = dis;
-    if (s) params.sort = s;
+    if (sor) params.sort = sor;
     if (pg) params.page = pg;
+    if (sta) params.state = sta;
 
     return `/search-rides?${new URLSearchParams(params).toString()}`;
   };
@@ -112,6 +117,7 @@ const SearchRidesPage = async (props: {
     difficulty,
     distance,
     sort,
+    state,
   });
 
   const difficulties = await getAllDifficulties();
@@ -198,7 +204,7 @@ const SearchRidesPage = async (props: {
               <Link
                 key={s}
                 className={`mx-2 ${sort == s && 'font-bold'}`}
-                href={getFilterUrl({ s })}
+                href={getFilterUrl({ sor: s })}
               >
                 {s}
               </Link>
@@ -211,9 +217,7 @@ const SearchRidesPage = async (props: {
             <RideCard key={ride.ride_id} ride={ride} />
           ))}
         </div>
-        {rides.totalPages > 1 && (
-          <Pagination page={Number(page) || 1} totalPages={rides?.totalPages} />
-        )}
+        <Pagination page={Number(page) || 1} totalPages={rides.totalPages} />
       </div>
     </div>
   );

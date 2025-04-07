@@ -2,6 +2,13 @@
 
 import { prisma } from '@/db/prisma';
 
+// Get all states
+export async function getAllStates() {
+  const states = await prisma.state.findMany();
+
+  return states;
+}
+
 // Find an existing location or create a new location if not exists
 export async function findOrCreateLocation({
   stateId,

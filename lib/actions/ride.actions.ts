@@ -40,6 +40,7 @@ export async function getAllRides({
   difficulty,
   distance,
   sort,
+  state,
 }: {
   query: string;
   limit?: number;
@@ -47,6 +48,7 @@ export async function getAllRides({
   difficulty?: string;
   distance?: string;
   sort?: string;
+  state?: string;
 }) {
   // Query filter
   const queryFilter: Prisma.rideWhereInput =
@@ -74,11 +76,24 @@ export async function getAllRides({
         }
       : {};
 
+  // State filter
+  const stateFilter: Prisma.rideWhereInput =
+    state && state !== 'all'
+      ? {
+          location: {
+            state: {
+              abbreviation: state,
+            },
+          },
+        }
+      : {};
+
   const data = await prisma.ride.findMany({
     where: {
       ...queryFilter,
       ...difficultyFilter,
       ...distanceFilter,
+      ...stateFilter,
     },
     orderBy:
       sort === 'shortest'
@@ -90,7 +105,9 @@ export async function getAllRides({
     take: limit,
     include: {
       user_ride: { where: { status: 'SIGNED_UP' } },
-      location: true,
+      location: {
+        include: { state: true },
+      },
     },
   });
 
