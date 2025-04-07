@@ -259,6 +259,7 @@ export async function updateUser(user: z.infer<typeof updateUserSchema>) {
         firstName: user.firstName,
         lastName: user.lastName,
         role: user.role,
+        locationId: user.locationId,
       },
     });
 

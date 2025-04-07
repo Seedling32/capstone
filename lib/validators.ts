@@ -71,6 +71,9 @@ export const updateProfileSchema = z.object({
   firstName: z.string().min(3, 'First name must be at least 3 characters.'),
   lastName: z.string().min(3, 'Last name must be at least 3 characters.'),
   email: z.string().min(3, 'Email must be at least 3 characters.'),
+  locationId: z.number().nullable(),
+  city: z.string().min(1, 'City is required').optional(),
+  stateId: z.string().min(1, 'State is required.').optional(),
 });
 
 // Schema to update the user as admin

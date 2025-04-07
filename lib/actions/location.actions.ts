@@ -9,6 +9,21 @@ export async function getAllStates() {
   return states;
 }
 
+// Get location by ID
+export async function getLocationById(userLocationId: number) {
+  const location = await prisma.location.findFirst({
+    where: { id: userLocationId },
+    include: {
+      state: { select: { abbreviation: true } },
+    },
+  });
+
+  return {
+    city: location?.city,
+    stateId: location?.stateId,
+  };
+}
+
 // Find an existing location or create a new location if not exists
 export async function findOrCreateLocation({
   stateId,
