@@ -101,10 +101,12 @@ const AdminUserRides = async (props: {
             ))}
           </TableBody>
         </Table>
-        <Pagination
-          page={Number(page) || 1}
-          totalPages={userRides?.totalPages}
-        />
+        {userRides.totalPages > 1 && (
+          <Pagination
+            page={Number(page) || 1}
+            totalPages={userRides?.totalPages}
+          />
+        )}
       </div>
     </div>
   );

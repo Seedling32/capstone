@@ -72,7 +72,7 @@ const AdminOverviewPage = async () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {summary.riderData[0].activeUsers}
+              {summary.riderData?.[0]?.activeUsers ?? 0}
             </div>
           </CardContent>
         </Card>
