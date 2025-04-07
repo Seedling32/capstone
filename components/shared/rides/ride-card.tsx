@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Ride } from '@/types';
+import { RideWithLocation } from '@/types';
 import { limitedDescription } from '@/lib/utils';
 import { formatDateTime } from '@/lib/utils';
 
-const RideCard = ({ ride }: { ride: Ride }) => {
+const RideCard = ({ ride }: { ride: RideWithLocation }) => {
+  console.log(ride);
+
   return (
     <Card className="flex flex-col w-full max-w-[300px] shadow-xl overflow-hidden">
       <CardHeader className="p-0 items-center">
@@ -35,6 +37,7 @@ const RideCard = ({ ride }: { ride: Ride }) => {
           <p className="font-bold">
             Date: {formatDateTime(ride.date).dateTime}
           </p>
+          <p className="font-bold">Location: {ride.location.city}</p>
         </div>
       </CardContent>
     </Card>

@@ -71,6 +71,7 @@ const AdminAllRides = async (props: {
             <TableHead>Ride</TableHead>
             <TableHead>Date</TableHead>
             <TableHead>Distance</TableHead>
+            <TableHead>Location</TableHead>
             <TableHead>Difficulty</TableHead>
             <TableHead>Attendees</TableHead>
             <TableHead className="w-[100px]">Actions</TableHead>
@@ -95,6 +96,7 @@ const AdminAllRides = async (props: {
               </TableCell>
               <TableCell>{formatDateTime(ride.date).dateTime}</TableCell>
               <TableCell>{ride.distance} Miles</TableCell>
+              <TableCell>{ride.location.city}</TableCell>
               <TableCell>
                 {ride.difficulty.charAt(0).toUpperCase() +
                   ride.difficulty.slice(1)}

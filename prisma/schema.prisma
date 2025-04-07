@@ -19,15 +19,17 @@ model ride {
   slug             String
   date             DateTime    @db.Timestamp(6)
   path             String // JSON string to store coordinates
-  elevation        String? // JSON string to store elevations
+  elevation        String // JSON string to store elevations
   distance         Float
   shortDescription String
   longDescription  String
   staticMapUrl     String?
-  difficulty       String      @default("easy")
+  difficulty       String
+  locationId       Int
   createdAt        DateTime    @default(now()) @db.Timestamp(6)
   updatedAt        DateTime    @updatedAt @db.Timestamp(6)
   user_ride        user_ride[]
+  location         location    @relation(fields: [locationId], references: [id])
 }
 
 model user {
@@ -45,6 +47,7 @@ model user {
   account       Account[]
   session       Session[]
   user_ride     user_ride[]
+  location      location?   @relation(fields: [locationId], references: [id])
 }
 
 model Account {
@@ -95,4 +98,20 @@ model user_ride {
   date_completed DateTime?
   user           user      @relation(fields: [user_id], references: [userId], onDelete: Cascade)
   ride           ride      @relation(fields: [ride_id], references: [ride_id], onDelete: Cascade)
+}
+
+model state {
+  id           Int        @id @default(autoincrement())
+  name         String
+  abbreviation String     @unique
+  locations    location[]
+}
+
+model location {
+  id      Int    @id @default(autoincrement())
+  city    String
+  stateId Int
+  state   state  @relation(fields: [stateId], references: [id])
+  user    user[]
+  ride    ride[]
 }

@@ -78,6 +78,7 @@ const RideDetailsPage = async (props: {
           <li>Distance: {ride.distance} Miles</li>
           <li>Date: {formatDateTime(ride.date).dateOnly}</li>
           <li>Time: {formatDateTime(ride.date).timeOnly}</li>
+          <li>Location: {ride.location.city}</li>
         </ul>
         <div>
           {session && !userRide ? (

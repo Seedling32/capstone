@@ -37,6 +37,9 @@ export const createRideFormDefaultValues = {
   distance: 0.0,
   slug: '',
   difficulty: '',
+  city: '',
+  stateId: '0',
+  locationId: 0,
 };
 
 export const USER_ROLES = process.env.USER_ROLES

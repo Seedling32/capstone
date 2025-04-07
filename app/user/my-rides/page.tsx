@@ -47,6 +47,7 @@ const MyRidesPage = async (props: {
                   <TableHead>Ride</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Distance</TableHead>
+                  <TableHead>Location</TableHead>
                   <TableHead>Difficulty</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Actions</TableHead>
@@ -75,6 +76,7 @@ const MyRidesPage = async (props: {
                       {formatDateTime(ride.ride.date).dateTime}
                     </TableCell>
                     <TableCell>{ride.ride.distance} Miles</TableCell>
+                    <TableCell>{ride.ride.location.city}</TableCell>
                     <TableCell>
                       {ride.ride.difficulty.charAt(0).toUpperCase() +
                         ride.ride.difficulty.slice(1)}

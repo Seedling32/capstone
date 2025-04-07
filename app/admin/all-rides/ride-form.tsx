@@ -28,7 +28,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import polyline from '@mapbox/polyline';
-import { Ride } from '@/types';
+import { Ride, State } from '@/types';
 import {
   Select,
   SelectContent,
@@ -36,6 +36,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { findOrCreateLocation } from '@/lib/actions/location.actions';
 
 const mapContainerStyle = {
   width: '100%',
@@ -76,6 +77,7 @@ const RideForm = ({
 
   const googleRef = useRef<typeof google | null>(null); // Store Google API
   const mapRef = useRef<google.maps.Map | null>(null);
+  const [states, setStates] = useState<State[]>([]);
   const [pathInitialized, setPathInitialized] = useState(false);
   const [path, setPath] = useState<{ lat: number; lng: number }[]>([]);
   const [elevation, setElevation] = useState<
@@ -84,6 +86,21 @@ const RideForm = ({
   const distanceRef = useRef(0);
   const [submitted, setSubmitted] = useState(false);
   const [distance, setDistance] = useState<number>(0);
+
+  // Fetch all states for populated drop down in form
+  useEffect(() => {
+    async function fetchStates() {
+      try {
+        const response = await fetch('/api/states');
+        const data = await response.json();
+        setStates(data);
+      } catch (error) {
+        console.error('Error fetching states:', error);
+      }
+    }
+
+    fetchStates();
+  }, []);
 
   const handleMapLoad = (map: google.maps.Map) => {
     mapRef.current = map;
@@ -215,9 +232,19 @@ const RideForm = ({
     if (submitted) return;
     setSubmitted(true);
 
+    const locationResponse = await findOrCreateLocation({
+      stateId: Number(values.stateId) || 0,
+      city: values.city || '',
+    });
+
+    const locationId = locationResponse.id;
+
     const updatedValues = {
       ...values,
+      locationId: locationId,
     };
+
+    delete updatedValues.city;
 
     // On Create
     if (type === 'Create') {
@@ -447,6 +474,64 @@ const RideForm = ({
                     disabled
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="flex gap-4">
+          <FormField
+            control={form.control}
+            name="city"
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<
+                z.infer<typeof createRideSchema>,
+                'city'
+              >;
+            }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter city..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="stateId"
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<
+                z.infer<typeof createRideSchema>,
+                'stateId'
+              >;
+            }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>State</FormLabel>
+                <Select
+                  name="select"
+                  onValueChange={field.onChange}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger className="min-w-[75px]">
+                      <SelectValue placeholder="Select state" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {states.map((state) => (
+                      <SelectItem key={state.id} value={String(state.id)}>
+                        {state.abbreviation}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

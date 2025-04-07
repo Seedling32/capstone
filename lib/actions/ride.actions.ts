@@ -22,6 +22,11 @@ export async function getLatestRides() {
     orderBy: {
       date: 'desc',
     },
+    include: {
+      location: {
+        select: { city: true },
+      },
+    },
   });
 
   return convertToPlainObject(data);
@@ -83,7 +88,10 @@ export async function getAllRides({
         : { date: 'desc' },
     skip: (page - 1) * limit,
     take: limit,
-    include: { user_ride: { where: { status: 'SIGNED_UP' } } },
+    include: {
+      user_ride: { where: { status: 'SIGNED_UP' } },
+      location: true,
+    },
   });
 
   const dataCount = await prisma.ride.count();
@@ -98,6 +106,9 @@ export async function getAllRides({
 export async function getRideBySlug(slug: string) {
   return await prisma.ride.findFirst({
     where: { slug: slug },
+    include: {
+      location: true,
+    },
   });
 }
 
@@ -187,7 +198,11 @@ export async function getMyRides({
     take: limit,
     skip: (page - 1) * limit,
     include: {
-      ride: true, // Include ride details
+      ride: {
+        include: {
+          location: true,
+        },
+      },
     },
   });
 
@@ -370,6 +385,8 @@ export async function createNewRide({
         distance: newRide.distance,
         path: JSON.stringify(path),
         elevation: JSON.stringify(elevation),
+        locationId: newRide.locationId,
+        difficulty: newRide.difficulty,
       },
     });
 
