@@ -20,9 +20,24 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  findOrCreateLocation,
+  getAllStates,
+} from '@/lib/actions/location.actions';
+import { useEffect, useState } from 'react';
 
 const SignUpForm = () => {
   const { data: session, update } = useSession();
+  const [states, setStates] = useState<{ id: number; abbreviation: string }[]>(
+    []
+  );
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams?.get('callbackUrl') || '/';
@@ -35,11 +50,32 @@ const SignUpForm = () => {
       email: '',
       password: '',
       confirmPassword: '',
+      locationId: 0,
+      city: '',
+      stateId: '',
     },
   });
 
+  useEffect(() => {
+    const getStates = async () => {
+      const allStates = await getAllStates();
+      setStates(allStates);
+    };
+    getStates();
+  }, []);
+
   const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
-    const response = await signUpUser(null, values);
+    const locationResponse = await findOrCreateLocation({
+      stateId: Number(values.stateId) || 0,
+      city: values.city || '',
+    });
+
+    const locationId = locationResponse.id;
+
+    const response = await signUpUser(null, {
+      ...values,
+      locationId: locationId,
+    });
 
     if (!response.success) {
       return toast(<div className="text-destructive">{response.message}</div>);
@@ -115,6 +151,49 @@ const SignUpForm = () => {
               </FormItem>
             )}
           />
+          <div className="flex gap-4">
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter city..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="stateId"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>State</FormLabel>
+                  <Select
+                    name="select"
+                    onValueChange={field.onChange}
+                    value={String(field.value)}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="min-w-[75px]">
+                        <SelectValue placeholder="Select state" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {states.map((state) => (
+                        <SelectItem key={state.id} value={String(state.id)}>
+                          {state.abbreviation}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="password"

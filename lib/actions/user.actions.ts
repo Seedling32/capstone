@@ -51,6 +51,7 @@ export async function signUpUser(
     firstName: string;
     lastName: string;
     email: string;
+    locationId: number;
     password: string;
     confirmPassword: string;
   }
@@ -60,6 +61,7 @@ export async function signUpUser(
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
+      locationId: values.locationId,
       password: values.password,
       confirmPassword: values.confirmPassword,
     });
@@ -73,6 +75,7 @@ export async function signUpUser(
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        locationId: user.locationId,
         password: user.password,
       },
     });

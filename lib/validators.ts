@@ -36,6 +36,9 @@ export const signUpFormSchema = z
     lastName: z.string().min(3, 'Last name must be at least 3 characters.'),
     email: z.string().email('Invalid email address.'),
     password: z.string().min(6, 'Password must be at least 6 characters.'),
+    locationId: z.number(),
+    city: z.string().min(1, 'City is required').optional(),
+    stateId: z.string().min(1, 'State is required.').optional(),
     confirmPassword: z
       .string()
       .min(6, 'Confirm password must be at least 6 characters.'),

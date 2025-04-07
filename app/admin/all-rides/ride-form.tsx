@@ -245,6 +245,7 @@ const RideForm = ({
     };
 
     delete updatedValues.city;
+    delete updatedValues.stateId;
 
     // On Create
     if (type === 'Create') {
