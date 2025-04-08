@@ -115,7 +115,7 @@ const RideForm = ({
             stateId: location?.stateId ? String(location.stateId) : '',
             date: processRideDate ? new Date(processRideDate) : new Date(),
           });
-        }, 0);
+        }, 1000);
       } catch (error) {
         console.error('Error initializing form:', error);
         toast.error('Failed to load form data.');
