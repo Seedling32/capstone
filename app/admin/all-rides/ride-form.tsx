@@ -36,7 +36,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { findOrCreateLocation } from '@/lib/actions/location.actions';
+import {
+  findOrCreateLocation,
+  getAllStates,
+  getLocationById,
+} from '@/lib/actions/location.actions';
 
 const mapContainerStyle = {
   width: '100%',
@@ -61,18 +65,19 @@ const RideForm = ({
 
   // If updating, use existing ride values as the default values for the form, else, use default values
   const processRide =
-    ride && type === 'Update'
-      ? {
-          ...ride,
-          date: ride.date ? new Date(ride.date) : new Date(),
-        }
-      : createRideFormDefaultValues;
+    ride && type === 'Update' ? ride : createRideFormDefaultValues;
+
+  console.log(processRide);
 
   const form = useForm<CreateRideSchema | UpdateRideSchema>({
     resolver: zodResolver(
       type === 'Update' ? updateRideSchema : createRideSchema
     ),
-    defaultValues: processRide,
+    defaultValues: {
+      ...processRide,
+      city: processRide.city ?? '',
+      stateId: processRide.stateId ?? '',
+    },
   });
 
   const googleRef = useRef<typeof google | null>(null); // Store Google API
@@ -87,20 +92,36 @@ const RideForm = ({
   const [submitted, setSubmitted] = useState(false);
   const [distance, setDistance] = useState<number>(0);
 
-  // Fetch all states for populated drop down in form
-  useEffect(() => {
-    async function fetchStates() {
-      try {
-        const response = await fetch('/api/states');
-        const data = await response.json();
-        setStates(data);
-      } catch (error) {
-        console.error('Error fetching states:', error);
-      }
-    }
+  // Fetch all states for populated drop down in form.
+  // Use processRide from earlier to set form values
+  const processRideDate = ride?.date ?? null;
 
-    fetchStates();
-  }, []);
+  useEffect(() => {
+    const initializeForm = async () => {
+      try {
+        const [allStates, location] = await Promise.all([
+          getAllStates(),
+          processRide?.locationId
+            ? getLocationById(processRide.locationId)
+            : Promise.resolve(null),
+        ]);
+
+        setStates(allStates);
+
+        form.reset({
+          ...processRide,
+          city: location?.city ?? '',
+          stateId: location?.stateId ? String(location.stateId) : '',
+          date: processRideDate ? new Date(processRideDate) : new Date(),
+        });
+      } catch (error) {
+        console.error('Error initializing form:', error);
+        toast.error('Failed to load form data.');
+      }
+    };
+
+    initializeForm();
+  }, [processRide, processRideDate, form]);
 
   const handleMapLoad = (map: google.maps.Map) => {
     mapRef.current = map;
@@ -267,6 +288,7 @@ const RideForm = ({
         setElevation([]);
         setDistance(0);
         setSubmitted(false);
+        router.push('/admin/all-rides');
       }
     }
 
@@ -293,6 +315,7 @@ const RideForm = ({
         setPath([]);
         setDistance(0);
         setSubmitted(false);
+        router.push('/admin/all-rides');
       }
     }
   };

@@ -43,7 +43,6 @@ const UpdateUserForm = ({
   const [states, setStates] = useState<{ id: number; abbreviation: string }[]>(
     []
   );
-  const [loading, setLoading] = useState(true);
 
   const form = useForm<z.infer<typeof updateUserSchema>>({
     resolver: zodResolver(updateUserSchema),
@@ -71,8 +70,6 @@ const UpdateUserForm = ({
           city: location?.city ?? '',
           stateId: location?.stateId ? String(location.stateId) : '',
         });
-
-        setLoading(false); // ✅ Done loading
       } catch (error) {
         console.error('Error initializing form:', error);
         toast.error('Failed to load form data.');
