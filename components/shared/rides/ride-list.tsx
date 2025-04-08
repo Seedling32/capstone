@@ -1,12 +1,12 @@
 import RideCard from './ride-card';
-import { Ride } from '@/types';
+import { RideWithLocation } from '@/types';
 
 const RideList = ({
   data,
   title,
   limit,
 }: {
-  data: Ride[];
+  data: RideWithLocation[];
   title?: string;
   limit?: number;
 }) => {
@@ -19,14 +19,14 @@ const RideList = ({
         <div className="overflow-hidden w-full group">
           <div className="flex w-fit animate-scroll-left whitespace-nowrap group-hover:[animation-play-state:paused]">
             <div className="flex">
-              {limitedData.map((ride: Ride, index) => (
+              {limitedData.map((ride: RideWithLocation, index) => (
                 <div key={`${ride.ride_id}-${index}`} className="mx-4">
                   <RideCard ride={ride} />
                 </div>
               ))}
             </div>
             <div className="flex">
-              {limitedData.map((ride: Ride, index) => (
+              {limitedData.map((ride: RideWithLocation, index) => (
                 <div key={`${ride.ride_id}-${index}`} className="mx-4">
                   <RideCard ride={ride} />
                 </div>
