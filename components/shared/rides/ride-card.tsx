@@ -6,8 +6,6 @@ import { limitedDescription } from '@/lib/utils';
 import { formatDateTime } from '@/lib/utils';
 
 const RideCard = ({ ride }: { ride: RideWithLocation }) => {
-  console.log(ride);
-
   return (
     <Card className="flex flex-col w-full max-w-[300px] shadow-xl overflow-hidden">
       <CardHeader className="p-0 items-center">
