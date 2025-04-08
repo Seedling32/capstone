@@ -169,44 +169,89 @@ const RideForm = ({
 
   // Populate the path array and calculate distance.
   // If the event happens on a lat/lng point it adds it to the array
-  const handleMapClick = (event: google.maps.MapMouseEvent) => {
-    if (event.latLng) {
-      const newPath = [
-        ...path,
-        { lat: event.latLng.lat(), lng: event.latLng.lng() },
-      ];
+  const handleMapClick = async (event: google.maps.MapMouseEvent) => {
+    if (!event.latLng || !googleRef.current) return;
 
-      if (newPath.length > 1 && googleRef.current) {
-        const lastPoint = newPath[newPath.length - 2];
-        const newPoint = newPath[newPath.length - 1];
+    const newPoint = { lat: event.latLng.lat(), lng: event.latLng.lng() };
 
-        // Compute distance in meters and convert to kilometers
-        const segmentDistance =
-          googleRef.current.maps.geometry.spherical.computeDistanceBetween(
-            lastPoint,
-            newPoint
-          );
+    // First point: just set initial path
+    if (path.length === 0) {
+      setPath([newPoint]);
+      return;
+    }
 
-        setDistance(
-          (prevDistance) => prevDistance + segmentDistance * 0.000621371
-        ); // Convert to miles
-        distanceRef.current += segmentDistance * 0.000621371;
+    try {
+      const lastPoint = path[path.length - 1];
+      const segmentPoints = [lastPoint, newPoint];
+
+      const pathParam = segmentPoints
+        .map((point) => `${point.lat},${point.lng}`)
+        .join('|');
+
+      const response = await fetch(
+        `https://roads.googleapis.com/v1/snapToRoads?path=${pathParam}&interpolate=true&key=${GOOGLE_MAPS_API_KEY}`
+      );
+
+      const data = await response.json();
+
+      if (!data.snappedPoints) {
+        toast.error('Snap to Roads API did not return a valid path.');
+        return;
       }
 
-      setPath(newPath);
+      type SnappedPoint = {
+        location: {
+          latitude: number;
+          longitude: number;
+        };
+        originalIndex?: number;
+        placeId?: string;
+      };
 
-      // Fetch elevation for this point
-      const elevator = new googleRef.current!.maps.ElevationService();
+      const snappedPath = data.snappedPoints.map(
+        (snappedPoint: SnappedPoint) => ({
+          lat: snappedPoint.location.latitude,
+          lng: snappedPoint.location.longitude,
+        })
+      );
 
-      const lat = event.latLng.lat();
-      const lng = event.latLng.lng();
+      // Full path
+      setPath((prevPath) => [...prevPath, ...snappedPath.slice(1)]);
 
+      // Accumulate total distance
+      if (snappedPath.length > 1) {
+        let segmentDistance = 0;
+        for (let i = 1; i < snappedPath.length; i++) {
+          const prev = snappedPath[i - 1];
+          const curr = snappedPath[i];
+          const distance =
+            googleRef.current.maps.geometry.spherical.computeDistanceBetween(
+              new googleRef.current.maps.LatLng(prev.lat, prev.lng),
+              new googleRef.current.maps.LatLng(curr.lat, curr.lng)
+            );
+          segmentDistance += distance;
+        }
+
+        const segmentDistanceMiles = segmentDistance * 0.000621371;
+
+        setDistance((prevDistance) => {
+          const newTotal = prevDistance + segmentDistanceMiles;
+          distanceRef.current = newTotal;
+          return parseFloat(newTotal.toFixed(2));
+        });
+      }
+
+      // Calculate elevation for total path
+      const elevator = new googleRef.current.maps.ElevationService();
       elevator.getElevationForLocations(
-        { locations: [new google.maps.LatLng(lat, lng)] },
+        {
+          locations: [
+            new googleRef.current.maps.LatLng(newPoint.lat, newPoint.lng),
+          ],
+        },
         (results, status) => {
-          if (status === 'OK' && results && results?.length > 0) {
+          if (status === 'OK' && results && results.length > 0) {
             const elevationInFeet = results[0].elevation * 3.28084;
-
             setElevation((prev) => [
               ...prev,
               {
@@ -219,6 +264,9 @@ const RideForm = ({
           }
         }
       );
+    } catch (error) {
+      console.error('Snap to Roads API error:', error);
+      toast.error('Failed to snap route to roads.');
     }
   };
 
@@ -283,7 +331,6 @@ const RideForm = ({
         path,
         elevation,
       });
-      console.log(response.success);
 
       if (!response.success) {
         toast.error(`${response.message}`);
@@ -312,7 +359,6 @@ const RideForm = ({
           ride_id: rideId,
         },
       });
-      console.log(response.success);
 
       if (!response.success) {
         toast.error(`${response.message}`);
@@ -578,6 +624,10 @@ const RideForm = ({
               zoom={12}
               onClick={handleMapClick}
               onLoad={handleMapLoad}
+              options={{
+                draggableCursor: 'crosshair',
+                draggingCursor: 'grabbing',
+              }}
             >
               <Polyline
                 path={path}
