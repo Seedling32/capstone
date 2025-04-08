@@ -23,9 +23,7 @@ export async function getLatestRides() {
       date: 'desc',
     },
     include: {
-      location: {
-        select: { city: true },
-      },
+      location: true,
     },
   });
 
