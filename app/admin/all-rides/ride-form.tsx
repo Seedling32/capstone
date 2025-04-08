@@ -123,6 +123,7 @@ const RideForm = ({
     initializeForm();
   }, [processRide, processRideDate, form]);
 
+  // Loads the map with the existing path if updating a ride
   const handleMapLoad = (map: google.maps.Map) => {
     mapRef.current = map;
 
@@ -226,13 +227,21 @@ const RideForm = ({
     form.setValue('distance', parseFloat(distance.toFixed(2)));
   }, [distance, form]);
 
-  // Parses out the existing path if one exists to draw on the map
-
   // Encodes the path array and sets the value for staticMapUrl
+  // Sets the time based on time zone
   const handlePreSubmit = () => {
     if (path.length === 0) {
       toast.error('Please draw a route first.');
       return;
+    }
+
+    // Adjust time to UTC before submitting
+    const date = form.getValues('date');
+    if (date) {
+      const utcDate = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+      form.setValue('date', utcDate);
     }
 
     const encodedPath = polyline.encode(path.map((p) => [p.lat, p.lng]));
@@ -246,7 +255,6 @@ const RideForm = ({
     })();
   };
 
-  //
   const onSubmit: SubmitHandler<z.infer<typeof createRideSchema>> = async (
     values
   ) => {
