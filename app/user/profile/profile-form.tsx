@@ -59,13 +59,15 @@ const ProfileForm = () => {
 
         setStates(allStates);
 
-        form.reset({
-          firstName: firstName,
-          lastName: lastName,
-          email: session?.user.email ?? '',
-          city: location?.city ?? '',
-          stateId: location?.stateId ? String(location.stateId) : '',
-        });
+        setTimeout(() => {
+          form.reset({
+            firstName: firstName,
+            lastName: lastName,
+            email: session?.user.email ?? '',
+            city: location?.city ?? '',
+            stateId: location?.stateId ? String(location.stateId) : '',
+          });
+        }, 100);
       } catch (error) {
         console.error('Error initializing form:', error);
         toast.error('Failed to load form data.');

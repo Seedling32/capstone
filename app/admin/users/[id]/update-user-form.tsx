@@ -65,11 +65,13 @@ const UpdateUserForm = ({
 
         setStates(allStates);
 
-        form.reset({
-          ...user,
-          city: location?.city ?? '',
-          stateId: location?.stateId ? String(location.stateId) : '',
-        });
+        setTimeout(() => {
+          form.reset({
+            ...user,
+            city: location?.city ?? '',
+            stateId: location?.stateId ? String(location.stateId) : '',
+          });
+        }, 100);
       } catch (error) {
         console.error('Error initializing form:', error);
         toast.error('Failed to load form data.');
