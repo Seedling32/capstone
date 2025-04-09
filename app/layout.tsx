@@ -15,6 +15,22 @@ export const metadata: Metadata = {
   },
   description: APP_DESCRIPTION,
   metadataBase: new URL(SERVER_URL),
+  openGraph: {
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+    url: SERVER_URL,
+    siteName: APP_NAME,
+    images: [
+      {
+        url: '/images/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Pedal Pact logo and tagline',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
