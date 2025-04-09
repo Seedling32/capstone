@@ -15,15 +15,19 @@ const HomePage = async () => {
           </h1>
         </div>
       </div>
-      <RideList title="Upcoming Rides" data={rideData} />
-      <div className=" wrapper">
-        <WeatherWidget />
+      <div className="wrapper flex flex-col items-center text-center mb-16">
+        <h2 className="h2-bold">Please excuse the construction</h2>
+        <p className="mb-16">Finished site coming soon</p>
         <Image
           src="/images/portrait-home.png"
           width={387}
           height={643}
           alt="Sunrise bike ride with friends."
         />
+      </div>
+      <RideList title="Upcoming Rides" data={rideData} />
+      <div className=" wrapper">
+        <WeatherWidget />
       </div>
     </div>
   );
