@@ -16,6 +16,7 @@ export default {
         'hero-large': "url('/images/hero-large.webp')",
         'hero-small': "url('/images/hero-small.webp')",
         'sunrise-hero': "url('/images/sunrise-ride.png')",
+        'crank-hero': "url('/images/crank.webp')",
         mountains: "url('/images/mountains.jpg')",
       },
       colors: {
