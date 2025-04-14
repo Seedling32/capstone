@@ -87,6 +87,61 @@ const AboutUsPage = () => {
           </div>
         </div>
       </section>
+      <section className="max-w-6xl mx-auto py-16 px-4">
+        <h2 className="h2-bold capitalize text-center mb-4">
+          Meet the ride leaders
+        </h2>
+        <div className="flex flex-col-reverse md:flex-row items-center gap-10 mb-8">
+          <div>
+            <h3 className="h2-bold mb-4">David Graham</h3>
+            <p>
+              Hi, I&apos;m David Graham — the creator of Pedal Pact and a
+              passionate cyclist at heart. I combined my love for riding with my
+              background in web development to build a platform where cyclists
+              can connect, explore new routes, and grow their community
+              together. Whether I&apos;m coding new features or out scouting
+              local trails, I&apos;m driven by the idea that every great ride
+              starts with great company. When I&apos;m not working on Pedal
+              Pact, you&apos;ll probably find me chasing sunrises on two wheels,
+              exploring new climbs, or brainstorming ways to make this platform
+              even better for fellow riders. Let&apos;s ride!
+            </p>
+          </div>
+          <Image
+            src={'/images/david.png'}
+            alt="David Graham."
+            width={500}
+            height={624}
+            className="rounded-sm"
+          />
+        </div>
+        <div className="flex flex-col-reverse md:flex-row-reverse items-center gap-10">
+          <div>
+            <h3 className="h2-bold mb-4">Joe Piorkowski</h3>
+            <p>
+              Joe is a master woodworker and lifelong rider whose journey
+              started on BMX tracks before he found his way into mountain biking
+              and road cycling. Whether he&apos;s shaping timber in the shop or
+              carving perfect lines through the forest, Joe brings creativity,
+              precision, and passion to everything he does. With deep roots in
+              craftsmanship and a love for two wheels, Joe thrives on building
+              connections — both on the trails and in the cycling community. His
+              favorite rides are the ones that mix fast descents with good
+              company, and he&apos;s always ready to share a tip, a laugh, or a
+              route recommendation. Off the bike, you&apos;ll find Joe designing
+              custom furniture, working on woodworking projects, or scouting out
+              new adventures to bring back to the Pedal Pact crew.
+            </p>
+          </div>
+          <Image
+            src={'/images/joe.png'}
+            alt="David Graham."
+            width={500}
+            height={624}
+            className="rounded-sm"
+          />
+        </div>
+      </section>
       <section className="py-16">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="h2-bold capitalize mb-6">Who Pedal-Pact is for</h2>
