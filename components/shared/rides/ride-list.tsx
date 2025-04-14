@@ -13,8 +13,8 @@ const RideList = ({
   const limitedData = limit ? data.slice(0, limit) : data;
 
   return (
-    <div className="relative flex flex-col items-center w-full">
-      <h2 className="h2-bold uppercase mb-4">{title}</h2>
+    <div className="relative flex flex-col w-full">
+      <h2 className="h2-bold uppercase mb-4 text-center">{title}</h2>
       {data.length > 0 ? (
         <div className="overflow-hidden w-full group">
           <div className="flex w-fit animate-scroll-left whitespace-nowrap group-hover:[animation-play-state:paused]">
