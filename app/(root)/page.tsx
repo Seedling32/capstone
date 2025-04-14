@@ -30,7 +30,7 @@ const HomePage = async () => {
       </section>
       <section className="py-16 text-center max-w-6xl mx-auto px-4">
         <div className="bg-muted flex flex-col gap-6 p-6 border rounded-xl md:gap-0 md:flex-row-reverse items-center shadow-xl">
-          <div>
+          <div className="min-w-[225px] flex-1">
             <h2 className="text-6xl mb-4">How it works</h2>
             <ol className="flex flex-col gap-16 md:-translate-x-[100px]">
               <li>
@@ -65,16 +65,18 @@ const HomePage = async () => {
               </li>
             </ol>
           </div>
-          <Image
-            src={'/images/portrait-home.png'}
-            alt="David Graham."
-            width={500}
-            height={686}
-            className="rounded-lg"
-          />
+          <div className="flex-shrink md:flex-1">
+            <Image
+              src={'/images/portrait-home.png'}
+              alt="David Graham."
+              width={500}
+              height={686}
+              className="rounded-lg w-full max-w-[500px] height-auto"
+            />
+          </div>
         </div>
       </section>
-      <div className=" wrapper">
+      <div className="wrapper">
         <WeatherWidget />
       </div>
     </div>
