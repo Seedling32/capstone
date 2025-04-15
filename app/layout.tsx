@@ -59,7 +59,7 @@ export default function RootLayout({
         </noscript>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >

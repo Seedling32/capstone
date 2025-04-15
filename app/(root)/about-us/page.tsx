@@ -63,7 +63,7 @@ const AboutUsPage = () => {
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="h2-bold capitalize mb-8">What we offer</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card>
+            <Card className="border-2">
               <CardContent>
                 <CardHeader>
                   <CardTitle className="capitalize">Custom routes</CardTitle>
@@ -74,7 +74,7 @@ const AboutUsPage = () => {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="border-2">
               <CardContent>
                 <CardHeader>
                   <CardTitle className="capitalize">Group rides</CardTitle>
@@ -85,7 +85,7 @@ const AboutUsPage = () => {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="border-2">
               <CardContent>
                 <CardHeader>
                   <CardTitle className="capitalize">Discovery</CardTitle>
@@ -158,7 +158,7 @@ const AboutUsPage = () => {
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="h2-bold capitalize mb-16">Our values</h2>
           <div className="grid grid-cols-2 gap-6">
-            <Card>
+            <Card className="border-2">
               <CardContent>
                 <CardHeader>
                   <CardTitle className="capitalize">Community first</CardTitle>
@@ -168,7 +168,7 @@ const AboutUsPage = () => {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="border-2">
               <CardContent>
                 <CardHeader>
                   <CardTitle className="capitalize">Inclusion</CardTitle>
@@ -178,7 +178,7 @@ const AboutUsPage = () => {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="border-2">
               <CardContent>
                 <CardHeader>
                   <CardTitle className="capitalize">Sustainability</CardTitle>
@@ -188,7 +188,7 @@ const AboutUsPage = () => {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="border-2">
               <CardContent>
                 <CardHeader>
                   <CardTitle className="capitalize">

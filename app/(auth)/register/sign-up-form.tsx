@@ -240,9 +240,8 @@ const SignUpForm = () => {
           {form.formState.isSubmitting ? 'Submitting...' : 'Register'}
         </Button>
         <div className="text-sm text-center text-muted-foreground mt-4">
-          Already have an account?{' '}
           <Link href="/sign-in" target="_self" className="link hover:underline">
-            Sign In
+            Already have an account? Sign In
           </Link>
         </div>
       </form>

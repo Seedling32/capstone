@@ -16,7 +16,7 @@ const HomePage = async () => {
           <h1 className="text-left text-[clamp(1.5rem,5vw,4rem)] font-bold text-white text-shadow uppercase max-w-[550px]">
             Connect & ride with the ultimate hub for community cycling
           </h1>
-          <p className="text-lg text-popover-foreground bg-white/50 rounded-md px-4 text-black">
+          <p className="text-lg text-popover-foreground bg-background/70 rounded-md px-4 text-black">
             Pedal Pact makes it easy to discover new routes, join group rides,
             and share the adventure with cyclists of all levels.
           </p>
@@ -34,7 +34,7 @@ const HomePage = async () => {
             <h2 className="text-6xl mb-4">How it works</h2>
             <ol className="flex flex-col gap-16 md:-translate-x-[100px]">
               <li>
-                <Card>
+                <Card className="border-2">
                   <CardHeader>
                     <CardTitle>Step 1</CardTitle>
                   </CardHeader>
@@ -44,7 +44,7 @@ const HomePage = async () => {
                 </Card>
               </li>
               <li>
-                <Card>
+                <Card className="border-2">
                   <CardHeader>
                     <CardTitle>Step 2</CardTitle>
                   </CardHeader>
@@ -54,7 +54,7 @@ const HomePage = async () => {
                 </Card>
               </li>
               <li>
-                <Card>
+                <Card className="border-2">
                   <CardHeader>
                     <CardTitle>Step 3</CardTitle>
                   </CardHeader>
