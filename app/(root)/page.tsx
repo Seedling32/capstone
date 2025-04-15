@@ -13,7 +13,7 @@ const HomePage = async () => {
     <div>
       <div className="flex flex-col bg-hero-small min-h-[40vh] md:bg-hero-large lg:min-h-[60vh] relative z-10">
         <div className="absolute px-2 top-32 md:top-4 flex flex-col gap-4 md:left-20  max-w-[650px]">
-          <h1 className="text-left text-[clamp(1.5rem,5vw,4rem)] font-bold text-shadow uppercase max-w-[550px]">
+          <h1 className="text-left text-[clamp(1.5rem,5vw,4rem)] font-bold text-white text-shadow uppercase max-w-[550px]">
             Connect & ride with the ultimate hub for community cycling
           </h1>
           <p className="text-lg text-popover-foreground bg-white/50 rounded-md px-4 text-black">
