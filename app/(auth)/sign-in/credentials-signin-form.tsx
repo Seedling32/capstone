@@ -63,14 +63,20 @@ const CredentialsSignInForm = () => {
           <div className="text-center text-destructive">{data.message}</div>
         )}
 
-        <div className="text-sm text-center text-muted-foreground">
-          Don&apos;t have an account?{' '}
+        <div className="flex flex-col text-sm text-center text-muted-foreground">
           <Link
             href="/register"
             target="_self"
             className="link hover:underline"
           >
-            Register
+            Don&apos;t have an account? Register
+          </Link>
+          <Link
+            href="/forgot-password"
+            target="_self"
+            className="link hover:underline"
+          >
+            Forgot your password?
           </Link>
         </div>
       </div>

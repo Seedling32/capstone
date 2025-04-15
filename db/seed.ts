@@ -1,10 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import states from './states';
+import sampleUsers from './users';
 
 async function main() {
   const prisma = new PrismaClient();
 
-  await prisma.state.createMany({ data: states });
+  await prisma.user.createMany({ data: sampleUsers.users });
 
   console.log('states seeded successfully');
 }

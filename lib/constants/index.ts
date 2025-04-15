@@ -7,6 +7,8 @@ export const APP_DESCRIPTION =
 export const GOOGLE_MAPS_API_KEY =
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
 
+export const RESEND_API_KEY = process.env.NEXT_PUBLIC_RESEND_API_KEY || '';
+
 export const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
 
