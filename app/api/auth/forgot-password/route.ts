@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import { v4 as uuid } from 'uuid';
 import { sendPasswordResetEmail } from '@/lib/email';
 import { SERVER_URL } from '@/lib/constants';
-import { toast } from 'sonner';
 
 export async function POST(req: Request) {
   const { email } = await req.json();
