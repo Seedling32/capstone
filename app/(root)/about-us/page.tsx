@@ -6,7 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Handshake, Heart, Leaf, Lightbulb, Map, Users } from 'lucide-react';
+import {
+  Compass,
+  Handshake,
+  Heart,
+  Leaf,
+  Lightbulb,
+  Map,
+  Users,
+} from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,23 +26,27 @@ export const metadata: Metadata = {
 const AboutUsPage = () => {
   return (
     <div>
-      <section className="flex flex-col justify-center items-center mb-4 bg-hero-small min-h-96 text-white text-center md:bg-sunrise-hero bg-center relative">
-        <div className="absolute top-10 flex justify-center items-center mx-auto md:top-[180px] md:left-20">
-          <h1 className="text-left text-5xl font-bold text-shadow uppercase max-w-[475px] bg-gradient-to-l from-slate-400/50 to-transparent rounded-lg">
+      <section className="flex flex-col justify-center items-center bg-sunrise-hero-small text-white text-center md:bg-sunrise-hero relative md:min-h-[384px] min-h-[300px]">
+        <div className="absolute top-36 flex justify-center items-center mx-auto md:top-[180px] md:left-20">
+          <h1 className="text-left text-5xl font-bold text-shadow uppercase max-w-[475px]">
             Ride together, explore further
           </h1>
         </div>
       </section>
       <section className="max-w-6xl mx-auto py-16 px-4 flex flex-col-reverse md:flex-row items-center gap-10">
-        <Image
-          src={'/images/turn.jpg'}
-          alt="Cyclists making a sharp turn."
-          width={500}
-          height={333}
-          className="rounded-sm"
-        />
-        <div>
-          <h2 className="h2-bold mb-4">The story behind Pedal-Pact</h2>
+        <div className="relative flex justify-center items-center flex-shrink flex-1 rounded-md max-w-[500px]">
+          <Image
+            src={'/images/turn.jpg'}
+            alt="Cyclists making a sharp turn."
+            width={500}
+            height={333}
+            className="rounded-md max-w-[500px] height-auto w-full"
+          />
+        </div>
+        <div className="min-w-[320px] flex-1">
+          <h2 className="h2-bold capitalize mb-4">
+            The story behind Pedal-Pact
+          </h2>
           <p>
             Pedal Pact began as a capstone project, but it quickly grew into
             something bigger. As a passionate cyclist and web developer, I
@@ -47,14 +59,14 @@ const AboutUsPage = () => {
           </p>
         </div>
       </section>
-      <section className="py-16 bg-accent">
+      <section className="py-16 border-t bg-accent bg-gradient-to-b from-transparent to-background">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="h2-bold capitalize mb-8">What we offer</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card>
               <CardContent>
                 <CardHeader>
-                  <CardTitle className="capitalize">Custom maps</CardTitle>
+                  <CardTitle className="capitalize">Custom routes</CardTitle>
                 </CardHeader>
                 <CardDescription className="flex flex-col items-center">
                   <Map width={100} height={100} />
@@ -76,19 +88,19 @@ const AboutUsPage = () => {
             <Card>
               <CardContent>
                 <CardHeader>
-                  <CardTitle className="capitalize">Custom maps</CardTitle>
+                  <CardTitle className="capitalize">Discovery</CardTitle>
                 </CardHeader>
                 <CardDescription className="flex flex-col items-center">
-                  <Map width={100} height={100} />
-                  Explore our custom routes with an interactive map.
+                  <Compass width={100} height={100} />
+                  Find hidden gems and scenic spots with curated routes.
                 </CardDescription>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
-      <section className="max-w-6xl mx-auto py-16 px-4">
-        <h2 className="h2-bold capitalize text-center mb-4">
+      <section className="max-w-6xl mx-auto px-4">
+        <h2 className="h2-bold capitalize text-center mb-16">
           Meet the ride leaders
         </h2>
         <div className="flex flex-col-reverse md:flex-row items-center gap-10 mb-8">
@@ -129,7 +141,7 @@ const AboutUsPage = () => {
               favorite rides are the ones that mix fast descents with good
               company, and he&apos;s always ready to share a tip, a laugh, or a
               route recommendation. Off the bike, you&apos;ll find Joe designing
-              custom furniture, working on woodworking projects, or scouting out
+              custom creations, working on woodworking projects, or scouting out
               new adventures to bring back to the Pedal Pact crew.
             </p>
           </div>
@@ -142,32 +154,9 @@ const AboutUsPage = () => {
           />
         </div>
       </section>
-      <section className="py-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="h2-bold capitalize mb-6">Who Pedal-Pact is for</h2>
-          <ul className="space-y-4 text-lg">
-            <li className="before:content-['-']">
-              {' '}
-              Road cyclists chasing long miles
-            </li>
-            <li className="before:content-['-']">
-              {' '}
-              Casual cruisers exploring scenic routes
-            </li>
-            <li className="before:content-['-']">
-              {' '}
-              Weekend adventurers discovering new paths
-            </li>
-            <li className="before:content-['-']">
-              {' '}
-              Ride leaders building community events
-            </li>
-          </ul>
-        </div>
-      </section>
-      <section className="bg-accent py-16">
+      <section className="bg-accent py-16 drop-shadow-xl bg-gradient-to-t from-transparent to-background">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="h2-bold capitalize mb-8">Our values</h2>
+          <h2 className="h2-bold capitalize mb-16">Our values</h2>
           <div className="grid grid-cols-2 gap-6">
             <Card>
               <CardContent>
@@ -202,7 +191,9 @@ const AboutUsPage = () => {
             <Card>
               <CardContent>
                 <CardHeader>
-                  <CardTitle className="capitalize">Continuos growth</CardTitle>
+                  <CardTitle className="capitalize">
+                    Continuous growth
+                  </CardTitle>
                 </CardHeader>
                 <CardDescription className="flex flex-col items-center">
                   <Lightbulb width={100} height={100} />
@@ -217,7 +208,7 @@ const AboutUsPage = () => {
         <p className="mb-8 text-lg">
           Explore our routes and join a ride near you.
         </p>
-        <div className="flex flex-col md:flex-row gap-4 justify-center">
+        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <Button>
             <Link href="/search-rides" className="btn-primary">
               Browse Rides

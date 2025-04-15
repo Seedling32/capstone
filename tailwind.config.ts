@@ -14,8 +14,9 @@ export default {
       },
       backgroundImage: {
         'hero-large': "url('/images/group-1.jpg')",
-        'hero-small': "url('/images/hero-small.webp')",
+        'hero-small': "url('/images/group-1-small.webp')",
         'sunrise-hero': "url('/images/sunrise-ride.png')",
+        'sunrise-hero-small': "url('/images/sunrise-ride-small.png')",
         'crank-hero': "url('/images/crank.webp')",
         mountains: "url('/images/mountains.jpg')",
       },

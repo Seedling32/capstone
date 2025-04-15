@@ -35,7 +35,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div id="contact" className="w-full p-10">
+    <div className="w-full p-10">
       <motion.div
         initial={{ y: -100 }}
         whileInView={{ y: 0 }}
@@ -45,7 +45,7 @@ const ContactForm = () => {
         onSubmit={onSubmit}
         className="max-w-2xl mx-auto flex flex-col items-center"
       >
-        <div className="flex flex-col md:flex-row md:justify-between gap-10 mt-10 mb-8 w-full">
+        <div className="flex flex-col md:flex-row md:justify-between gap-10 mb-8 w-full">
           <label htmlFor="name" className="sr-only">
             Name
           </label>

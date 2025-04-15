@@ -15,15 +15,15 @@ const ContactPage = () => {
           </h1>
         </div>
       </section>
-      <section className="py-16">
+      <section className="bg-muted bg-gradient-to-t from-transparent to-background shadow-xl rounded-xl py-16 my-16 max-w-6xl mx-auto border">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="h2-bold capitalize mb-6">Send us a message</h2>
           <p className="mt-4 text-lg font-semibold">
             We&apos;d love to hear from you — whether it&apos;s feedback,
             questions, or just to say hi!
           </p>
-          <p className="mb-8 text-lg">
-            Fill out the form below, and we’ll get back to you soon!
+          <p className="text-lg">
+            Fill out the form below, and we&apos;ll get back to you soon!
           </p>
           <ContactForm />
         </div>
