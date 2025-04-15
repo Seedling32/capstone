@@ -1,9 +1,15 @@
 import { Resend } from 'resend';
 import { RESEND_API_KEY } from './constants';
 
-const resend = new Resend(RESEND_API_KEY);
-
 export async function sendPasswordResetEmail(email: string, url: string) {
+  const resendApiKey = RESEND_API_KEY;
+  if (!resendApiKey) {
+    console.error('Missing API key');
+    return;
+  }
+
+  const resend = new Resend(resendApiKey);
+
   await resend.emails.send({
     from: 'Pedal Pact <no-reply@pedal-pact.com>',
     to: email,
