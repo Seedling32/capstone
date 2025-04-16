@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         hostname: 'api.weather.gov',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        port: '',
+      },
     ],
   },
 };
