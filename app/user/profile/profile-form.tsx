@@ -238,45 +238,49 @@ const ProfileForm = () => {
               )}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="image"
-            render={() => (
-              <FormItem className="w-full">
-                <FormLabel>Avatar</FormLabel>
-                <Card>
-                  <CardContent className="space-y-2 mt-2 min-h-32">
-                    <div className="flex-start">
-                      {image ? (
-                        <Image
-                          src={image}
-                          alt="User image."
-                          className="w-20 h-20 object-cover object-center rounded-sm mr-4"
-                          width={100}
-                          height={100}
-                        />
-                      ) : (
-                        ''
-                      )}
-                      <FormControl>
-                        <UploadButton
-                          className="text-foreground"
-                          endpoint="imageUploader"
-                          onClientUploadComplete={(res: { url: string }[]) => {
-                            form.setValue('image', res[0].url);
-                          }}
-                          onUploadError={(error: Error) => {
-                            toast.error(`${error.message}`);
-                          }}
-                        />
-                      </FormControl>
-                    </div>
-                  </CardContent>
-                </Card>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="upload-field">
+            <FormField
+              control={form.control}
+              name="image"
+              render={() => (
+                <FormItem className="w-full">
+                  <FormLabel>Avatar</FormLabel>
+                  <Card>
+                    <CardContent className="space-y-2 mt-2 min-h-32">
+                      <div className="flex-start">
+                        {image ? (
+                          <Image
+                            src={image}
+                            alt="User image."
+                            className="w-20 h-20 object-cover object-center rounded-sm mr-4"
+                            width={100}
+                            height={100}
+                          />
+                        ) : (
+                          ''
+                        )}
+                        <FormControl>
+                          <UploadButton
+                            className="text-foreground"
+                            endpoint="imageUploader"
+                            onClientUploadComplete={(
+                              res: { url: string }[]
+                            ) => {
+                              form.setValue('image', res[0].url);
+                            }}
+                            onUploadError={(error: Error) => {
+                              toast.error(`${error.message}`);
+                            }}
+                          />
+                        </FormControl>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
         <Button
           type="submit"
