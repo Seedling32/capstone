@@ -3,6 +3,7 @@ import ModeToggle from './mode-toggle';
 import { EllipsisVertical } from 'lucide-react';
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetTitle,
@@ -34,15 +35,21 @@ const Menu = () => {
           </SheetTrigger>
           <SheetContent className="flex flex-col items-start">
             <SheetTitle>Menu</SheetTitle>
-            <Link href="/search-rides" className="hover:underline">
-              Rides
-            </Link>
-            <Link href="/about-us" className="hover:underline">
-              About
-            </Link>
-            <Link href="/contact" className="hover:underline">
-              Contact
-            </Link>
+            <SheetClose asChild>
+              <Link href="/search-rides" className="hover:underline">
+                Rides
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href="/about-us" className="hover:underline">
+                About
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href="/contact" className="hover:underline">
+                Contact
+              </Link>
+            </SheetClose>
             <UserButton />
             <ModeToggle />
             <SheetDescription></SheetDescription>
