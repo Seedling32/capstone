@@ -131,7 +131,6 @@ const ProfileForm = () => {
   };
 
   const image = form.watch('image');
-  console.log(image);
 
   return (
     <Form {...form}>

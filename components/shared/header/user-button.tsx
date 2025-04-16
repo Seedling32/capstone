@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { UserIcon, UserRoundPlus } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const UserButton = async () => {
   const session = await auth();
@@ -32,18 +33,26 @@ const UserButton = async () => {
   }
 
   const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? '';
+  const image = session.user?.image;
 
   return (
     <div className="flex gap-2 items-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center">
-            <Button
-              variant="ghost"
-              className="relative w-8 h-8 rounded-full ml-2 flex items-center justify-center bg-gray-200 text-black"
-            >
-              {firstInitial}
-            </Button>
+            {image ? (
+              <Avatar className="cursor-pointer">
+                <AvatarImage src={image} />
+                <AvatarFallback>{firstInitial}</AvatarFallback>
+              </Avatar>
+            ) : (
+              <Button
+                variant="ghost"
+                className="relative w-8 h-8 rounded-full ml-2 flex items-center justify-center bg-gray-200 text-black"
+              >
+                {firstInitial}
+              </Button>
+            )}
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
