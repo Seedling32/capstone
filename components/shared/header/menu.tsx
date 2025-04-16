@@ -14,7 +14,11 @@ import UserButton from './user-button';
 const Menu = () => {
   return (
     <div className="flex justify-end gap-3">
-      <nav className="hidden md:flex items-center w-full max-w-s gap-2">
+      <nav
+        role="navigation"
+        aria-label="Main navigation"
+        className="hidden md:flex items-center w-full max-w-s gap-2"
+      >
         <Link href="/search-rides" className="hover:text-primary">
           Rides
         </Link>
@@ -27,7 +31,11 @@ const Menu = () => {
         <UserButton />
         <ModeToggle />
       </nav>
-      <nav className="md:hidden">
+      <nav
+        role="navigation"
+        aria-label="Mobile navigation"
+        className="md:hidden"
+      >
         <Sheet>
           <SheetTrigger className="align-middle text-primary flex">
             Menu

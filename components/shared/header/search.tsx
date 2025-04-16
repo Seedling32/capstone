@@ -3,7 +3,9 @@ import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
@@ -16,22 +18,32 @@ const Search = async () => {
   return (
     <form action="/search-rides" method="GET">
       <div className="flex w-full max-w-sm items-center space-x-2">
-        <Select name="state">
-          <SelectTrigger className="w-[180px]">
+        <label id="state-label" htmlFor="state" className="sr-only">
+          States
+        </label>
+        <Select name="state" aria-labelledby="state-label">
+          <SelectTrigger id="state" className="w-[180px]">
             <SelectValue placeholder="All" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem key="All" value="all">
-              All
-            </SelectItem>
-            {states.map((x) => (
-              <SelectItem key={x.abbreviation} value={x.abbreviation}>
-                {x.abbreviation}
+          <SelectContent className="max-h-[400px]">
+            <SelectGroup>
+              <SelectLabel>States</SelectLabel>
+              <SelectItem key="All" value="all">
+                All
               </SelectItem>
-            ))}
+              {states.map((x) => (
+                <SelectItem key={x.abbreviation} value={x.abbreviation}>
+                  {x.abbreviation}
+                </SelectItem>
+              ))}
+            </SelectGroup>
           </SelectContent>
         </Select>
+        <label htmlFor="q" className="sr-only">
+          Query
+        </label>
         <Input
+          id="q"
           name="q"
           type="text"
           placeholder="Search..."
@@ -39,6 +51,7 @@ const Search = async () => {
         />
         <Button>
           <SearchIcon />
+          <span className="sr-only">Search</span>
         </Button>
       </div>
     </form>

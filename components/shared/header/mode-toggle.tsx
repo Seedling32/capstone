@@ -39,6 +39,7 @@ const ModeToggle = () => {
           ) : (
             <SunIcon color="#ea580b" />
           )}
+          <span className="sr-only">Theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
