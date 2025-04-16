@@ -69,8 +69,8 @@ export const config = {
 
       // If there is an update, set user name
       if (trigger === 'update') {
-        session.user.firstName = user.firstName;
-        session.user.lastName = user.lastName;
+        session.user.name = user.name;
+        session.user.locationId = user.locationId;
       }
 
       return session;
@@ -96,7 +96,10 @@ export const config = {
 
       // Handle session updates
       if (session?.user?.name && trigger === 'update') {
+        console.log(session.user.name);
+
         token.name = session.user.name;
+        token.locationId = session.user.locationId;
       }
 
       return token;

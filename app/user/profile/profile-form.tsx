@@ -17,7 +17,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { updateProfile } from '@/lib/actions/user.actions';
-import { getAllStates, getLocationById } from '@/lib/actions/location.actions';
+import {
+  findOrCreateLocation,
+  getAllStates,
+  getLocationById,
+} from '@/lib/actions/location.actions';
 import { useEffect, useState } from 'react';
 import {
   Select,
@@ -26,8 +30,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useRouter } from 'next/navigation';
 
 const ProfileForm = () => {
+  const router = useRouter();
   const { data: session, update } = useSession();
   const [states, setStates] = useState<{ id: number; abbreviation: string }[]>(
     []
@@ -42,6 +48,7 @@ const ProfileForm = () => {
       firstName: firstName ?? '',
       lastName: lastName ?? '',
       email: session?.user?.email ?? '',
+      locationId: session?.user?.locationId ?? null,
       city: '',
       stateId: '',
     },
@@ -61,8 +68,9 @@ const ProfileForm = () => {
 
         setTimeout(() => {
           form.reset({
-            firstName: firstName,
-            lastName: lastName,
+            ...session?.user,
+            firstName: firstName ?? '',
+            lastName: lastName ?? '',
             email: session?.user.email ?? '',
             city: location?.city ?? '',
             stateId: location?.stateId ? String(location.stateId) : '',
@@ -78,23 +86,42 @@ const ProfileForm = () => {
   }, [session?.user, firstName, lastName, form]);
 
   const onSubmit = async (values: z.infer<typeof updateProfileSchema>) => {
-    const response = await updateProfile(values);
+    try {
+      const locationResponse = await findOrCreateLocation({
+        stateId: Number(values.stateId) || 0,
+        city: values.city || '',
+      });
 
-    if (!response.success) {
-      return toast(<div className="text-destructive">{response.message}</div>);
+      const locationId = {
+        city: locationResponse.city,
+        id: locationResponse.id,
+      };
+      const response = await updateProfile({
+        ...values,
+        locationId: locationId.id,
+      });
+
+      if (!response.success) {
+        return toast.error(`${response.message}`);
+      }
+
+      const newSession = {
+        ...session,
+        user: {
+          name: `${values.firstName} ${values.lastName}`,
+          locationId: locationId.id,
+        },
+      };
+
+      await update(newSession);
+
+      toast.success(`${response.message}`);
+
+      form.reset();
+      router.push('/user/profile');
+    } catch (error) {
+      toast.error(`${(error as Error).message}`);
     }
-
-    const newSession = {
-      ...session,
-      user: {
-        ...session?.user,
-        name: `${values.firstName} ${values.lastName}`,
-      },
-    };
-
-    await update(newSession);
-
-    toast('User updated successfully.');
   };
 
   return (

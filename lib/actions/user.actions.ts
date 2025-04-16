@@ -103,6 +103,7 @@ export async function updateProfile(user: {
   firstName: string;
   lastName: string;
   email: string;
+  locationId: number | null;
 }) {
   try {
     const session = await auth();
@@ -118,6 +119,7 @@ export async function updateProfile(user: {
       data: {
         firstName: user.firstName,
         lastName: user.lastName,
+        locationId: user.locationId,
       },
     });
 
