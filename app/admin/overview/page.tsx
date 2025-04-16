@@ -31,7 +31,7 @@ const AdminOverviewPage = async () => {
   const summary = await getRideSummary();
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       <h1 className="h2-bold">Dashboard</h1>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>

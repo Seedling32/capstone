@@ -18,14 +18,14 @@ const SignUpForRide = ({ ride }: { ride: rideItem }) => {
       const response = await addRideToUserRide(ride);
 
       if (!response.success) {
-        toast(<div className="text-destructive">{response.message}</div>);
+        toast.error(`${response.message}`);
         return;
       }
 
       router.refresh();
 
       // Handle success add to rides
-      toast(`Signed Up For ${ride.shortDescription}`, {
+      toast.success(`Signed Up For ${ride.shortDescription}`, {
         action: {
           label: 'Go To Rides',
           onClick: () => router.push('/user/my-rides'),
