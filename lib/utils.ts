@@ -110,3 +110,13 @@ export function formUrlQuery({
     }
   );
 }
+
+// Convert UTC time to local for display.
+export function convertUTCToLocal(date: Date): Date {
+  return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+}
+
+// Convert local time to UTC for db storage.
+export function convertLocalToUTC(date: Date): Date {
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+}

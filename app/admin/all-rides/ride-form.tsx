@@ -41,6 +41,7 @@ import {
   getAllStates,
   getLocationById,
 } from '@/lib/actions/location.actions';
+import { convertLocalToUTC, convertUTCToLocal } from '@/lib/utils';
 
 const mapContainerStyle = {
   width: '100%',
@@ -66,8 +67,6 @@ const RideForm = ({
   // If updating, use existing ride values as the default values for the form, else, use default values
   const processRide =
     ride && type === 'Update' ? ride : createRideFormDefaultValues;
-
-  console.log(processRide);
 
   const form = useForm<CreateRideSchema | UpdateRideSchema>({
     resolver: zodResolver(
@@ -113,7 +112,9 @@ const RideForm = ({
             ...processRide,
             city: location?.city ?? '',
             stateId: location?.stateId ? String(location.stateId) : '',
-            date: processRideDate ? new Date(processRideDate) : new Date(),
+            date: processRideDate
+              ? convertUTCToLocal(new Date(processRideDate))
+              : new Date(),
           });
         }, 100);
       } catch (error) {
@@ -288,9 +289,7 @@ const RideForm = ({
     // Adjust time to UTC before submitting
     const date = form.getValues('date');
     if (date) {
-      const utcDate = new Date(
-        date.getTime() - date.getTimezoneOffset() * 60000
-      );
+      const utcDate = convertLocalToUTC(date);
       form.setValue('date', utcDate);
     }
 
