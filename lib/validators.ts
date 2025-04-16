@@ -74,6 +74,7 @@ export const updateProfileSchema = z.object({
   locationId: z.number().nullable(),
   city: z.string().min(1, 'City is required').optional(),
   stateId: z.string().min(1, 'State is required.').optional(),
+  image: z.string().nullable(),
 });
 
 // Schema to update the user as admin

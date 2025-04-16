@@ -71,6 +71,7 @@ export const config = {
       if (trigger === 'update') {
         session.user.name = user.name;
         session.user.locationId = user.locationId;
+        session.user.image = user.image;
       }
 
       return session;
@@ -100,6 +101,7 @@ export const config = {
 
         token.name = session.user.name;
         token.locationId = session.user.locationId;
+        token.image = session.user.image;
       }
 
       return token;

@@ -116,3 +116,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Uploadthing button text overide */
+html.dark .upload-field .text-white {
+  color: #fff;
+}
+
+/* .upload-field .text-white {
+  color: #000 !important;
+} */

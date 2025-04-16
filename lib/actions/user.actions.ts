@@ -104,6 +104,7 @@ export async function updateProfile(user: {
   lastName: string;
   email: string;
   locationId: number | null;
+  image: string | null;
 }) {
   try {
     const session = await auth();
@@ -120,6 +121,7 @@ export async function updateProfile(user: {
         firstName: user.firstName,
         lastName: user.lastName,
         locationId: user.locationId,
+        image: user.image,
       },
     });
 
