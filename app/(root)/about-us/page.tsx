@@ -159,7 +159,7 @@ const AboutUsPage = () => {
           <h2 className="h2-bold capitalize mb-16">Our values</h2>
           <div className="grid grid-cols-2 gap-6">
             <Card className="border-2">
-              <CardContent>
+              <CardContent className="flex flex-col items-center">
                 <CardHeader>
                   <CardTitle className="capitalize">Community first</CardTitle>
                 </CardHeader>
@@ -169,7 +169,7 @@ const AboutUsPage = () => {
               </CardContent>
             </Card>
             <Card className="border-2">
-              <CardContent>
+              <CardContent className="flex flex-col items-center">
                 <CardHeader>
                   <CardTitle className="capitalize">Inclusion</CardTitle>
                 </CardHeader>
@@ -179,7 +179,7 @@ const AboutUsPage = () => {
               </CardContent>
             </Card>
             <Card className="border-2">
-              <CardContent>
+              <CardContent className="flex flex-col items-center">
                 <CardHeader>
                   <CardTitle className="capitalize">Sustainability</CardTitle>
                 </CardHeader>
@@ -189,7 +189,7 @@ const AboutUsPage = () => {
               </CardContent>
             </Card>
             <Card className="border-2">
-              <CardContent>
+              <CardContent className="flex flex-col items-center">
                 <CardHeader>
                   <CardTitle className="capitalize">
                     Continuous growth

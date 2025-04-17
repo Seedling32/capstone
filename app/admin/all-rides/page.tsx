@@ -112,7 +112,7 @@ const AdminAllRides = async (props: {
           ))}
         </TableBody>
       </Table>
-      {rides.totalPages > 1 && (
+      {rides?.totalPages > 1 && (
         <Pagination page={Number(page) || 1} totalPages={rides?.totalPages} />
       )}
     </div>

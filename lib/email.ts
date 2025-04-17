@@ -23,6 +23,7 @@ export async function sendPasswordResetEmail(email: string, url: string) {
         If you didn&apos;t request a password reset, you can safely ignore this email.
       </p>
       <p>Thanks for being a part of the Pact!</p>
+      <p><small>This link will expire in 1 hour</small></p>
     </div>
     `,
   });

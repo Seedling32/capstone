@@ -11,18 +11,30 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
 import { APP_NAME } from '@/lib/constants';
+import { Button } from '@/components/ui/button';
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const [done, setDone] = useState(false);
   const token = useSearchParams().get('token');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    setError('');
+
     await fetch('/api/auth/reset-password', {
       method: 'POST',
       body: JSON.stringify({ token, password }),
     });
+
     setDone(true);
   };
 
@@ -61,17 +73,36 @@ export default function ResetPasswordPage() {
                 .
               </p>
             ) : (
-              <>
+              <div className="flex flex-col items-center gap-4">
+                <label htmlFor="password" className="sr-only">
+                  Enter password
+                </label>
                 <input
+                  id="password"
                   className="p-2 border rounded w-full mb-2"
                   type="password"
                   required
-                  placeholder="New password"
+                  placeholder="New password..."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className="btn-primary">Reset Password</button>
-              </>
+                <label htmlFor="confirmPassword" className="sr-only">
+                  Confirm password
+                </label>
+                <input
+                  id="confirmPassword"
+                  className="p-2 border rounded w-full"
+                  type="password"
+                  required
+                  placeholder="Confirm password..."
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {error && <p className="text-destructive text-sm">{error}</p>}
+                <Button disabled={!password || password !== confirmPassword}>
+                  Reset Password
+                </Button>
+              </div>
             )}
           </form>
         </CardContent>

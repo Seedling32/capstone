@@ -75,8 +75,8 @@ const AdminAllUsers = async (props: {
                     {user.role === 'ADMIN'
                       ? 'Admin'
                       : user.role === 'SUPER_ADMIN'
-                      ? 'Super Admin'
-                      : 'User'}
+                        ? 'Super Admin'
+                        : 'User'}
                   </Badge>
                 </TableCell>
                 <TableCell className="flex gap-2">
@@ -89,7 +89,9 @@ const AdminAllUsers = async (props: {
             ))}
           </TableBody>
         </Table>
-        <Pagination page={Number(page) || 1} totalPages={users?.totalPages} />
+        {users?.totalPages > 1 && (
+          <Pagination page={Number(page) || 1} totalPages={users?.totalPages} />
+        )}
       </div>
     </div>
   );

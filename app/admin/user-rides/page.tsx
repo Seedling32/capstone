@@ -84,10 +84,10 @@ const AdminUserRides = async (props: {
                     {ride.status === 'SIGNED_UP'
                       ? 'Signed Up'
                       : ride.status === 'CANCELED'
-                      ? 'Canceled'
-                      : ride.status === 'COMPLETED'
-                      ? 'Completed'
-                      : 'No Show'}
+                        ? 'Canceled'
+                        : ride.status === 'COMPLETED'
+                          ? 'Completed'
+                          : 'No Show'}
                   </Badge>
                 </TableCell>
                 <TableCell>
@@ -101,7 +101,7 @@ const AdminUserRides = async (props: {
             ))}
           </TableBody>
         </Table>
-        {userRides.totalPages > 1 && (
+        {userRides?.totalPages > 1 && (
           <Pagination
             page={Number(page) || 1}
             totalPages={userRides?.totalPages}
