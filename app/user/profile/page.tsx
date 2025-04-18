@@ -12,7 +12,7 @@ const Profile = async () => {
 
   return (
     <SessionProvider session={session}>
-      <div className="max-w-md mx-auto space-y-4">
+      <div className="max-w-md bg-muted mx-auto rounded-lg p-6 space-y-4 bg-gradient-to-t from-transparent to-background">
         <h2 className="h2-bold">Profile</h2>
         <ProfileForm />
       </div>

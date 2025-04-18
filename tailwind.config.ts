@@ -13,7 +13,7 @@ export default {
         'scroll-left': 'scroll-left 20s linear infinite',
       },
       backgroundImage: {
-        'hero-large': "url('/images/group-1.jpg')",
+        'hero-large': "url('/images/group-1-2.webp')",
         'hero-small': "url('/images/group-1-small.webp')",
         'sunrise-hero': "url('/images/sunrise-ride.png')",
         'sunrise-hero-small': "url('/images/sunrise-ride-small.png')",

@@ -12,56 +12,55 @@ const HomePage = async () => {
   return (
     <div>
       <div className="flex flex-col bg-hero-small min-h-[40vh] md:bg-hero-large lg:min-h-[60vh] relative z-10">
-        <div className="absolute px-2 top-32 md:top-4 flex flex-col gap-4 md:left-20  max-w-[650px]">
-          <h1 className="text-left text-[clamp(1.5rem,5vw,4rem)] font-bold text-white text-shadow uppercase max-w-[550px]">
-            Connect & ride with the ultimate hub for community cycling
+        <div className="absolute px-2 top-32 flex flex-col gap-4 md:left-20  max-w-[650px]">
+          <h1 className="text-left text-[clamp(2rem,5vw,4rem)] font-bold text-white text-shadow uppercase max-w-[550px]">
+            Connect & ride with your community
           </h1>
-          <p className="text-lg text-popover-foreground bg-background/70 rounded-md px-4 text-black">
-            Pedal Pact makes it easy to discover new routes, join group rides,
-            and share the adventure with cyclists of all levels.
-          </p>
-          <Button asChild className="max-w-32">
-            <Link href="/register">Join for free</Link>
-          </Button>
+          <div className="flex flex-col items-center max-w-[300px] md:max-w-[500px] text-lg text-popover-foreground bg-background/90 rounded-md p-4 text-black">
+            <p>
+              Pedal Pact makes it easy to discover new routes, join group rides,
+              and share the adventure with cyclists of all levels.
+            </p>
+            <Button
+              asChild
+              className="mt-6 max-w-32 hover:-translate-y-1 transition duration-300"
+            >
+              <Link href="/register">Join for free</Link>
+            </Button>
+          </div>
         </div>
       </div>
-      <section className="border-t bg-muted drop-shadow-xl py-16 px-4 bg-gradient-to-t from-transparent to-background">
+      <section className="border-t bg-muted drop-shadow-xl pt-20 pb-16 md:py-16 px-4 bg-gradient-to-t from-transparent to-background">
         <RideList title="Upcoming Rides" data={rideData} />
       </section>
       <section className="py-16 text-center max-w-6xl mx-auto px-4">
         <div className="bg-muted flex flex-col gap-6 p-6 rounded-xl md:gap-0 md:flex-row-reverse items-center shadow-xl bg-gradient-to-t from-transparent to-background">
           <div className="min-w-[225px] flex-1">
-            <h2 className="text-6xl mb-4">How it works</h2>
+            <h2 className="text-6xl mb-20 capitalize">How it works:</h2>
             <ol className="flex flex-col gap-16 md:-translate-x-[100px]">
               <li>
-                <Card className="border-2">
-                  <CardHeader>
-                    <CardTitle>Step 1</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    Sign-up for free to join the community.
-                  </CardContent>
-                </Card>
+                <Link href="/register" className="group">
+                  <Card className="border-2 group-hover:-translate-y-3 duration-300">
+                    <CardHeader>
+                      <CardTitle className="uppercase">Step 1</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      Sign-up for free to join the community.
+                    </CardContent>
+                  </Card>
+                </Link>
               </li>
               <li>
-                <Card className="border-2">
-                  <CardHeader>
-                    <CardTitle>Step 2</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    Browse existing routes or events near you.
-                  </CardContent>
-                </Card>
-              </li>
-              <li>
-                <Card className="border-2">
-                  <CardHeader>
-                    <CardTitle>Step 3</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    Meet fellow cyclists and enjoy the ride!
-                  </CardContent>
-                </Card>
+                <Link href="/search-rides" className="group">
+                  <Card className="border-2 group-hover:-translate-y-3 duration-300">
+                    <CardHeader>
+                      <CardTitle className="uppercase">Step 2</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      Browse existing routes and go ride!
+                    </CardContent>
+                  </Card>
+                </Link>
               </li>
             </ol>
           </div>
@@ -79,7 +78,7 @@ const HomePage = async () => {
       <section className="py-16">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="h2-bold capitalize mb-6">- Who Pedal-Pact is for -</h2>
-          <ul className="space-y-4 text-lg">
+          <ul className="space-y-4 text-lg capitalize">
             <li> Road cyclists chasing long miles</li>
             <li> Casual cruisers exploring scenic routes</li>
             <li> Weekend adventurers discovering new paths</li>
@@ -87,7 +86,7 @@ const HomePage = async () => {
           </ul>
         </div>
       </section>
-      <div className="wrapper">
+      <div className="wrapper mb-10">
         <WeatherWidget />
       </div>
     </div>
