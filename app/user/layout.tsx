@@ -13,11 +13,11 @@ export default function UserLayout({
   return (
     <>
       <div className="flex flex-col">
-        <div className="border-b bg-slate-800">
+        <div className="bg-muted">
           <div className="flex container mx-auto items-center h-16 px-4">
             <Link href="/" className="w-22">
               <Image
-                src="/images/logo.svg"
+                src="/images/logo-1.png"
                 height={48}
                 width={48}
                 alt={`${APP_NAME} logo.`}

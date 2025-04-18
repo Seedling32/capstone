@@ -40,7 +40,7 @@ const MainNav = ({
           key={item.href}
           href={item.href}
           className={cn(
-            'text-sm text-white font-medium transition-colors hover:text-primary',
+            'text-sm font-medium',
             pathName?.includes(item.href) ? '' : 'text-muted-foreground'
           )}
         >
