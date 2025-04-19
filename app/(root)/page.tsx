@@ -11,8 +11,8 @@ const HomePage = async () => {
 
   return (
     <div>
-      <div className="flex flex-col bg-hero-small min-h-[40vh] md:bg-hero-large lg:min-h-[60vh] relative z-10">
-        <div className="absolute px-2 top-32 flex flex-col gap-4 md:left-20  max-w-[650px]">
+      <div className="flex flex-col justify-center bg-hero-small min-h-[40vh] md:bg-hero-large lg:min-h-[60vh] relative z-10">
+        <div className="px-8 flex flex-col gap-4 md:left-20  max-w-[650px] mb-2">
           <h1 className="text-left text-[clamp(2rem,5vw,4rem)] font-bold text-white text-shadow uppercase max-w-[550px]">
             Connect & ride with your community
           </h1>
