@@ -304,6 +304,44 @@ const RideForm = ({
     })();
   };
 
+  // Undo the last point that you clicked. Recalculates elevation and distance as well based on the remaining points in the array after removing the last one.
+  const undoLastPoint = () => {
+    if (path.length > 1) {
+      const newPath = [...path];
+      newPath.pop();
+      setPath(newPath);
+    } else {
+      setPath([]);
+    }
+
+    // Also update elevation and distance if needed
+    if (elevation.length > 0) {
+      setElevation((prev) => prev.slice(0, -1));
+    }
+
+    if (path.length > 1 && googleRef.current) {
+      const newTotalDistance = path
+        .slice(0, -1)
+        .reduce((total, point, index, arr) => {
+          if (index === 0) return total;
+          const prev = arr[index - 1];
+          const segment =
+            googleRef.current!.maps.geometry.spherical.computeDistanceBetween(
+              new googleRef.current!.maps.LatLng(prev.lat, prev.lng),
+              new googleRef.current!.maps.LatLng(point.lat, point.lng)
+            );
+          return total + segment;
+        }, 0);
+
+      const miles = newTotalDistance * 0.000621371;
+      setDistance(parseFloat(miles.toFixed(2)));
+      distanceRef.current = miles;
+    } else {
+      setDistance(0);
+      distanceRef.current = 0;
+    }
+  };
+
   const onSubmit: SubmitHandler<z.infer<typeof createRideSchema>> = async (
     values
   ) => {
@@ -603,7 +641,7 @@ const RideForm = ({
                       <SelectValue placeholder="Select state" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="h-[400px]">
                     {states.map((state) => (
                       <SelectItem key={state.id} value={String(state.id)}>
                         {state.abbreviation}
@@ -618,7 +656,7 @@ const RideForm = ({
         </div>
 
         <div className="flex flex-col space-y-4">
-          <div>
+          <div className="relative">
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
               center={defaultCenter}
@@ -635,12 +673,19 @@ const RideForm = ({
                 options={{ strokeColor: '#FF0000', strokeWeight: 4 }}
               />
             </GoogleMap>
+            <Button
+              type="button"
+              onClick={undoLastPoint}
+              className="capitalize absolute right-2 bottom-36"
+            >
+              Undo last point
+            </Button>
           </div>
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
             onClick={handlePreSubmit}
-            className="bg-green-500 min-w-[350px] self-center"
+            className="min-w-[350px] self-center"
           >
             {form.formState.isSubmitting ? 'Saving Route...' : `${type} Ride`}
           </Button>
