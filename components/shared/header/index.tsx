@@ -6,7 +6,7 @@ import Search from './search';
 
 const Header = () => {
   return (
-    <header role="header" className="bg-muted w-full">
+    <header className="bg-muted w-full">
       <div className="wrapper flex-between py-5">
         <div className="flex-start">
           <Link href="/" className="flex-start ml-4">
