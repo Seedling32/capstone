@@ -78,7 +78,7 @@ const SignUpForm = () => {
     });
 
     if (!response.success) {
-      return toast(<div className="text-destructive">{response.message}</div>);
+      return toast.error(`${response.message}`);
     }
 
     const newSession = {
@@ -91,7 +91,7 @@ const SignUpForm = () => {
 
     await update(newSession);
 
-    toast('User registered successfully.');
+    toast.success('User registered successfully.');
   };
 
   return (
