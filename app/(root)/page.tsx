@@ -34,9 +34,18 @@ const HomePage = async () => {
         <RideList title="Upcoming Rides" data={rideData} />
       </section>
       <section className="py-16 text-center max-w-6xl mx-auto px-4">
+        <h2 className="text-6xl mb-10 capitalize">How it works:</h2>
+        <p className="text-lg mb-10">
+          Pedal Pact makes it easy to join fun, organized group bike rides in
+          your area. Each ride is led by a designated ride leader who knows the
+          route, sets the pace, and ensures everyone stays on track. Simply
+          browse the list of upcoming rides, sign up for one that fits your
+          schedule and skill level, and show up ready to ride. Whether
+          you&apos;re new to group cycling or a seasoned rider, Pedal Pact helps
+          you connect with others and enjoy the ride with confidence.
+        </p>
         <div className="bg-muted flex flex-col gap-6 p-6 rounded-xl md:gap-0 md:flex-row-reverse items-center shadow-xl bg-gradient-to-t from-transparent to-background">
           <div className="min-w-[225px] flex-1">
-            <h2 className="text-6xl mb-20 capitalize">How it works:</h2>
             <ol className="flex flex-col gap-16 md:-translate-x-[100px]">
               <li>
                 <Link href="/register" className="group">
