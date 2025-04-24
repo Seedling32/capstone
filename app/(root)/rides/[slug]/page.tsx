@@ -110,7 +110,10 @@ const RideDetailsPage = async (props: {
           ) : (
             <Card>
               <CardContent className="p-6 flex items-center gap-2">
-                <p>Please sign in to register for rides.</p>
+                <p>
+                  Please sign in to register for rides and see who else is
+                  joining!
+                </p>
                 <Button>
                   <Link href={`/sign-in?callbackUrl=/rides/${ride.slug}`}>
                     Sign-in
@@ -122,41 +125,47 @@ const RideDetailsPage = async (props: {
         </div>
         <div className="mt-6">
           <h2 className="h2-bold capitalize">Who else is going</h2>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {otherRiders.length > 0 ? (
-                otherRiders.map((user) => (
-                  <TableRow key={user.user_id}>
-                    <TableCell>{`${user.user.firstName} ${user.user.lastName}`}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={
-                          user.status === 'SIGNED_UP' ||
-                          user.status === 'COMPLETED'
-                            ? 'secondary'
-                            : 'destructive'
-                        }
-                      >
-                        {user.status === 'SIGNED_UP' ? 'Signed Up' : 'Canceled'}
-                      </Badge>
+          {session ? (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {otherRiders.length > 0 ? (
+                  otherRiders.map((user) => (
+                    <TableRow key={user.user_id}>
+                      <TableCell>{`${user.user.firstName} ${user.user.lastName}`}</TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={
+                            user.status === 'SIGNED_UP' ||
+                            user.status === 'COMPLETED'
+                              ? 'secondary'
+                              : 'destructive'
+                          }
+                        >
+                          {user.status === 'SIGNED_UP'
+                            ? 'Signed Up'
+                            : 'Canceled'}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={2}>
+                      No other riders are signed up for this ride.
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={2}>
-                    No other riders are signed up for this ride.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                )}
+              </TableBody>
+            </Table>
+          ) : (
+            <p>Sign in to get the scoop on who else will be there.</p>
+          )}
         </div>
       </div>
       <div className="col-span-2 flex flex-col gap-6">
