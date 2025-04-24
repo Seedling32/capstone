@@ -7,23 +7,23 @@ import Link from 'next/link';
 const distances = [
   {
     name: '0-5 Miles',
-    value: '0.1-5.99',
+    value: '0-5',
   },
   {
-    name: '6-10 Miles',
-    value: '6-10.99',
+    name: '5-10 Miles',
+    value: '5.01-10',
   },
   {
-    name: '11-15 Miles',
-    value: '11-15.99',
+    name: '10-15 Miles',
+    value: '10.01-15',
   },
   {
-    name: '16-20 Miles',
-    value: '16-20.99',
+    name: '15-20 Miles',
+    value: '15.01-20',
   },
   {
-    name: '21 Miles & Up',
-    value: '21-100',
+    name: '20 Miles & Up',
+    value: '20.01-100',
   },
 ];
 
