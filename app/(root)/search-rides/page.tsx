@@ -190,9 +190,11 @@ const SearchRidesPage = async (props: {
             <span>
               {distance !== 'all' && 'Distance: ' + distance + ' Miles'}
             </span>
+            <span>{state !== 'all' && 'State: ' + state}</span>
             {(q !== 'all' && q !== '') ||
             (difficulty !== 'all' && difficulty !== '') ||
-            distance !== 'all' ? (
+            distance !== 'all' ||
+            state !== 'all' ? (
               <Button variant={'link'} asChild className="border">
                 <Link href="/search-rides">Clear</Link>
               </Button>
