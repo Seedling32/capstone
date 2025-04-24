@@ -293,7 +293,15 @@ const RideForm = ({
       form.setValue('date', utcDate);
     }
 
-    const encodedPath = polyline.encode(path.map((p) => [p.lat, p.lng]));
+    // Keep 1 of every 10 points to generate the path for encoding
+    // the the url. This keeps the url shorter than the common ~2000ish
+    // character limit.
+    const simplifiedPath = path.filter((_, index) => index % 10 === 0);
+
+    const encodedPath = polyline.encode(
+      simplifiedPath.map((p) => [p.lat, p.lng])
+    );
+
     const staticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?size=600x300&path=enc:${encodedPath}&key=${GOOGLE_MAPS_API_KEY}`;
 
     form.setValue('staticMapUrl', staticMapUrl);

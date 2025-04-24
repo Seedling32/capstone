@@ -112,7 +112,9 @@ const RideDetailsPage = async (props: {
               <CardContent className="p-6 flex items-center gap-2">
                 <p>Please sign in to register for rides.</p>
                 <Button>
-                  <Link href="/sign-in">Sign-in</Link>
+                  <Link href={`/sign-in?callbackUrl=/rides/${ride.slug}`}>
+                    Sign-in
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
