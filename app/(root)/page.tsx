@@ -86,8 +86,8 @@ const HomePage = async () => {
       </section>
       <section className="py-16">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="h2-bold capitalize mb-6">- Who Pedal-Pact is for -</h2>
-          <ul className="space-y-4 text-lg capitalize">
+          <h2 className="h2-bold capitalize mb-6">Who Pedal-Pact is for</h2>
+          <ul className="space-y-4 capitalize">
             <li> Road cyclists chasing long miles</li>
             <li> Casual cruisers exploring scenic routes</li>
             <li> Weekend adventurers discovering new paths</li>

@@ -78,9 +78,11 @@ const AdminOverviewPage = async () => {
         </Card>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
+        <Card className="hidden md:flex col-span-4 flex-col justify-around">
           <CardHeader>
-            <CardTitle>Overview</CardTitle>
+            <CardTitle className="text-center capitalize">
+              User sign-up overview
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <Charts
