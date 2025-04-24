@@ -64,6 +64,11 @@ const InstructionsDrawer = () => {
                 <strong>Use the map:</strong> Your first click is the beginning
                 of the route. Click along the desired path to set the route.
               </li>
+              <li>
+                <strong>Undo:</strong> Use the undo button on the map to erase
+                the last map click. You may have to click the button multiple
+                times
+              </li>
             </ul>
             <DrawerClose asChild>
               <Link href={redirectLink}>

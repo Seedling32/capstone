@@ -42,6 +42,7 @@ import {
   getLocationById,
 } from '@/lib/actions/location.actions';
 import { convertLocalToUTC, convertUTCToLocal } from '@/lib/utils';
+import { Redo2 } from 'lucide-react';
 
 const mapContainerStyle = {
   width: '100%',
@@ -686,6 +687,7 @@ const RideForm = ({
               onClick={undoLastPoint}
               className="capitalize absolute right-2 bottom-36"
             >
+              <Redo2 />
               Undo last point
             </Button>
           </div>
