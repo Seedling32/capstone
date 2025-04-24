@@ -16,7 +16,7 @@ export async function sendPasswordResetEmail(email: string, url: string) {
     subject: 'Reset your Pedal Pact password',
     html: `
     <div style="border: 2px solid #333; max-width: 450px; padding: .5rem; border-radius: 25px; box-shadow: 5px 5px 10px #333; text-align: center;">
-      <img src="https://www.pedal-pact.com/images/logo-1.png" alt="Pedal Pact logo." width="80" height="80" />
+      <img src="https://www.pedal-pact.com/images/logo.png" alt="Pedal Pact logo." width="80" height="80" />
       <h2 style="margin-top: 0;">Password Reset</h2>
       <p>Click <a href="${url}" style="text-decoration: none; border: 1px solid #333; border-radius: 5px; padding: 3px; color: black; background-color: #ddd;">here</a> to reset your password.</p>
       <p style="max-width: 300px; margin: 1rem auto;">

@@ -11,10 +11,10 @@ const Header = () => {
         <div className="flex-start">
           <Link href="/" className="flex-start ml-4">
             <Image
-              src="/images/logo-1.png"
+              src="/images/logo.png"
               alt={`${APP_NAME} logo.`}
-              height={48}
-              width={48}
+              height={60}
+              width={60}
               priority={true}
               className="rounded-lg"
             />
