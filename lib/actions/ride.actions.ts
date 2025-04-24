@@ -97,8 +97,8 @@ export async function getAllRides({
       sort === 'shortest'
         ? { distance: 'asc' }
         : sort === 'longest'
-        ? { distance: 'desc' }
-        : { date: 'desc' },
+          ? { distance: 'desc' }
+          : { date: 'desc' },
     skip: (page - 1) * limit,
     take: limit,
     include: {
