@@ -21,14 +21,14 @@ const WeatherWidget = async () => {
 
   return (
     <Card className="bg-mountains flex flex-col items-center gap-4">
-      <CardHeader className="h3-bold text-center bg-slate-600/50 p-2 mt-2 rounded-md">
+      <CardHeader className="h3-bold text-center bg-slate-600/80 p-2 mt-2 rounded-md">
         Asheville Weather
       </CardHeader>
-      <CardContent className="flex flex-col items-center gap-4 md:flex-row mb-2 p-0 mx-2 w-full justify-around">
+      <CardContent className="flex flex-col items-center gap-4 md:flex-row md:flex-wrap mb-2 p-0 mx-2 w-full justify-around">
         {data.properties.periods.slice(0, 3).map((day: weatherData) => (
           <div
             key={day.number}
-            className="flex items-center gap-6 bg-slate-600/50 p-2 rounded-md"
+            className="flex items-center gap-6 bg-slate-600/80 p-2 rounded-md"
           >
             <Image
               src={day.icon}
