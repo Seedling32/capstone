@@ -49,8 +49,12 @@ export default function ForgotPasswordPage() {
             {sent ? (
               <p className="text-center">Check your email for a reset link.</p>
             ) : (
-              <>
+              <div>
+                <label htmlFor="email" className="sr-only">
+                  Email
+                </label>
                 <input
+                  id="email"
                   className="p-2 border rounded w-full mb-2"
                   type="email"
                   placeholder="Enter your email address..."
@@ -61,7 +65,7 @@ export default function ForgotPasswordPage() {
                 <Button type="submit" className="w-full mt-4">
                   Send Reset Link
                 </Button>
-              </>
+              </div>
             )}
           </form>
         </CardContent>

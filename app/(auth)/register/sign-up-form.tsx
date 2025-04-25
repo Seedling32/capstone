@@ -104,9 +104,10 @@ const SignUpForm = () => {
             name="firstName"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>First Name</FormLabel>
+                <FormLabel id="firstName">First Name</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="firstName"
                     placeholder={signUpDefaultValues.firstName}
                     className="input-field"
                     {...field}
@@ -121,9 +122,10 @@ const SignUpForm = () => {
             name="lastName"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Last Name</FormLabel>
+                <FormLabel id="lastName">Last Name</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="lastName"
                     placeholder={signUpDefaultValues.lastName}
                     className="input-field"
                     {...field}
@@ -138,9 +140,10 @@ const SignUpForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Email</FormLabel>
+                <FormLabel id="email">Email</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="email"
                     placeholder={signUpDefaultValues.email}
                     className="input-field"
                     type="email"
@@ -157,9 +160,9 @@ const SignUpForm = () => {
               name="city"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>City</FormLabel>
+                  <FormLabel id="city">City</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter city..." {...field} />
+                    <Input aria-describedby="city" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -170,14 +173,17 @@ const SignUpForm = () => {
               name="stateId"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>State</FormLabel>
+                  <FormLabel id="state">State</FormLabel>
                   <Select
                     name="select"
                     onValueChange={field.onChange}
                     value={String(field.value)}
                   >
                     <FormControl>
-                      <SelectTrigger className="min-w-[75px]">
+                      <SelectTrigger
+                        aria-describedby="state"
+                        className="min-w-[75px]"
+                      >
                         <SelectValue placeholder="Select state" />
                       </SelectTrigger>
                     </FormControl>
@@ -199,9 +205,10 @@ const SignUpForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Password</FormLabel>
+                <FormLabel id="password">Password</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="password"
                     placeholder={signUpDefaultValues.password}
                     className="input-field"
                     type="password"
@@ -217,9 +224,10 @@ const SignUpForm = () => {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Confirm Password</FormLabel>
+                <FormLabel id="confirmPassword">Confirm Password</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="confirmPassword"
                     placeholder={signUpDefaultValues.confirmPassword}
                     className="input-field"
                     type="password"
