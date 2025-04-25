@@ -12,6 +12,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { APP_NAME } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState('');
@@ -30,10 +31,18 @@ export default function ResetPasswordPage() {
 
     setError('');
 
-    await fetch('/api/auth/reset-password', {
+    const res = await fetch('/api/auth/reset-password', {
       method: 'POST',
       body: JSON.stringify({ token, password }),
     });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error || 'Something went wrong');
+      toast.error(`${error}`);
+      return;
+    }
 
     setDone(true);
   };
