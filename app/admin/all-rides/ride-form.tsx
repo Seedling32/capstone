@@ -444,9 +444,13 @@ const RideForm = ({
               >;
             }) => (
               <FormItem className="w-full">
-                <FormLabel>Ride Title</FormLabel>
+                <FormLabel id="title">Ride Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter ride name..." {...field} />
+                  <Input
+                    aria-describedby="title"
+                    placeholder="Enter ride name..."
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -464,9 +468,11 @@ const RideForm = ({
               >;
             }) => (
               <FormItem className="w-full">
-                <FormLabel htmlFor="slug">Slug</FormLabel>
+                <FormLabel htmlFor="slug" id="slug-description">
+                  Slug
+                </FormLabel>
                 <FormControl>
-                  <div>
+                  <div aria-describedby="slug-description">
                     <Input
                       id="slug"
                       disabled
@@ -506,9 +512,10 @@ const RideForm = ({
             >;
           }) => (
             <FormItem className="w-full">
-              <FormLabel>Description</FormLabel>
+              <FormLabel id="description">Description</FormLabel>
               <FormControl>
                 <Textarea
+                  aria-describedby="description"
                   placeholder="Enter the ride description..."
                   {...field}
                 />
@@ -530,9 +537,10 @@ const RideForm = ({
               >;
             }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Date</FormLabel>
+                <FormLabel id="date">Date</FormLabel>
                 <FormControl>
                   <DatePicker
+                    aria-describedby="date"
                     selected={field.value instanceof Date ? field.value : null}
                     onChange={(date) => field.onChange(date)}
                     onBlur={field.onBlur}
@@ -564,14 +572,14 @@ const RideForm = ({
               >;
             }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Difficulty</FormLabel>
+                <FormLabel id="difficulty">Difficulty</FormLabel>
                 <Select
                   name="select"
                   onValueChange={field.onChange}
                   value={field.value.toString()}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger aria-describedby="difficulty">
                       <SelectValue placeholder="Select difficulty" />
                     </SelectTrigger>
                   </FormControl>
@@ -592,9 +600,10 @@ const RideForm = ({
             name="distance"
             render={() => (
               <FormItem className="flex flex-col">
-                <FormLabel>Distance</FormLabel>
+                <FormLabel id="distance">Distance</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="distance"
                     placeholder={`${parseFloat(distance.toFixed(2))}`}
                     value={`${parseFloat(distance.toFixed(2))} Miles`}
                     disabled
@@ -619,9 +628,13 @@ const RideForm = ({
               >;
             }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>City</FormLabel>
+                <FormLabel id="city">City</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter city..." {...field} />
+                  <Input
+                    aria-describedby="city"
+                    placeholder="Enter city..."
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -639,14 +652,20 @@ const RideForm = ({
               >;
             }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>State</FormLabel>
+                <FormLabel htmlFor="state" id="state-description">
+                  State
+                </FormLabel>
                 <Select
-                  name="select"
+                  name="state"
                   onValueChange={field.onChange}
                   value={String(field.value)}
                 >
                   <FormControl>
-                    <SelectTrigger className="min-w-[75px]">
+                    <SelectTrigger
+                      id="state"
+                      aria-describedby="state-description"
+                      className="min-w-[75px]"
+                    >
                       <SelectValue placeholder="Select state" />
                     </SelectTrigger>
                   </FormControl>

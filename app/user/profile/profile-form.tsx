@@ -144,9 +144,10 @@ const ProfileForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Email</FormLabel>
+                <FormLabel id="email">Email</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="email"
                     disabled
                     placeholder="Email"
                     className="input-field"
@@ -162,9 +163,10 @@ const ProfileForm = () => {
             name="firstName"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>First Name</FormLabel>
+                <FormLabel id="firstName">First Name</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="firstName"
                     placeholder="First Name"
                     className="input-field"
                     {...field}
@@ -179,9 +181,10 @@ const ProfileForm = () => {
             name="lastName"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Last Name</FormLabel>
+                <FormLabel id="lastName">Last Name</FormLabel>
                 <FormControl>
                   <Input
+                    aria-describedby="lastName"
                     placeholder="Last Name"
                     className="input-field"
                     {...field}
@@ -197,9 +200,13 @@ const ProfileForm = () => {
               name="city"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>City</FormLabel>
+                  <FormLabel id="city">City</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter city..." {...field} />
+                    <Input
+                      aria-describedby="city"
+                      placeholder="Enter city..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -210,14 +217,17 @@ const ProfileForm = () => {
               name="stateId"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>State</FormLabel>
+                  <FormLabel id="state">State</FormLabel>
                   <Select
                     name="select"
                     onValueChange={field.onChange}
                     value={String(field.value)}
                   >
                     <FormControl>
-                      <SelectTrigger className="min-w-[75px]">
+                      <SelectTrigger
+                        aria-describedby="state"
+                        className="min-w-[75px]"
+                      >
                         <SelectValue placeholder="Select state">
                           {states.find(
                             (state) => String(state.id) === String(field.value)
@@ -244,7 +254,7 @@ const ProfileForm = () => {
               name="image"
               render={() => (
                 <FormItem className="w-full">
-                  <FormLabel>Avatar</FormLabel>
+                  <span>Avatar</span>
                   <Card>
                     <CardContent className="space-y-2 mt-2 min-h-32">
                       <div className="flex-start">

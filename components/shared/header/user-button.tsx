@@ -42,7 +42,7 @@ const UserButton = async () => {
           <div className="flex items-center">
             {image ? (
               <Avatar className="cursor-pointer">
-                <AvatarImage src={image} />
+                <AvatarImage src={image} alt="User image." />
                 <AvatarFallback>{firstInitial}</AvatarFallback>
               </Avatar>
             ) : (

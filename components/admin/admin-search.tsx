@@ -10,8 +10,8 @@ const AdminSearch = () => {
   const formActionUrl = pathName.includes('/admin/user-rides')
     ? '/admin/user-rides'
     : pathName.includes('/admin/users')
-    ? '/admin/users'
-    : '/admin/all-rides';
+      ? '/admin/users'
+      : '/admin/all-rides';
 
   const searchParams = useSearchParams();
   const [queryValue, setQueryValue] = useState(searchParams.get('query') || '');
@@ -22,7 +22,11 @@ const AdminSearch = () => {
 
   return (
     <form action={formActionUrl} method="GET">
+      <label htmlFor="search" className="sr-only">
+        Search
+      </label>
       <Input
+        id="search"
         type="search"
         placeholder={
           pathName.includes('/admin/user-rides') ||

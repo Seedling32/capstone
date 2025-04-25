@@ -18,11 +18,11 @@ const Search = async () => {
   return (
     <form action="/search-rides" method="GET">
       <div className="flex w-full max-w-sm items-center space-x-2">
-        <label id="state-label" htmlFor="state" className="sr-only">
-          States
-        </label>
-        <Select name="state" aria-labelledby="state-label">
-          <SelectTrigger id="state" className="w-[180px]">
+        <span id="state-label" className="sr-only">
+          State
+        </span>
+        <Select>
+          <SelectTrigger aria-labelledby="state-label" className="w-[180px]">
             <SelectValue placeholder="All" />
           </SelectTrigger>
           <SelectContent className="max-h-[400px]">

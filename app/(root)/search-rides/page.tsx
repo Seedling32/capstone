@@ -124,6 +124,7 @@ const SearchRidesPage = async (props: {
 
   return (
     <div className="wrapper grid md:grid-cols-5 md:gap-5">
+      <h1 className="sr-only">Search rides</h1>
       <div className="filter-links">
         {/* Difficulty Links */}
         <div className="text-xl mb-2 mt-3">Difficulty</div>
@@ -213,12 +214,13 @@ const SearchRidesPage = async (props: {
             ))}
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <h2 className="sr-only">All rides</h2>
           {rides.data.length === 0 && <div>No rides found.</div>}
           {rides.data.map((ride) => (
             <RideCard key={ride.ride_id} ride={ride} />
           ))}
-        </div>
+        </section>
         <Pagination page={Number(page) || 1} totalPages={rides.totalPages} />
       </div>
     </div>
