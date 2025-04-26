@@ -15,10 +15,13 @@ export async function POST(req: NextRequest) {
   const isHuman = await verifyTurnstile(captchaToken);
 
   if (!isHuman) {
-    return {
-      success: false,
-      message: 'CAPTCHA validation failed. Please try again.',
-    };
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'CAPTCHA validation failed. Please try again.',
+      },
+      { status: 400 }
+    );
   }
   formData.delete('captchaToken');
   formData.append('access_key', '94aa02a2-d5b5-4cf2-bee2-8adc2e6bf9b4');
