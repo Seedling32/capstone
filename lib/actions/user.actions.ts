@@ -44,6 +44,22 @@ export async function signOutUser() {
   await signOut();
 }
 
+// Cloudfare Turnstile token validation
+export async function verifyTurnstile(token: string): Promise<boolean> {
+  const secretKey = process.env.TURNSTILE_SECRET_KEY;
+  const res = await fetch(
+    'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${secretKey}&response=${token}`,
+    }
+  );
+
+  const data = await res.json();
+  return data.success;
+}
+
 // Sign up user
 export async function signUpUser(
   prevState: unknown,
@@ -54,8 +70,17 @@ export async function signUpUser(
     locationId: number;
     password: string;
     confirmPassword: string;
+    captchaToken: string;
   }
 ) {
+  const isHuman = await verifyTurnstile(values.captchaToken);
+
+  if (!isHuman) {
+    return {
+      success: false,
+      message: 'CAPTCHA validation failed. Please try again.',
+    };
+  }
   try {
     const user = signUpFormSchema.parse({
       firstName: values.firstName,

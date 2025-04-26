@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { signUpDefaultValues } from '@/lib/constants';
+import { signUpDefaultValues, TURNSTILE_SITE_KEY } from '@/lib/constants';
 import Link from 'next/link';
 import { signUpUser } from '@/lib/actions/user.actions';
 import { useSearchParams } from 'next/navigation';
@@ -32,12 +32,14 @@ import {
   getAllStates,
 } from '@/lib/actions/location.actions';
 import { useEffect, useState } from 'react';
+import Turnstile from 'react-turnstile';
 
 const SignUpForm = () => {
   const { data: session, update } = useSession();
   const [states, setStates] = useState<{ id: number; abbreviation: string }[]>(
     []
   );
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams?.get('callbackUrl') || '/';
@@ -65,6 +67,11 @@ const SignUpForm = () => {
   }, []);
 
   const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
+    if (!captchaToken) {
+      toast.error('Please complete CAPTCHA verification.');
+      return;
+    }
+
     const locationResponse = await findOrCreateLocation({
       stateId: Number(values.stateId) || 0,
       city: values.city || '',
@@ -75,6 +82,7 @@ const SignUpForm = () => {
     const response = await signUpUser(null, {
       ...values,
       locationId: locationId,
+      captchaToken,
     });
 
     if (!response.success) {
@@ -237,6 +245,12 @@ const SignUpForm = () => {
                 <FormMessage />
               </FormItem>
             )}
+          />
+        </div>
+        <div className="flex justify-center my-4">
+          <Turnstile
+            sitekey={TURNSTILE_SITE_KEY}
+            onSuccess={(token) => setCaptchaToken(token)}
           />
         </div>
         <Button
