@@ -4,28 +4,20 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import Turnstile from 'react-turnstile';
-import { TURNSTILE_SITE_KEY } from '@/lib/constants';
 
 const ContactForm = () => {
   const [result, setResult] = useState('');
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!captchaToken) {
-      toast.error('Please complete CAPTCHA verification.');
-      return;
-    }
 
     setResult('Sending....');
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    formData.append('captchaToken', captchaToken);
+    formData.append('access_key', '94aa02a2-d5b5-4cf2-bee2-8adc2e6bf9b4');
 
-    const response = await fetch('/api/auth/contact', {
+    const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       body: formData,
     });
@@ -108,12 +100,6 @@ const ContactForm = () => {
           {result === '' ? 'Send message' : result}
           <ArrowRight />
         </motion.button>
-        <div className="flex justify-center my-4">
-          <Turnstile
-            sitekey={TURNSTILE_SITE_KEY}
-            onSuccess={(token) => setCaptchaToken(token)}
-          />
-        </div>
       </form>
     </div>
   );
