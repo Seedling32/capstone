@@ -81,6 +81,7 @@ export async function signUpUser(
       message: 'CAPTCHA validation failed. Please try again.',
     };
   }
+
   try {
     const user = signUpFormSchema.parse({
       firstName: values.firstName,

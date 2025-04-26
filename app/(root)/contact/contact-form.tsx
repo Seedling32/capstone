@@ -12,8 +12,8 @@ const ContactForm = () => {
   const [result, setResult] = useState('');
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     if (!captchaToken) {
       toast.error('Please complete CAPTCHA verification.');
@@ -30,12 +30,10 @@ const ContactForm = () => {
     }
 
     setResult('Sending....');
-    const form = event.target as HTMLFormElement;
+    const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    formData.append('access_key', '94aa02a2-d5b5-4cf2-bee2-8adc2e6bf9b4');
-
-    const response = await fetch('https://api.web3forms.com/submit', {
+    const response = await fetch('/api/contact', {
       method: 'POST',
       body: formData,
     });
@@ -43,7 +41,7 @@ const ContactForm = () => {
     const data = await response.json();
 
     if (data.success) {
-      toast.success('Form Submitted Successfully');
+      toast.success(`${data.message}`);
       setResult('');
       form.reset();
     } else {
@@ -61,7 +59,7 @@ const ContactForm = () => {
         transition={{ duration: 0.5 }}
       ></motion.div>
       <form
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         className="max-w-2xl mx-auto flex flex-col items-center"
       >
         <div className="flex flex-col md:flex-row md:justify-between gap-10 mb-8 w-full">
