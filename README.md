@@ -1,3 +1,6 @@
+<strong>Photo Credits:</strong>
+All photos used in this project are courtesy of Burke Saunders and are used with permission. These images are &copy;Burke Saunders, all rights reserved. Please do not reuse without permission.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
