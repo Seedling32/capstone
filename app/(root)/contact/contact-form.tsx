@@ -5,7 +5,6 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import Turnstile from 'react-turnstile';
-import { verifyTurnstile } from '@/lib/actions/user.actions';
 import { TURNSTILE_SITE_KEY } from '@/lib/constants';
 
 const ContactForm = () => {
@@ -18,15 +17,6 @@ const ContactForm = () => {
     if (!captchaToken) {
       toast.error('Please complete CAPTCHA verification.');
       return;
-    }
-
-    const isHuman = await verifyTurnstile(captchaToken);
-
-    if (!isHuman) {
-      return {
-        success: false,
-        message: 'CAPTCHA validation failed. Please try again.',
-      };
     }
 
     setResult('Sending....');
