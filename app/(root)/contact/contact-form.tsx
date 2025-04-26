@@ -4,12 +4,31 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import Turnstile from 'react-turnstile';
+import { verifyTurnstile } from '@/lib/actions/user.actions';
+import { TURNSTILE_SITE_KEY } from '@/lib/constants';
 
 const ContactForm = () => {
   const [result, setResult] = useState('');
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!captchaToken) {
+      toast.error('Please complete CAPTCHA verification.');
+      return;
+    }
+
+    const isHuman = await verifyTurnstile(captchaToken);
+
+    if (!isHuman) {
+      return {
+        success: false,
+        message: 'CAPTCHA validation failed. Please try again.',
+      };
+    }
+
     setResult('Sending....');
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
@@ -99,6 +118,12 @@ const ContactForm = () => {
           {result === '' ? 'Send message' : result}
           <ArrowRight />
         </motion.button>
+        <div className="flex justify-center my-4">
+          <Turnstile
+            sitekey={TURNSTILE_SITE_KEY}
+            onSuccess={(token) => setCaptchaToken(token)}
+          />
+        </div>
       </form>
     </div>
   );

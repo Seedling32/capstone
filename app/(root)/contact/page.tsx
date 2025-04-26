@@ -15,7 +15,7 @@ const ContactPage = () => {
           </h1>
         </div>
       </section>
-      <section className="bg-muted bg-gradient-to-t from-transparent to-background shadow-xl rounded-xl py-16 my-16 max-w-6xl mx-auto">
+      <section className="bg-muted bg-gradient-to-t from-transparent to-background shadow-xl rounded-xl pt-16 my-16 max-w-6xl mx-auto">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="h2-bold capitalize mb-6">Send us a message</h2>
           <p className="mt-4 text-lg font-semibold">
