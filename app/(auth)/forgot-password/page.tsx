@@ -9,15 +9,34 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 import Image from 'next/image';
-import { APP_NAME } from '@/lib/constants';
+import { APP_NAME, TURNSTILE_SITE_KEY } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
+import Turnstile from 'react-turnstile';
+import { verifyTurnstile } from '@/lib/actions/user.actions';
+import { toast } from 'sonner';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!captchaToken) {
+      toast.error('Please complete CAPTCHA verification.');
+      return;
+    }
+
+    const isHuman = await verifyTurnstile(captchaToken);
+
+    if (!isHuman) {
+      return {
+        success: false,
+        message: 'CAPTCHA validation failed. Please try again.',
+      };
+    }
+
     await fetch('/api/auth/forgot-password', {
       method: 'POST',
       body: JSON.stringify({ email }),
@@ -63,6 +82,12 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                <div className="flex justify-center my-4">
+                  <Turnstile
+                    sitekey={TURNSTILE_SITE_KEY}
+                    onSuccess={(token) => setCaptchaToken(token)}
+                  />
+                </div>
                 <Button type="submit" className="w-full mt-4">
                   Send Reset Link
                 </Button>
