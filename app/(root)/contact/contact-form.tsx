@@ -25,7 +25,7 @@ const ContactForm = () => {
 
     formData.append('captchaToken', captchaToken);
 
-    const response = await fetch('/api/contact', {
+    const response = await fetch('/api/auth/contact', {
       method: 'POST',
       body: formData,
     });
