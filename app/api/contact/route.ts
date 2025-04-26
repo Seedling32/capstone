@@ -1,7 +1,7 @@
 import { verifyTurnstile } from '@/lib/actions/user.actions';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const captchaToken = formData.get('captchaToken');
 
