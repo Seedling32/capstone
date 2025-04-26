@@ -1,14 +1,15 @@
 import { verifyTurnstile } from '@/lib/actions/user.actions';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   const formData = await req.formData();
   const captchaToken = formData.get('captchaToken');
 
   if (!captchaToken || typeof captchaToken !== 'string') {
-    return {
-      success: false,
-      message: 'CAPTCHA token missing',
-    };
+    return NextResponse.json(
+      { success: false, message: 'Missing CAPTCHA token.' },
+      { status: 400 }
+    );
   }
 
   const isHuman = await verifyTurnstile(captchaToken);
@@ -30,16 +31,11 @@ export async function POST(req: Request) {
   const data = await res.json();
 
   if (data.success) {
-    return {
-      success: true,
-      message: 'Form submitted successfully',
-    };
+    return NextResponse.json({ success: true });
   } else {
-    return {
-      success: false,
-      message: `${data.message}`,
-    };
+    return NextResponse.json(
+      { success: false, message: data.message },
+      { status: 500 }
+    );
   }
-
-  // continue processing form (send to Web3Forms, save to db, etc.)
 }
