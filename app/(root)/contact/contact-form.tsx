@@ -33,6 +33,8 @@ const ContactForm = () => {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
+    formData.append('captchaToken', captchaToken);
+
     const response = await fetch('/api/contact', {
       method: 'POST',
       body: formData,
