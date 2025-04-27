@@ -18,11 +18,11 @@ export const metadata: Metadata = {
 };
 
 const SignInPage = async (props: {
-  searchParams: Promise<{
-    callbackUrl: string;
-  }>;
+  searchParams: {
+    callbackUrl?: string;
+  };
 }) => {
-  const { callbackUrl } = await props.searchParams;
+  const { callbackUrl } = props.searchParams || {};
 
   const session = await auth();
 
