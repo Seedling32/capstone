@@ -120,3 +120,26 @@ export function convertUTCToLocal(date: Date): Date {
 export function convertLocalToUTC(date: Date): Date {
   return new Date(date.getTime() - date.getTimezoneOffset() * 60000);
 }
+
+// Normalize url for callback function
+export function normalizeCallbackUrl(url: string | undefined): string {
+  if (!url) return '/';
+
+  url = url.trim();
+
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    try {
+      const parsed = new URL(url);
+      return parsed.pathname + parsed.search + parsed.hash;
+    } catch (error) {
+      console.log(`${error}`);
+      return '/';
+    }
+  }
+
+  if (!url.startsWith('/')) {
+    return '/';
+  }
+
+  return url;
+}

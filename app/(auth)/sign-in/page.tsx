@@ -12,6 +12,7 @@ import Link from 'next/link';
 import CredentialsSignInForm from './credentials-signin-form';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
+import { normalizeCallbackUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Sign In',
@@ -23,12 +24,13 @@ const SignInPage = async (props: {
   }>;
 }) => {
   const { callbackUrl } = await props.searchParams;
-  console.log(callbackUrl);
+
+  const cleanCallBackUrl = normalizeCallbackUrl(callbackUrl);
 
   const session = await auth();
 
   if (session) {
-    redirect(callbackUrl ? `${callbackUrl.trim()}` : '/');
+    redirect(cleanCallBackUrl ? `${cleanCallBackUrl.trim()}` : '/');
   }
 
   return (
