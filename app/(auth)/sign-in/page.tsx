@@ -23,17 +23,18 @@ const SignInPage = async (props: {
   }>;
 }) => {
   const { callbackUrl } = await props.searchParams;
+  console.log(callbackUrl);
 
   const session = await auth();
 
   if (session) {
-    redirect(callbackUrl ? `${callbackUrl}` : '/');
+    redirect(callbackUrl ? `${callbackUrl.trim()}` : '/');
   }
 
   return (
     <div className="w-full max-w-md mx-auto">
       <h1 className="sr-only">Sign in</h1>
-      <p>{`${callbackUrl}`}</p>
+      <p>&apos;{`${callbackUrl}`}&apos;</p>
       <Card>
         <CardHeader className="space-y-4">
           <Link href="/" className="flex-center">
