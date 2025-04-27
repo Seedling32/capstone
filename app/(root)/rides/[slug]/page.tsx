@@ -18,6 +18,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import DownloadGPX from '@/components/shared/rides/download-gpx';
 
 const RideDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -83,8 +84,8 @@ const RideDetailsPage = async (props: {
         <div>
           {session && !userRide ? (
             <Card>
-              <CardContent className="p-6 flex flex-col items-center">
-                <p className="mb-4">Sign Up to join in on the fun!</p>
+              <CardContent className="p-6 flex flex-col items-center gap-4">
+                <p>Sign Up to join in on the fun!</p>
                 <SignUpForRide
                   ride={{
                     ride_id: ride.ride_id,
@@ -95,25 +96,29 @@ const RideDetailsPage = async (props: {
                     staticMapUrl: ride.staticMapUrl,
                   }}
                 />
+                <DownloadGPX title={ride.shortDescription} path={parsedPath} />
               </CardContent>
             </Card>
           ) : session && userRide ? (
             <Card>
-              <CardContent className="p-6">
+              <CardContent className="flex flex-col p-6">
                 <p>Thanks for signing up for the ride!</p>
-                <p>
+                <p className="mb-4">
                   This helps us keep accurate user metrics and ultimately create
                   a better experience for our users, like you.
                 </p>
+                <DownloadGPX title={ride.shortDescription} path={parsedPath} />
               </CardContent>
             </Card>
           ) : (
             <Card>
-              <CardContent className="p-6 flex items-center gap-2">
-                <p>
-                  Please sign in to register for rides and see who else is
-                  joining!
-                </p>
+              <CardContent className="p-6 flex flex-col items-center gap-2">
+                <p>Please sign in to access member features.</p>
+                <ul className="list-disc">
+                  <li>Sign Up for the ride to join the fun</li>
+                  <li>See who else is signed up for the ride</li>
+                  <li>Download the route GPX file</li>
+                </ul>
                 <Button>
                   <Link href={`/sign-in?callbackUrl=/rides/${ride.slug}`}>
                     Sign-in
