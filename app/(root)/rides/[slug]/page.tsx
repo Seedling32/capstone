@@ -120,9 +120,7 @@ const RideDetailsPage = async (props: {
                   <li>Download the route GPX file</li>
                 </ul>
                 <Button>
-                  <Link
-                    href={`/sign-in?callbackUrl=https%3A%2F%2Fpedal-pact.com%2Frides%2F${ride.slug}`}
-                  >
+                  <Link href={`/sign-in?callbackUrl=/rides/${ride.slug}`}>
                     Sign-in
                   </Link>
                 </Button>

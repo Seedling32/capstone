@@ -4,6 +4,7 @@ import { getRideById } from '@/lib/actions/ride.actions';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import GoogleMapsWrapper from '@/components/shared/map/google-maps-wrapper';
+import { requireAdmin } from '@/lib/auth-guard';
 
 export const metadata: Metadata = {
   title: 'Update Ride',
@@ -14,6 +15,7 @@ const AdminUpdateRidePage = async (props: {
     id: string;
   }>;
 }) => {
+  await requireAdmin();
   const { id } = await props.params;
 
   const ride = await getRideById(id);
