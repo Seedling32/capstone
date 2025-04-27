@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import DownloadGPX from '@/components/shared/rides/download-gpx';
+import { SERVER_URL } from '@/lib/constants';
 
 const RideDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -120,7 +121,9 @@ const RideDetailsPage = async (props: {
                   <li>Download the route GPX file</li>
                 </ul>
                 <Button>
-                  <Link href={`/sign-in?callbackUrl=/rides/${ride.slug}`}>
+                  <Link
+                    href={`/sign-in?callbackUrl=${SERVER_URL}/rides/${ride.slug}`}
+                  >
                     Sign-in
                   </Link>
                 </Button>

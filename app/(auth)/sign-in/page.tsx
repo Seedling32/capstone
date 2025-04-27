@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { APP_NAME, SERVER_URL } from '@/lib/constants';
+import { APP_NAME } from '@/lib/constants';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,7 +27,7 @@ const SignInPage = async (props: {
   const session = await auth();
 
   if (session) {
-    return redirect(`${SERVER_URL}${callbackUrl}` || '/');
+    return redirect(`${callbackUrl}` || '/');
   }
 
   return (
