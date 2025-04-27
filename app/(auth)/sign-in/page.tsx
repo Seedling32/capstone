@@ -36,7 +36,6 @@ const SignInPage = async (props: {
   return (
     <div className="w-full max-w-md mx-auto">
       <h1 className="sr-only">Sign in</h1>
-      <p>&apos;{`${callbackUrl}`}&apos;</p>
       <Card>
         <CardHeader className="space-y-4">
           <Link href="/" className="flex-center">
