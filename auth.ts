@@ -4,7 +4,6 @@ import { prisma } from '@/db/prisma';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { compareSync } from 'bcrypt-ts-edge';
 import { NextAuthConfig } from 'next-auth';
-import { NextResponse } from 'next/server';
 
 export const config = {
   pages: {
@@ -113,21 +112,8 @@ export const config = {
       const { pathname } = request.nextUrl;
 
       // Check if user not authenticated and accessing a  protected path
-      if (!auth && protectedPaths.some((p) => p.test(pathname))) {
-        return false;
-
-        // Clone the req headers
-        const newRequestHeaders = new Headers(request.headers);
-
-        // Create new response and add new headers
-        const response = NextResponse.next({
-          request: {
-            headers: newRequestHeaders,
-          },
-        });
-
-        return response;
-      } else {
+      if (!auth && protectedPaths.some((p) => p.test(pathname))) return false;
+      else {
         return true;
       }
     },
