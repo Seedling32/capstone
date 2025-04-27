@@ -1,6 +1,6 @@
 For the full database diagram, you can view it [Here](https://dbdiagram.io/d/pedal-pact-678bc92f6b7fa355c34b58c8), hosted by dbdiagram.io
 
-Alternatively, you can download the SQL file [Here](assets/pedal-pact.sql)
+Alternatively, you can view the SQL file [Here](assets/pedal-pact.sql)
 
 <strong>Photo Credits:</strong>
 All photos used in this project are courtesy of Burke Saunders and are used with permission. These images are &copy;Burke Saunders, all rights reserved. Please do not reuse without permission.
