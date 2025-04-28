@@ -60,8 +60,7 @@ const PrivacyPolicyPage = () => {
           <h2 className="h2-bold mb-2">Your Rights</h2>
           <p>
             You have the right to access, correct, or delete your personal
-            information. To make a request, please contact us at [Insert support
-            email].
+            information.
           </p>
         </div>
 

@@ -15,7 +15,7 @@ export const TURNSTILE_SITE_KEY =
 export const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
 
-export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 8;
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 9;
 
 export const signInDefaultValues = {
   email: '',

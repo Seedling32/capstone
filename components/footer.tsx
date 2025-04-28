@@ -8,12 +8,14 @@ const Footer = () => {
     <footer className="flex flex-col items-center gap-4 py-2 bg-muted border-t">
       <div className="flex items-center justify-center gap-2 text-center">
         {currentYear} {APP_NAME}{' '}
-        <Image
-          src="/images/logo.png"
-          width={48}
-          height={48}
-          alt={`${APP_NAME} logo`}
-        />{' '}
+        <Link href="/">
+          <Image
+            src="/images/logo.png"
+            width={48}
+            height={48}
+            alt={`${APP_NAME} logo`}
+          />
+        </Link>{' '}
         All Rights Reserved
       </div>
       <div className=" flex gap-2 text-sm underline">

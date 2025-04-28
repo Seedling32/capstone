@@ -125,58 +125,64 @@ const SearchRidesPage = async (props: {
   return (
     <div className="wrapper grid md:grid-cols-5 md:gap-5">
       <h1 className="sr-only">Search rides</h1>
-      <div className="filter-links">
+      <aside className="filter-links flex md:flex-col gap-6 justify-center md:justify-start">
+        <h2 className="sr-only">Filter links</h2>
         {/* Difficulty Links */}
-        <div className="text-xl mb-2 mt-3">Difficulty</div>
-        <div>
-          <ul className="space-y-1">
-            <li>
-              <Link
-                className={`${
-                  (difficulty === 'all' || difficulty === '') && 'font-bold'
-                }`}
-                href={getFilterUrl({ dif: 'all' })}
-              >
-                Any
-              </Link>
-            </li>
-            {difficulties.map((x) => (
-              <li key={x.difficulty}>
+        <section>
+          <h3 className="text-xl mb-2 mt-3">Difficulty</h3>
+          <div>
+            <ul className="space-y-1">
+              <li>
                 <Link
-                  className={`${difficulty === x.difficulty && 'font-bold'}`}
-                  href={getFilterUrl({ dif: x.difficulty })}
+                  className={`${
+                    (difficulty === 'all' || difficulty === '') && 'font-bold'
+                  }`}
+                  href={getFilterUrl({ dif: 'all' })}
                 >
-                  {x.difficulty.charAt(0).toUpperCase() + x.difficulty.slice(1)}
+                  Any
                 </Link>
               </li>
-            ))}
-          </ul>
-        </div>
+              {difficulties.map((x) => (
+                <li key={x.difficulty}>
+                  <Link
+                    className={`${difficulty === x.difficulty && 'font-bold'}`}
+                    href={getFilterUrl({ dif: x.difficulty })}
+                  >
+                    {x.difficulty.charAt(0).toUpperCase() +
+                      x.difficulty.slice(1)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
         {/* Distance Links */}
-        <div className="text-xl mb-2 mt-3">Distance</div>
-        <div>
-          <ul className="space-y-1">
-            <li>
-              <Link
-                className={`${distance === 'all' && 'font-bold'}`}
-                href={getFilterUrl({ dis: 'all' })}
-              >
-                Any
-              </Link>
-            </li>
-            {distances.map((d) => (
-              <li key={d.value}>
+        <section>
+          <h3 className="text-xl mb-2 mt-3">Distance</h3>
+          <div>
+            <ul className="space-y-1">
+              <li>
                 <Link
-                  className={`${distance === d.value && 'font-bold'}`}
-                  href={getFilterUrl({ dis: d.value })}
+                  className={`${distance === 'all' && 'font-bold'}`}
+                  href={getFilterUrl({ dis: 'all' })}
                 >
-                  {d.name}
+                  Any
                 </Link>
               </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+              {distances.map((d) => (
+                <li key={d.value}>
+                  <Link
+                    className={`${distance === d.value && 'font-bold'}`}
+                    href={getFilterUrl({ dis: d.value })}
+                  >
+                    {d.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </aside>
       <div className="md:col-span-4 space-y-4">
         <div className="flex-between flex-col md:flex-row my-4">
           <div className="flex items-center gap-2">
@@ -214,14 +220,21 @@ const SearchRidesPage = async (props: {
             ))}
           </div>
         </div>
-        <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <section
+          className="grid grid-cols-1 gap-4 md:grid-cols-2
+        lg:grid-cols-3 justify-items-center"
+        >
           <h2 className="sr-only">All rides</h2>
           {rides.data.length === 0 && <div>No rides found.</div>}
           {rides.data.map((ride) => (
             <RideCard key={ride.ride_id} ride={ride} />
           ))}
         </section>
-        <Pagination page={Number(page) || 1} totalPages={rides.totalPages} />
+        {rides.totalPages > 1 ? (
+          <Pagination page={Number(page) || 1} totalPages={rides.totalPages} />
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
