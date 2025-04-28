@@ -96,7 +96,7 @@ const AdminOverviewPage = async () => {
           <CardHeader>
             <CardTitle>Recently Signed Up</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-0">
             <Table>
               <TableHeader>
                 <TableRow>
