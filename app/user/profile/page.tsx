@@ -15,7 +15,7 @@ const Profile = async () => {
   return (
     <SessionProvider session={session}>
       <div className="max-w-md bg-muted mx-auto rounded-lg p-6 space-y-4 bg-gradient-to-t from-transparent to-background">
-        <h2 className="h2-bold">Profile</h2>
+        <h2 className="h2-bold capitalize">Edit profile</h2>
         <ProfileForm />
         <div className="flex flex-col items-center gap-4">
           <h2 className="h2-bold capitalize">Delete account</h2>
