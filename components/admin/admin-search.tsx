@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 
-const AdminSearch = () => {
+const AdminSearch = ({ forHeader }: { forHeader?: boolean }) => {
   const pathName = usePathname();
   const formActionUrl = pathName.includes('/admin/user-rides')
     ? '/admin/user-rides'
@@ -37,7 +37,11 @@ const AdminSearch = () => {
         name="query"
         value={queryValue}
         onChange={(e) => setQueryValue(e.target.value)}
-        className="hidden md:block w-[100px] lg:w-[300px]"
+        className={
+          forHeader
+            ? 'hidden lg:block w-[100px] lg:w-[300px]'
+            : 'w-full lg:hidden'
+        }
       />
       <Button className="sr-only" type="submit">
         Search

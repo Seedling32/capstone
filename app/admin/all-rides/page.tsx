@@ -16,6 +16,7 @@ import { formatDateTime } from '@/lib/utils';
 import Pagination from '@/components/shared/pagination';
 import DeleteDialog from '@/components/shared/delete-dialog';
 import { PlusIcon } from 'lucide-react';
+import RideCard from '@/components/shared/rides/ride-card';
 
 export const metadata: Metadata = {
   title: 'All Rides',
@@ -65,7 +66,7 @@ const AdminAllRides = async (props: {
           </Link>
         </Button>
       </div>
-      <Table>
+      <Table className="hidden lg:table">
         <TableHeader>
           <TableRow>
             <TableHead>Ride</TableHead>
@@ -112,6 +113,22 @@ const AdminAllRides = async (props: {
           ))}
         </TableBody>
       </Table>
+      <div className="grid grid-cols-1 md:grid-cols-2  justify-items-center gap-4 lg:hidden">
+        {rides.data.map((ride) => (
+          <div
+            key={ride.ride_id}
+            className="space-y-4 border p-4 rounded-lg bg-muted-foreground drop-shadow-lg"
+          >
+            <RideCard ride={ride} />
+            <div className="flex justify-center gap-4">
+              <Button variant="outline" size="sm">
+                <Link href={`/admin/all-rides/${ride.ride_id}`}>Edit</Link>
+              </Button>
+              <DeleteDialog id={ride.ride_id} action={deleteRide} />
+            </div>
+          </div>
+        ))}
+      </div>
       {rides?.totalPages > 1 && (
         <Pagination page={Number(page) || 1} totalPages={rides?.totalPages} />
       )}

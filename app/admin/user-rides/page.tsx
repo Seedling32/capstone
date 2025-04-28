@@ -15,6 +15,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Pagination from '@/components/shared/pagination';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import AdminSearch from '@/components/admin/admin-search';
 
 export const metadata: Metadata = {
   title: 'User Rides',
@@ -46,8 +48,9 @@ const AdminUserRides = async (props: {
           </div>
         )}
       </div>
+      <AdminSearch forHeader={false} />
       <div className="overflow-x-auto">
-        <Table>
+        <Table className="hidden lg:table">
           <TableHeader>
             <TableRow>
               <TableHead>Ride</TableHead>
@@ -101,6 +104,65 @@ const AdminUserRides = async (props: {
             ))}
           </TableBody>
         </Table>
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2  justify-items-center gap-4 lg:hidden">
+          {userRides.data.map((ride) => (
+            <Card key={ride.user_ride_id} className="drop-shadow-lg">
+              <CardHeader className="p-0 items-center">
+                <Link href={`/rides/${ride.ride.slug}`}>
+                  <Image
+                    src={ride.ride.staticMapUrl!}
+                    alt={ride.ride.shortDescription}
+                    height={300}
+                    width={300}
+                    priority={true}
+                    className="rounded-t-lg"
+                  />
+                </Link>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4 mt-4">
+                <ul className="flex flex-col gap-2">
+                  <li>
+                    <strong>Ride: </strong>
+                    {ride.ride.shortDescription}
+                  </li>
+                  <li>
+                    <strong>User: </strong>
+                    {`${ride.user.firstName} ${ride.user.lastName}`}
+                  </li>
+                  <li>
+                    <strong>Date: </strong>
+                    {formatDateTime(ride.ride.date).dateTime}
+                  </li>
+                  <li className="flex justify-between">
+                    <strong>Status: </strong>
+                    <Badge
+                      className="mr-4"
+                      variant={
+                        ride.status === 'SIGNED_UP' ||
+                        ride.status === 'COMPLETED'
+                          ? 'secondary'
+                          : 'destructive'
+                      }
+                    >
+                      {ride.status === 'SIGNED_UP'
+                        ? 'Signed Up'
+                        : ride.status === 'CANCELED'
+                          ? 'Canceled'
+                          : ride.status === 'COMPLETED'
+                            ? 'Completed'
+                            : 'No Show'}
+                    </Badge>
+                  </li>
+                </ul>
+                <Button asChild variant="outline" size="sm">
+                  <Link href={`/user/my-rides/${ride.user_ride_id}`}>
+                    Details
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
         {userRides?.totalPages > 1 && (
           <Pagination
             page={Number(page) || 1}

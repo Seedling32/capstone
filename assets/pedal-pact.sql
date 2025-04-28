@@ -1,9 +1,3 @@
-CREATE TYPE "Role" AS ENUM (
-  'USER',
-  'ADMIN',
-  'SUPER_ADMIN'
-);
-
 CREATE TYPE "Status" AS ENUM (
   'SIGNED_UP',
   'CANCELED',
@@ -20,7 +14,7 @@ CREATE TABLE "user" (
   "image" text,
   "password" text,
   "location_id" int,
-  "role" enum NOT NULL DEFAULT 'USER',
+  "role" text NOT NULL DEFAULT 'USER',
   "created_at" timestamp(6) DEFAULT (now()),
   "updated_at" timestamp(6) DEFAULT (now())
 );
@@ -56,7 +50,7 @@ CREATE TABLE "user_ride" (
   "user_ride_id" uuid PRIMARY KEY DEFAULT (gen_random_uuid()),
   "user_id" uuid NOT NULL,
   "ride_id" uuid NOT NULL,
-  "status" enum NOT NULL DEFAULT (SIGNED_UP),
+  "status" text NOT NULL DEFAULT (SIGNED_UP),
   "date_signed_up" timestamp(6) NOT NULL DEFAULT (now()),
   "date_completed" timestamp(6)
 );
