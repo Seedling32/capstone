@@ -14,13 +14,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '../ui/alert-dialog';
+import { signOutUser } from '@/lib/actions/user.actions';
 
 const DeleteDialog = ({
   id,
   action,
+  userDelete,
 }: {
   id: string;
   action: (id: string) => Promise<{ success: boolean; message: string }>;
+  userDelete?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -34,6 +37,10 @@ const DeleteDialog = ({
       } else {
         setOpen(false);
         toast.success(`${response.message}`);
+
+        if (userDelete) {
+          signOutUser();
+        }
       }
     });
   };
