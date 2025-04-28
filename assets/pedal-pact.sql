@@ -1,10 +1,3 @@
-CREATE TYPE "Status" AS ENUM (
-  'SIGNED_UP',
-  'CANCELED',
-  'COMPLETED',
-  'NO_SHOW'
-);
-
 CREATE TABLE "user" (
   "user_id" uuid PRIMARY KEY DEFAULT (gen_random_uuid()),
   "first_name" text NOT NULL DEFAULT (NO_FIRST_NAME),
