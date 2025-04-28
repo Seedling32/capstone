@@ -15,8 +15,6 @@ import { getUserRide } from '@/types';
 import Image from 'next/image';
 import StatusForm from './status-form';
 
-const currentDate = new Date();
-
 const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
   const { status, user_ride_id } = userRide;
   const {
@@ -112,25 +110,14 @@ const RideDetailsTable = ({ userRide }: { userRide: getUserRide }) => {
                         {status === 'SIGNED_UP'
                           ? 'Signed Up'
                           : status === 'CANCELED'
-                          ? 'Canceled'
-                          : status === 'COMPLETED'
-                          ? 'Completed'
-                          : 'No Show'}
+                            ? 'Canceled'
+                            : status === 'COMPLETED'
+                              ? 'Completed'
+                              : 'No Show'}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      {currentDate < new Date(date) ? (
-                        <StatusForm userRideId={user_ride_id} />
-                      ) : (
-                        <>
-                          <p>Unable to change status after the ride date.</p>
-                          <p>
-                            If you forgot to mark the ride as completed please
-                            just send us an email and we can check it off for
-                            you.
-                          </p>
-                        </>
-                      )}
+                      <StatusForm userRideId={user_ride_id} />
                     </TableCell>
                   </TableRow>
                 </TableBody>
