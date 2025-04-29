@@ -56,7 +56,67 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to clone the repository and run Pedal Pact on your local machine.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [npm](https://www.npmjs.com/) or [pnpm](https://pnpm.io/)
+- [PostgreSQL](https://www.postgresql.org/) or [Neon](https://neon.tech/)
+- [Git](https://git-scm.com/)
+
+You will also need API keys and/or secret keys for:
+
+- **Google Maps API**
+- **UploadThing**
+- **NextAuth**
+- **NEON Database**(connection string)
+- **Resend**
+- **Cloudfare Turnstile**
+
+Without the .env file the project will fail to build correctly and will not run locally.
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Seedling32/capstone.git
+cd pedal-pact
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Set Up the Environment Variables
+
+1. Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+2. Open `.env` and update the environment variables with your own credentials:
+
+```
+DATABASE_URL=your_database_url_here
+NEXTAUTH_SECRET=your_nextauth_secret_here
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
+```
+
+### Set Up The Database
+
+Run Prisma migration to create the database schema:
+
+```bash
+npx prisma migrate dev --name initial_setup
+```
+
+### Run The Development Server
 
 ```bash
 npm run dev
@@ -69,21 +129,6 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-This project has an extensive .env file for services such as:
-
-- **Google Maps API**
-- **UploadThing**
-- **NextAuth**
-- **NEON Database**
-- **Resend**
-- **And more...**
-
-Without the .env file the project will fail to build correctly and will not run on your local machine.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
