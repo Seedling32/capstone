@@ -13,12 +13,5 @@ const pool = new Pool({ connectionString });
 // Instantiates the Prisma adapter using the Neon connection pool to handle the connection between Prisma and Neon.
 const adapter = new PrismaNeon(pool);
 
-// Extends the PrismaClient with a custom result transformer to eventually convert the distance from  and rating fields to strings.
+// Extends the PrismaClient so you don't have to create this in each file that you want to access the database from.
 export const prisma = new PrismaClient({ adapter });
-// .$extends({
-//   result: {
-//     ride: {
-//       short
-//     }
-//   }
-// });
