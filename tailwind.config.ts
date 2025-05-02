@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       animation: {
-        'scroll-left': 'scroll-left 20s linear infinite',
+        'scroll-left': 'scroll-left 30s linear infinite',
       },
       backgroundImage: {
         'hero-large': "url('/images/group-1-2.webp')",
